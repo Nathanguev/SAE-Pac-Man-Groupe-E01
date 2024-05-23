@@ -104,6 +104,7 @@
             btnTouches.TabIndex = 0;
             btnTouches.Text = "TOUCHES";
             btnTouches.UseVisualStyleBackColor = false;
+            btnTouches.Click += btnTouches_Click;
             btnTouches.MouseEnter += btn_MouseEnter;
             btnTouches.MouseLeave += btn_MouseLeave;
             // 
@@ -149,6 +150,7 @@
             btnVolume.TabIndex = 0;
             btnVolume.Text = "VOLUME";
             btnVolume.UseVisualStyleBackColor = false;
+            btnVolume.Click += btnVolume_Click;
             btnVolume.MouseEnter += btn_MouseEnter;
             btnVolume.MouseLeave += btn_MouseLeave;
             // 
@@ -159,6 +161,7 @@
             BackColor = Color.FromArgb(0, 0, 43);
             ClientSize = new Size(1182, 628);
             Controls.Add(tableLayoutPanel1);
+            MinimumSize = new Size(960, 540);
             Name = "FormMenuOptions";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;

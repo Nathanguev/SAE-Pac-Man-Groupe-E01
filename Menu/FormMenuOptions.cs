@@ -41,5 +41,15 @@ namespace Interface_PacMan
         {
             this.Close();
         }
+
+        private void btnTouches_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Touches");
+        }
+
+        private void btnVolume_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Volume");
+        }
     }
 }

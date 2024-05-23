@@ -179,6 +179,7 @@
             BackColor = Color.FromArgb(0, 0, 43);
             ClientSize = new Size(1182, 628);
             Controls.Add(tableLayoutPanel1);
+            MinimumSize = new Size(960, 540);
             Name = "FormMenuPrincipal";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
