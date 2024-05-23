@@ -1,3 +1,5 @@
+using Interface_PacMan;
+
 namespace Menu
 {
     public partial class FormMenuPrincipal : Form
@@ -38,9 +40,13 @@ namespace Menu
             MessageBox.Show("Nouvelle Partie");
         }
 
-        private void btnOptions_Click(object sender, EventArgs e)
+        private async void btnOptions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Options");
+            FormMenuOptions menuOptions = new FormMenuOptions();
+            menuOptions.Show();
+
+            // await Task.Delay(1000);
+            // this.Close();
         }
     }
 }
