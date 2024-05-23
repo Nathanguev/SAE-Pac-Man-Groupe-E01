@@ -1,6 +1,6 @@
 ﻿namespace Menu
 {
-    partial class Form1
+    partial class FormMenuPrincipal
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenuPrincipal));
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
