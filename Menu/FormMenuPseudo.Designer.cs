@@ -1,14 +1,14 @@
-﻿namespace Menu
+﻿namespace Interface_PacMan
 {
-    partial class FormMenuPrincipal
+    partial class FormMenuPseudo
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,24 +23,25 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenuPrincipal));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenuPseudo));
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            btnContinuer = new Button();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            txtPseudo = new TextBox();
+            btnRetour = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
-            btnNouvellePartie = new Button();
             tableLayoutPanel4 = new TableLayoutPanel();
-            btnOptions = new Button();
+            btnSuivant = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
@@ -78,11 +79,14 @@
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel2.ColumnCount = 5;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel2.Controls.Add(btnContinuer, 1, 1);
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel5, 3, 1);
+            tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 317);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -93,20 +97,48 @@
             tableLayoutPanel2.Size = new Size(1176, 72);
             tableLayoutPanel2.TabIndex = 1;
             // 
-            // btnContinuer
+            // tableLayoutPanel5
             // 
-            btnContinuer.BackColor = Color.FromArgb(224, 224, 224);
-            btnContinuer.Dock = DockStyle.Fill;
-            btnContinuer.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnContinuer.Location = new Point(444, 10);
-            btnContinuer.Name = "btnContinuer";
-            btnContinuer.Size = new Size(288, 51);
-            btnContinuer.TabIndex = 0;
-            btnContinuer.Text = "CONTINUER";
-            btnContinuer.UseVisualStyleBackColor = false;
-            btnContinuer.Click += btnContinuer_Click;
-            btnContinuer.MouseEnter += btn_MouseEnter;
-            btnContinuer.MouseLeave += btn_MouseLeave;
+            tableLayoutPanel5.BackColor = Color.FromArgb(224, 224, 224);
+            tableLayoutPanel5.ColumnCount = 3;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel5.Controls.Add(txtPseudo, 1, 1);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(442, 10);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.Size = new Size(288, 51);
+            tableLayoutPanel5.TabIndex = 1;
+            // 
+            // txtPseudo
+            // 
+            txtPseudo.BorderStyle = BorderStyle.FixedSingle;
+            txtPseudo.Dock = DockStyle.Fill;
+            txtPseudo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            txtPseudo.Location = new Point(14, 5);
+            txtPseudo.Margin = new Padding(0);
+            txtPseudo.MaxLength = 10;
+            txtPseudo.Name = "txtPseudo";
+            txtPseudo.PlaceholderText = "PSEUDO";
+            txtPseudo.Size = new Size(259, 30);
+            txtPseudo.TabIndex = 0;
+            txtPseudo.TextAlign = HorizontalAlignment.Center;
+            // 
+            // btnRetour
+            // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.Location = new Point(120, 10);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Size = new Size(52, 51);
+            btnRetour.TabIndex = 0;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -114,7 +146,6 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel3.Controls.Add(btnNouvellePartie, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 395);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -125,28 +156,13 @@
             tableLayoutPanel3.Size = new Size(1176, 72);
             tableLayoutPanel3.TabIndex = 2;
             // 
-            // btnNouvellePartie
-            // 
-            btnNouvellePartie.BackColor = Color.FromArgb(224, 224, 224);
-            btnNouvellePartie.Dock = DockStyle.Fill;
-            btnNouvellePartie.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnNouvellePartie.Location = new Point(444, 10);
-            btnNouvellePartie.Name = "btnNouvellePartie";
-            btnNouvellePartie.Size = new Size(288, 51);
-            btnNouvellePartie.TabIndex = 0;
-            btnNouvellePartie.Text = "NOUVELLE PARTIE";
-            btnNouvellePartie.UseVisualStyleBackColor = false;
-            btnNouvellePartie.Click += btnNouvellePartie_Click;
-            btnNouvellePartie.MouseEnter += btn_MouseEnter;
-            btnNouvellePartie.MouseLeave += btn_MouseLeave;
-            // 
             // tableLayoutPanel4
             // 
             tableLayoutPanel4.ColumnCount = 3;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel4.Controls.Add(btnOptions, 1, 1);
+            tableLayoutPanel4.Controls.Add(btnSuivant, 1, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(3, 473);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -157,22 +173,20 @@
             tableLayoutPanel4.Size = new Size(1176, 72);
             tableLayoutPanel4.TabIndex = 3;
             // 
-            // btnOptions
+            // btnSuivant
             // 
-            btnOptions.BackColor = Color.FromArgb(224, 224, 224);
-            btnOptions.Dock = DockStyle.Fill;
-            btnOptions.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnOptions.Location = new Point(444, 10);
-            btnOptions.Name = "btnOptions";
-            btnOptions.Size = new Size(288, 51);
-            btnOptions.TabIndex = 0;
-            btnOptions.Text = "OPTIONS";
-            btnOptions.UseVisualStyleBackColor = false;
-            btnOptions.Click += btnOptions_Click;
-            btnOptions.MouseEnter += btn_MouseEnter;
-            btnOptions.MouseLeave += btn_MouseLeave;
+            btnSuivant.BackColor = Color.FromArgb(224, 224, 224);
+            btnSuivant.Dock = DockStyle.Fill;
+            btnSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnSuivant.Location = new Point(444, 10);
+            btnSuivant.Name = "btnSuivant";
+            btnSuivant.Size = new Size(288, 51);
+            btnSuivant.TabIndex = 0;
+            btnSuivant.Text = "SUIVANT";
+            btnSuivant.UseVisualStyleBackColor = false;
+            btnSuivant.Click += btnSuivant_Click;
             // 
-            // FormMenuPrincipal
+            // FormMenuPseudo
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -180,16 +194,17 @@
             ClientSize = new Size(1182, 628);
             Controls.Add(tableLayoutPanel1);
             MinimumSize = new Size(960, 540);
-            Name = "FormMenuPrincipal";
+            Name = "FormMenuPseudo";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Menu Principal";
+            Text = "Menu Pseudo";
             WindowState = FormWindowState.Maximized;
-            SizeChanged += FormMenuPrincipal_SizeChanged;
+            SizeChanged += FormMenuPseudo_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
             tableLayoutPanel4.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -200,9 +215,10 @@
         private PictureBox pictureBox1;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
-        private Button btnNouvellePartie;
         private TableLayoutPanel tableLayoutPanel4;
-        private Button btnOptions;
-        private Button btnContinuer;
+        private TableLayoutPanel tableLayoutPanel5;
+        private TextBox txtPseudo;
+        private Button btnRetour;
+        private Button btnSuivant;
     }
 }

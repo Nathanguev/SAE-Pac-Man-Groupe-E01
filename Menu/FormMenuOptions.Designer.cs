@@ -76,9 +76,9 @@
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.ColumnCount = 5;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.5F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6.5F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.5F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel2.Controls.Add(btnTouches, 3, 1);
@@ -98,10 +98,10 @@
             btnTouches.BackColor = Color.FromArgb(224, 224, 224);
             btnTouches.Dock = DockStyle.Fill;
             btnTouches.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnTouches.Location = new Point(443, 10);
+            btnTouches.Location = new Point(442, 10);
             btnTouches.Name = "btnTouches";
             btnTouches.Size = new Size(288, 51);
-            btnTouches.TabIndex = 0;
+            btnTouches.TabIndex = 1;
             btnTouches.Text = "TOUCHES";
             btnTouches.UseVisualStyleBackColor = false;
             btnTouches.Click += btnTouches_Click;
@@ -113,10 +113,10 @@
             btnRetour.BackColor = Color.FromArgb(224, 224, 224);
             btnRetour.Dock = DockStyle.Fill;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnRetour.Location = new Point(185, 10);
+            btnRetour.Location = new Point(120, 10);
             btnRetour.Name = "btnRetour";
-            btnRetour.Size = new Size(70, 51);
-            btnRetour.TabIndex = 1;
+            btnRetour.Size = new Size(52, 51);
+            btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;

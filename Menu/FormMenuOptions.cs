@@ -44,12 +44,14 @@ namespace Interface_PacMan
 
         private void btnTouches_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Touches");
+            FormMenuTouches menuTouches = new FormMenuTouches();
+            menuTouches.Show();
         }
 
         private void btnVolume_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Volume");
+            FormMenuVolume menuVolume = new FormMenuVolume();
+            menuVolume.Show();
         }
     }
 }

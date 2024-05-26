@@ -9,7 +9,7 @@ namespace Menu
             InitializeComponent();
         }
 
-        private void Form1_SizeChanged(object sender, EventArgs e)
+        private void FormMenuPrincipal_SizeChanged(object sender, EventArgs e)
         {
             float fontHeight = btnContinuer.Size.Height / 5;
 
@@ -37,7 +37,8 @@ namespace Menu
 
         private void btnNouvellePartie_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Nouvelle Partie");
+            FormMenuPseudo menuPseudo = new FormMenuPseudo();
+            menuPseudo.Show();
         }
 
         private async void btnOptions_Click(object sender, EventArgs e)
