@@ -21,8 +21,11 @@ namespace Interface_PacMan
         {
             float fontHeight = btnTouches.Size.Height / 5;
 
-            btnTouches.Font = new Font(btnTouches.Font.FontFamily, fontHeight, FontStyle.Bold);
-            btnVolume.Font = new Font(btnVolume.Font.FontFamily, fontHeight, FontStyle.Bold);
+            if (fontHeight > 0)
+            {
+                btnTouches.Font = new Font(btnTouches.Font.FontFamily, fontHeight, FontStyle.Bold);
+                btnVolume.Font = new Font(btnVolume.Font.FontFamily, fontHeight, FontStyle.Bold);
+            }
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

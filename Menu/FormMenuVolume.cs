@@ -21,9 +21,24 @@ namespace Interface_PacMan
         {
             float fontHeight = lblVolumeEffets.Size.Height / 5;
 
-            lblVolumeEffets.Font = new Font(lblVolumeEffets.Font.FontFamily, fontHeight, FontStyle.Bold);
-            lblVolumeGlobal.Font = new Font(lblVolumeGlobal.Font.FontFamily, fontHeight, FontStyle.Bold);
-            lblVolumeMusique.Font = new Font(lblVolumeMusique.Font.FontFamily, fontHeight, FontStyle.Bold);
+            if (fontHeight > 0)
+            {
+                lblVolumeEffets.Font = new Font(lblVolumeEffets.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblVolumeGlobal.Font = new Font(lblVolumeGlobal.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblVolumeMusique.Font = new Font(lblVolumeMusique.Font.FontFamily, fontHeight, FontStyle.Bold);
+            }
+        }
+
+        private void btn_MouseEnter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.LightBlue;
+        }
+
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.FromArgb(224, 224, 224);
         }
 
         private void button1_Click(object sender, EventArgs e)

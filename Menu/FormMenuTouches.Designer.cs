@@ -166,10 +166,10 @@
             // 
             // txtDroite
             // 
+            txtDroite.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtDroite.BorderStyle = BorderStyle.FixedSingle;
-            txtDroite.Dock = DockStyle.Fill;
             txtDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtDroite.Location = new Point(11, 5);
+            txtDroite.Location = new Point(11, 12);
             txtDroite.Margin = new Padding(0);
             txtDroite.MaxLength = 1;
             txtDroite.Name = "txtDroite";
@@ -228,10 +228,10 @@
             // 
             // txtHaut
             // 
+            txtHaut.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtHaut.BorderStyle = BorderStyle.FixedSingle;
-            txtHaut.Dock = DockStyle.Fill;
             txtHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtHaut.Location = new Point(11, 5);
+            txtHaut.Location = new Point(11, 12);
             txtHaut.Margin = new Padding(0);
             txtHaut.MaxLength = 1;
             txtHaut.Name = "txtHaut";
@@ -250,6 +250,8 @@
             btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = true;
             btnRetour.Click += button1_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel3
             // 
@@ -320,10 +322,10 @@
             // 
             // txtBas
             // 
+            txtBas.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtBas.BorderStyle = BorderStyle.FixedSingle;
-            txtBas.Dock = DockStyle.Fill;
             txtBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtBas.Location = new Point(11, 5);
+            txtBas.Location = new Point(11, 12);
             txtBas.Margin = new Padding(0);
             txtBas.MaxLength = 1;
             txtBas.Name = "txtBas";
@@ -382,10 +384,10 @@
             // 
             // txtGauche
             // 
+            txtGauche.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtGauche.BorderStyle = BorderStyle.FixedSingle;
-            txtGauche.Dock = DockStyle.Fill;
             txtGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtGauche.Location = new Point(11, 5);
+            txtGauche.Location = new Point(11, 12);
             txtGauche.Margin = new Padding(0);
             txtGauche.MaxLength = 1;
             txtGauche.Name = "txtGauche";
@@ -405,7 +407,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuTouches";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Touches";
             WindowState = FormWindowState.Maximized;
             Load += FormMenuTouches_Load;

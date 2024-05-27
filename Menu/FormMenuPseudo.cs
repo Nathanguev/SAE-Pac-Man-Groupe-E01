@@ -21,8 +21,23 @@ namespace Interface_PacMan
         {
             float fontHeight = btnSuivant.Size.Height / 5;
 
-            btnSuivant.Font = new Font(btnSuivant.Font.FontFamily, fontHeight, FontStyle.Bold);
-            txtPseudo.Font = new Font(txtPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
+            if (fontHeight > 0)
+            {
+                btnSuivant.Font = new Font(btnSuivant.Font.FontFamily, fontHeight, FontStyle.Bold);
+                txtPseudo.Font = new Font(txtPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
+            }
+        }
+
+        private void btn_MouseEnter(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.LightBlue;
+        }
+
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.FromArgb(224, 224, 224);
         }
 
         private void btnRetour_Click(object sender, EventArgs e)
@@ -33,6 +48,18 @@ namespace Interface_PacMan
         private void btnSuivant_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Suivant");
+        }
+
+        private void txtPseudo_TextChanged(object sender, EventArgs e)
+        {
+            if (txtPseudo.Text.Length == 0)
+            {
+                btnSuivant.Enabled = false;
+            }
+            else
+            {
+                btnSuivant.Enabled = true;
+            }
         }
     }
 }

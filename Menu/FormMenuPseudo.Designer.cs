@@ -117,10 +117,10 @@
             // 
             // txtPseudo
             // 
+            txtPseudo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtPseudo.BorderStyle = BorderStyle.FixedSingle;
-            txtPseudo.Dock = DockStyle.Fill;
             txtPseudo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtPseudo.Location = new Point(14, 5);
+            txtPseudo.Location = new Point(14, 10);
             txtPseudo.Margin = new Padding(0);
             txtPseudo.MaxLength = 10;
             txtPseudo.Name = "txtPseudo";
@@ -128,6 +128,7 @@
             txtPseudo.Size = new Size(259, 30);
             txtPseudo.TabIndex = 0;
             txtPseudo.TextAlign = HorizontalAlignment.Center;
+            txtPseudo.TextChanged += txtPseudo_TextChanged;
             // 
             // btnRetour
             // 
@@ -139,6 +140,8 @@
             btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel3
             // 
@@ -177,6 +180,7 @@
             // 
             btnSuivant.BackColor = Color.FromArgb(224, 224, 224);
             btnSuivant.Dock = DockStyle.Fill;
+            btnSuivant.Enabled = false;
             btnSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnSuivant.Location = new Point(444, 10);
             btnSuivant.Name = "btnSuivant";
@@ -185,6 +189,8 @@
             btnSuivant.Text = "SUIVANT";
             btnSuivant.UseVisualStyleBackColor = false;
             btnSuivant.Click += btnSuivant_Click;
+            btnSuivant.MouseEnter += btn_MouseEnter;
+            btnSuivant.MouseLeave += btn_MouseLeave;
             // 
             // FormMenuPseudo
             // 
@@ -196,7 +202,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuPseudo";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Pseudo";
             WindowState = FormWindowState.Maximized;
             SizeChanged += FormMenuPseudo_SizeChanged;

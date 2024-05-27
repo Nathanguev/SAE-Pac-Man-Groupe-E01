@@ -116,6 +116,8 @@
             btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += button1_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // lblVolumeEffets
             // 
@@ -248,7 +250,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuVolume";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Volume";
             WindowState = FormWindowState.Maximized;
             SizeChanged += FormMenuVolume_SizeChanged;
