@@ -1,4 +1,5 @@
 using Interface_PacMan;
+using BibliothequePacMan;
 
 namespace Menu
 {
@@ -7,6 +8,18 @@ namespace Menu
         public FormMenuPrincipal()
         {
             InitializeComponent();
+            FormManager.FormClosing += FormManager_FormClosing;
+        }
+
+        private void FormManager_FormClosing()
+        {
+            this.Invoke((Action)(() => this.Show()));
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            FormManager.FormClosing -= FormManager_FormClosing;
         }
 
         private void FormMenuPrincipal_SizeChanged(object sender, EventArgs e)
@@ -42,15 +55,19 @@ namespace Menu
         {
             FormMenuPseudo menuPseudo = new FormMenuPseudo();
             menuPseudo.Show();
+            this.Hide();
         }
 
         private async void btnOptions_Click(object sender, EventArgs e)
         {
             FormMenuOptions menuOptions = new FormMenuOptions();
             menuOptions.Show();
+            this.Hide();
+        }
 
-            // await Task.Delay(1000);
-            // this.Close();
+        private void FormMenuPrincipal_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

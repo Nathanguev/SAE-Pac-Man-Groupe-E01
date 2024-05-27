@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace Interface_PacMan
 {
@@ -15,6 +16,7 @@ namespace Interface_PacMan
         public FormMenuVolume()
         {
             InitializeComponent();
+            this.FormClosing += FormMenuVolume_FormClosing;
         }
 
         private void FormMenuVolume_SizeChanged(object sender, EventArgs e)
@@ -44,6 +46,28 @@ namespace Interface_PacMan
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormMenuVolume_Load(object sender, EventArgs e)
+        {
+            trackBarEffets.Value = Convert.ToInt32(ConfigurationManager.AppSettings["VolumeEffets"]);
+            trackBarGlobal.Value = Convert.ToInt32(ConfigurationManager.AppSettings["VolumeGlobal"]);
+            trackBarMusique.Value = Convert.ToInt32(ConfigurationManager.AppSettings["VolumeMusique"]);
+        }
+
+        private void trackBar_Validated(object sender, EventArgs e)
+        {
+            TrackBar trackBar = (TrackBar)sender;
+            string key = trackBar.Tag.ToString();
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings[key].Value = trackBar.Value.ToString();
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private void FormMenuVolume_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FormManager.OnFormOptionsClosing();
         }
     }
 }

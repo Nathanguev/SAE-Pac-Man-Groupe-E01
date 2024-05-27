@@ -175,9 +175,10 @@
             txtDroite.Name = "txtDroite";
             txtDroite.Size = new Size(94, 30);
             txtDroite.TabIndex = 0;
-            txtDroite.Text = "D";
+            txtDroite.Tag = "ToucheDroite";
             txtDroite.TextAlign = HorizontalAlignment.Center;
             txtDroite.TextChanged += txt_TextChanged;
+            txtDroite.Validated += txt_Validated;
             // 
             // tlpHaut
             // 
@@ -237,18 +238,20 @@
             txtHaut.Name = "txtHaut";
             txtHaut.Size = new Size(94, 30);
             txtHaut.TabIndex = 0;
-            txtHaut.Text = "Z";
+            txtHaut.Tag = "ToucheHaut";
             txtHaut.TextAlign = HorizontalAlignment.Center;
             txtHaut.TextChanged += txt_TextChanged;
+            txtHaut.Validated += txt_Validated;
             // 
             // btnRetour
             // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
             btnRetour.Dock = DockStyle.Fill;
             btnRetour.Location = new Point(120, 10);
             btnRetour.Name = "btnRetour";
             btnRetour.Size = new Size(52, 51);
             btnRetour.TabIndex = 0;
-            btnRetour.UseVisualStyleBackColor = true;
+            btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += button1_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
             btnRetour.MouseLeave += btn_MouseLeave;
@@ -331,9 +334,10 @@
             txtBas.Name = "txtBas";
             txtBas.Size = new Size(94, 30);
             txtBas.TabIndex = 0;
-            txtBas.Text = "S";
+            txtBas.Tag = "ToucheBas";
             txtBas.TextAlign = HorizontalAlignment.Center;
             txtBas.TextChanged += txt_TextChanged;
+            txtBas.Validated += txt_Validated;
             // 
             // tlpGauche
             // 
@@ -393,9 +397,10 @@
             txtGauche.Name = "txtGauche";
             txtGauche.Size = new Size(94, 30);
             txtGauche.TabIndex = 0;
-            txtGauche.Text = "Q";
+            txtGauche.Tag = "ToucheGauche";
             txtGauche.TextAlign = HorizontalAlignment.Center;
             txtGauche.TextChanged += txt_TextChanged;
+            txtGauche.Validated += txt_Validated;
             // 
             // FormMenuTouches
             // 
@@ -410,6 +415,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Touches";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormMenuTouches_FormClosing;
             Load += FormMenuTouches_Load;
             SizeChanged += FormMenuTouches_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);

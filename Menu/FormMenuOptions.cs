@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,19 @@ namespace Interface_PacMan
         public FormMenuOptions()
         {
             InitializeComponent();
+            this.FormClosing += FormMenuOptions_FormClosing;
+            FormManager.FormOptionsClosing += FormManager_FormOptionsClosing;
+        }
+
+        private void FormManager_FormOptionsClosing()
+        {
+            this.Invoke((Action)(() => this.Show()));
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            FormManager.FormOptionsClosing -= FormManager_FormOptionsClosing;
         }
 
         public void FormMenuOptions_SizeChanged(object sender, EventArgs e)
@@ -49,12 +63,19 @@ namespace Interface_PacMan
         {
             FormMenuTouches menuTouches = new FormMenuTouches();
             menuTouches.Show();
+            this.Hide();
         }
 
         private void btnVolume_Click(object sender, EventArgs e)
         {
             FormMenuVolume menuVolume = new FormMenuVolume();
             menuVolume.Show();
+            this.Hide();
+        }
+
+        private void FormMenuOptions_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FormManager.OnFormClosing();
         }
     }
 }

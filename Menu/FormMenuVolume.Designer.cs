@@ -34,21 +34,21 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             btnRetour = new Button();
             lblVolumeEffets = new Label();
-            trackBar3 = new TrackBar();
+            trackBarEffets = new TrackBar();
             tableLayoutPanel3 = new TableLayoutPanel();
             lblVolumeGlobal = new Label();
-            trackBar2 = new TrackBar();
+            trackBarGlobal = new TrackBar();
             tableLayoutPanel4 = new TableLayoutPanel();
             lblVolumeMusique = new Label();
-            trackBar1 = new TrackBar();
+            trackBarMusique = new TrackBar();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarEffets).BeginInit();
             tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarGlobal).BeginInit();
             tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarMusique).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -95,7 +95,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
             tableLayoutPanel2.Controls.Add(lblVolumeEffets, 3, 1);
-            tableLayoutPanel2.Controls.Add(trackBar3, 5, 1);
+            tableLayoutPanel2.Controls.Add(trackBarEffets, 5, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 317);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -132,19 +132,21 @@
             lblVolumeEffets.Text = "Volume Effets";
             lblVolumeEffets.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // trackBar3
+            // trackBarEffets
             // 
-            trackBar3.Cursor = Cursors.Hand;
-            trackBar3.Dock = DockStyle.Fill;
-            trackBar3.LargeChange = 10;
-            trackBar3.Location = new Point(618, 10);
-            trackBar3.Maximum = 100;
-            trackBar3.Name = "trackBar3";
-            trackBar3.Size = new Size(288, 51);
-            trackBar3.SmallChange = 5;
-            trackBar3.TabIndex = 2;
-            trackBar3.TickFrequency = 10;
-            trackBar3.Value = 80;
+            trackBarEffets.Cursor = Cursors.Hand;
+            trackBarEffets.Dock = DockStyle.Fill;
+            trackBarEffets.LargeChange = 10;
+            trackBarEffets.Location = new Point(618, 10);
+            trackBarEffets.Maximum = 100;
+            trackBarEffets.Name = "trackBarEffets";
+            trackBarEffets.Size = new Size(288, 51);
+            trackBarEffets.SmallChange = 5;
+            trackBarEffets.TabIndex = 2;
+            trackBarEffets.Tag = "VolumeEffets";
+            trackBarEffets.TickFrequency = 10;
+            trackBarEffets.Value = 80;
+            trackBarEffets.Validated += trackBar_Validated;
             // 
             // tableLayoutPanel3
             // 
@@ -155,7 +157,7 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel3.Controls.Add(lblVolumeGlobal, 1, 1);
-            tableLayoutPanel3.Controls.Add(trackBar2, 3, 1);
+            tableLayoutPanel3.Controls.Add(trackBarGlobal, 3, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 395);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -179,19 +181,21 @@
             lblVolumeGlobal.Text = "Volume Global";
             lblVolumeGlobal.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // trackBar2
+            // trackBarGlobal
             // 
-            trackBar2.Cursor = Cursors.Hand;
-            trackBar2.Dock = DockStyle.Fill;
-            trackBar2.LargeChange = 10;
-            trackBar2.Location = new Point(619, 10);
-            trackBar2.Maximum = 100;
-            trackBar2.Name = "trackBar2";
-            trackBar2.Size = new Size(288, 51);
-            trackBar2.SmallChange = 5;
-            trackBar2.TabIndex = 2;
-            trackBar2.TickFrequency = 10;
-            trackBar2.Value = 80;
+            trackBarGlobal.Cursor = Cursors.Hand;
+            trackBarGlobal.Dock = DockStyle.Fill;
+            trackBarGlobal.LargeChange = 10;
+            trackBarGlobal.Location = new Point(619, 10);
+            trackBarGlobal.Maximum = 100;
+            trackBarGlobal.Name = "trackBarGlobal";
+            trackBarGlobal.Size = new Size(288, 51);
+            trackBarGlobal.SmallChange = 5;
+            trackBarGlobal.TabIndex = 2;
+            trackBarGlobal.Tag = "VolumeGlobal";
+            trackBarGlobal.TickFrequency = 10;
+            trackBarGlobal.Value = 80;
+            trackBarGlobal.Validated += trackBar_Validated;
             // 
             // tableLayoutPanel4
             // 
@@ -202,7 +206,7 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel4.Controls.Add(lblVolumeMusique, 1, 1);
-            tableLayoutPanel4.Controls.Add(trackBar1, 3, 1);
+            tableLayoutPanel4.Controls.Add(trackBarMusique, 3, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(3, 473);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -226,19 +230,21 @@
             lblVolumeMusique.Text = "Volume Musique";
             lblVolumeMusique.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // trackBar1
+            // trackBarMusique
             // 
-            trackBar1.Cursor = Cursors.Hand;
-            trackBar1.Dock = DockStyle.Fill;
-            trackBar1.LargeChange = 10;
-            trackBar1.Location = new Point(619, 10);
-            trackBar1.Maximum = 100;
-            trackBar1.Name = "trackBar1";
-            trackBar1.Size = new Size(288, 51);
-            trackBar1.SmallChange = 5;
-            trackBar1.TabIndex = 2;
-            trackBar1.TickFrequency = 10;
-            trackBar1.Value = 80;
+            trackBarMusique.Cursor = Cursors.Hand;
+            trackBarMusique.Dock = DockStyle.Fill;
+            trackBarMusique.LargeChange = 10;
+            trackBarMusique.Location = new Point(619, 10);
+            trackBarMusique.Maximum = 100;
+            trackBarMusique.Name = "trackBarMusique";
+            trackBarMusique.Size = new Size(288, 51);
+            trackBarMusique.SmallChange = 5;
+            trackBarMusique.TabIndex = 2;
+            trackBarMusique.Tag = "VolumeMusique";
+            trackBarMusique.TickFrequency = 10;
+            trackBarMusique.Value = 80;
+            trackBarMusique.Validated += trackBar_Validated;
             // 
             // FormMenuVolume
             // 
@@ -253,18 +259,20 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Volume";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormMenuVolume_FormClosing;
+            Load += FormMenuVolume_Load;
             SizeChanged += FormMenuVolume_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarEffets).EndInit();
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarGlobal).EndInit();
             tableLayoutPanel4.ResumeLayout(false);
             tableLayoutPanel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarMusique).EndInit();
             ResumeLayout(false);
         }
 
@@ -279,8 +287,8 @@
         private Label lblVolumeEffets;
         private Label lblVolumeGlobal;
         private Label lblVolumeMusique;
-        private TrackBar trackBar2;
-        private TrackBar trackBar1;
-        private TrackBar trackBar3;
+        private TrackBar trackBarGlobal;
+        private TrackBar trackBarMusique;
+        private TrackBar trackBarEffets;
     }
 }

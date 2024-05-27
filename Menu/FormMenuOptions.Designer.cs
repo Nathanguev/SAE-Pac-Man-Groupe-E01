@@ -167,6 +167,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Options";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormMenuOptions_FormClosing;
             SizeChanged += FormMenuOptions_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

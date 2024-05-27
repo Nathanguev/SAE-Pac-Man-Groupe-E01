@@ -185,6 +185,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Principal";
             WindowState = FormWindowState.Maximized;
+            Load += FormMenuPrincipal_Load;
             SizeChanged += FormMenuPrincipal_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

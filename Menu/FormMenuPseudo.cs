@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace Interface_PacMan
         public FormMenuPseudo()
         {
             InitializeComponent();
+            this.FormClosing += FormMenuPseudo_FormClosing;
         }
 
         private void FormMenuPseudo_SizeChanged(object sender, EventArgs e)
@@ -60,6 +62,11 @@ namespace Interface_PacMan
             {
                 btnSuivant.Enabled = true;
             }
+        }
+
+        private void FormMenuPseudo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FormManager.OnFormClosing();
         }
     }
 }
