@@ -185,6 +185,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Principal";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormMenuPrincipal_FormClosing;
             Load += FormMenuPrincipal_Load;
             SizeChanged += FormMenuPrincipal_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);

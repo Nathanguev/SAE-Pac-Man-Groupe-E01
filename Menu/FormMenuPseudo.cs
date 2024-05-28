@@ -49,7 +49,8 @@ namespace Interface_PacMan
 
         private void btnSuivant_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Suivant");
+            FormMenuParametre formMenuParametre = new FormMenuParametre();
+            formMenuParametre.Show();
         }
 
         private void txtPseudo_TextChanged(object sender, EventArgs e)

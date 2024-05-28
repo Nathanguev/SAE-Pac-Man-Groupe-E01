@@ -1,14 +1,21 @@
 using Interface_PacMan;
 using BibliothequePacMan;
+using System.Media;
+using Interface_PacMan.Properties;
 
 namespace Menu
 {
     public partial class FormMenuPrincipal : Form
     {
+        private SoundPlayer player;
+
         public FormMenuPrincipal()
         {
             InitializeComponent();
             FormManager.FormClosing += FormManager_FormClosing;
+
+            var audioStream = Interface_PacMan.Properties.Resources.Italie;
+            player = new SoundPlayer(audioStream);
         }
 
         private void FormManager_FormClosing()
@@ -67,7 +74,20 @@ namespace Menu
 
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                player.Load();
+                player.PlayLooping();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la lecture de la musique : " + ex.Message);
+            }
+        }
+
+        private void FormMenuPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            player.Stop();
         }
     }
 }
