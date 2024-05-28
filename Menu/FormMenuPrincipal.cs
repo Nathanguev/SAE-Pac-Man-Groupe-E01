@@ -2,12 +2,15 @@ using Interface_PacMan;
 using BibliothequePacMan;
 using System.Media;
 using Interface_PacMan.Properties;
+using NAudio.Wave;
+using System.Configuration;
 
 namespace Menu
 {
     public partial class FormMenuPrincipal : Form
     {
-        private SoundPlayer player;
+        private WaveOutEvent waveOut;
+        private AudioFileReader audioFile;
 
         public FormMenuPrincipal()
         {
@@ -15,7 +18,42 @@ namespace Menu
             FormManager.FormClosing += FormManager_FormClosing;
 
             var audioStream = Interface_PacMan.Properties.Resources.Italie;
-            player = new SoundPlayer(audioStream);
+            InitializeAudio();
+        }
+
+        private void OnConfigFileChanged(object sender, FileSystemEventArgs e)
+        {
+            waveOut.Stop();
+        }
+
+        private void InitializeAudio()
+        {
+            string tempFilePath = SaveResourceToTempFile(Interface_PacMan.Properties.Resources.Italie, "Italie.wav");
+
+            waveOut = new WaveOutEvent();
+            audioFile = new AudioFileReader(tempFilePath);
+
+            waveOut.PlaybackStopped += OnPlaybackStopped;
+
+            waveOut.Init(audioFile);
+        }
+
+        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            audioFile.Position = 0;
+            waveOut.Play();
+        }
+
+        private string SaveResourceToTempFile(UnmanagedMemoryStream resource, string fileName)
+        {
+            string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+
+            using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
+            {
+                resource.CopyTo(fileStream);
+            }
+
+            return tempFilePath;
         }
 
         private void FormManager_FormClosing()
@@ -67,17 +105,22 @@ namespace Menu
 
         private async void btnOptions_Click(object sender, EventArgs e)
         {
-            FormMenuOptions menuOptions = new FormMenuOptions();
+            FormMenuOptions menuOptions = new FormMenuOptions(this);
             menuOptions.Show();
             this.Hide();
+        }
+
+        public void VolumeChanged(float volume)
+        {
+            waveOut.Volume = volume;
         }
 
         private void FormMenuPrincipal_Load(object sender, EventArgs e)
         {
             try
             {
-                player.Load();
-                player.PlayLooping();
+                waveOut.Play();
+                waveOut.Volume = Convert.ToInt32(ConfigurationManager.AppSettings["VolumeMusique"]) / 100.0f;
             }
             catch (Exception ex)
             {
@@ -87,7 +130,8 @@ namespace Menu
 
         private void FormMenuPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            player.Stop();
+            waveOut.Dispose();
+            audioFile.Dispose();
         }
     }
 }

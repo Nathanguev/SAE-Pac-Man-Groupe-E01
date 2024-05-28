@@ -1,13 +1,17 @@
-﻿using System.Configuration;
+﻿using Menu;
+using System.Configuration;
 
 namespace Interface_PacMan
 {
     public partial class FormMenuVolume : Form
     {
-        public FormMenuVolume()
+        private FormMenuPrincipal formMenuPrincipal;
+
+        public FormMenuVolume(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
             this.FormClosing += FormMenuVolume_FormClosing;
+            this.formMenuPrincipal = formMenuPrincipal;
         }
 
         private void FormMenuVolume_SizeChanged(object sender, EventArgs e)
@@ -59,6 +63,11 @@ namespace Interface_PacMan
         private void FormMenuVolume_FormClosing(object sender, FormClosingEventArgs e)
         {
             FormManager.OnFormOptionsClosing();
+        }
+
+        private void trackBarMusique_ValueChanged(object sender, EventArgs e)
+        {
+            formMenuPrincipal.VolumeChanged(trackBarMusique.Value / 100.0f);
         }
     }
 }

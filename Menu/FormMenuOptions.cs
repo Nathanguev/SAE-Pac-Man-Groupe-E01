@@ -1,12 +1,17 @@
-﻿namespace Interface_PacMan
+﻿using Menu;
+
+namespace Interface_PacMan
 {
     public partial class FormMenuOptions : Form
     {
-        public FormMenuOptions()
+        private FormMenuPrincipal formMenuPrincipal;
+
+        public FormMenuOptions(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
             this.FormClosing += FormMenuOptions_FormClosing;
             FormManager.FormOptionsClosing += FormManager_FormOptionsClosing;
+            this.formMenuPrincipal = formMenuPrincipal;
         }
 
         private void FormManager_FormOptionsClosing()
@@ -57,7 +62,7 @@
 
         private void btnVolume_Click(object sender, EventArgs e)
         {
-            FormMenuVolume menuVolume = new FormMenuVolume();
+            FormMenuVolume menuVolume = new FormMenuVolume(formMenuPrincipal);
             menuVolume.Show();
             this.Hide();
         }

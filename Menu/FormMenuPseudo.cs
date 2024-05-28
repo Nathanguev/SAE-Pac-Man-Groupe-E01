@@ -49,8 +49,9 @@ namespace Interface_PacMan
 
         private void btnSuivant_Click(object sender, EventArgs e)
         {
-            FormMenuParametre formMenuParametre = new FormMenuParametre();
+            FormMenuParametre formMenuParametre = new FormMenuParametre(this);
             formMenuParametre.Show();
+            this.Hide();
         }
 
         private void txtPseudo_TextChanged(object sender, EventArgs e)

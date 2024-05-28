@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenuParametre));
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            button1 = new Button();
-            button4 = new Button();
+            btnCouleur = new Button();
+            btnRetour = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
-            button2 = new Button();
+            btnDifficulte = new Button();
             tableLayoutPanel4 = new TableLayoutPanel();
-            button3 = new Button();
+            btnBonus = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -68,7 +67,7 @@
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Image = Properties.Resources.Logo;
             pictureBox1.Location = new Point(3, 30);
             pictureBox1.Margin = new Padding(3, 30, 3, 30);
             pictureBox1.Name = "pictureBox1";
@@ -85,8 +84,8 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel2.Controls.Add(button1, 3, 1);
-            tableLayoutPanel2.Controls.Add(button4, 1, 1);
+            tableLayoutPanel2.Controls.Add(btnCouleur, 3, 1);
+            tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 317);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -97,28 +96,32 @@
             tableLayoutPanel2.Size = new Size(1176, 72);
             tableLayoutPanel2.TabIndex = 1;
             // 
-            // button1
+            // btnCouleur
             // 
-            button1.BackColor = Color.FromArgb(224, 224, 224);
-            button1.Dock = DockStyle.Fill;
-            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button1.Location = new Point(442, 10);
-            button1.Name = "button1";
-            button1.Size = new Size(288, 51);
-            button1.TabIndex = 0;
-            button1.Text = "Couleur Pac-Man";
-            button1.UseVisualStyleBackColor = false;
+            btnCouleur.BackColor = Color.FromArgb(224, 224, 224);
+            btnCouleur.Dock = DockStyle.Fill;
+            btnCouleur.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnCouleur.Location = new Point(442, 10);
+            btnCouleur.Name = "btnCouleur";
+            btnCouleur.Size = new Size(288, 51);
+            btnCouleur.TabIndex = 0;
+            btnCouleur.Text = "Couleur Pac-Man";
+            btnCouleur.UseVisualStyleBackColor = false;
+            btnCouleur.MouseEnter += btn_MouseEnter;
+            btnCouleur.MouseLeave += btn_MouseLeave;
             // 
-            // button4
+            // btnRetour
             // 
-            button4.BackColor = Color.FromArgb(224, 224, 224);
-            button4.Dock = DockStyle.Fill;
-            button4.Location = new Point(120, 10);
-            button4.Name = "button4";
-            button4.Size = new Size(52, 51);
-            button4.TabIndex = 1;
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.Location = new Point(120, 10);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Size = new Size(52, 51);
+            btnRetour.TabIndex = 1;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel3
             // 
@@ -126,7 +129,7 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel3.Controls.Add(button2, 1, 1);
+            tableLayoutPanel3.Controls.Add(btnDifficulte, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 395);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -137,17 +140,19 @@
             tableLayoutPanel3.Size = new Size(1176, 72);
             tableLayoutPanel3.TabIndex = 2;
             // 
-            // button2
+            // btnDifficulte
             // 
-            button2.BackColor = Color.FromArgb(224, 224, 224);
-            button2.Dock = DockStyle.Fill;
-            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button2.Location = new Point(444, 10);
-            button2.Name = "button2";
-            button2.Size = new Size(288, 51);
-            button2.TabIndex = 0;
-            button2.Text = "Difficulté";
-            button2.UseVisualStyleBackColor = false;
+            btnDifficulte.BackColor = Color.FromArgb(224, 224, 224);
+            btnDifficulte.Dock = DockStyle.Fill;
+            btnDifficulte.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnDifficulte.Location = new Point(444, 10);
+            btnDifficulte.Name = "btnDifficulte";
+            btnDifficulte.Size = new Size(288, 51);
+            btnDifficulte.TabIndex = 0;
+            btnDifficulte.Text = "Difficulté";
+            btnDifficulte.UseVisualStyleBackColor = false;
+            btnDifficulte.MouseEnter += btn_MouseEnter;
+            btnDifficulte.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel4
             // 
@@ -155,7 +160,7 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel4.Controls.Add(button3, 1, 1);
+            tableLayoutPanel4.Controls.Add(btnBonus, 1, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(3, 473);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -166,17 +171,19 @@
             tableLayoutPanel4.Size = new Size(1176, 72);
             tableLayoutPanel4.TabIndex = 3;
             // 
-            // button3
+            // btnBonus
             // 
-            button3.BackColor = Color.FromArgb(224, 224, 224);
-            button3.Dock = DockStyle.Fill;
-            button3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button3.Location = new Point(444, 10);
-            button3.Name = "button3";
-            button3.Size = new Size(288, 51);
-            button3.TabIndex = 0;
-            button3.Text = "Bonus";
-            button3.UseVisualStyleBackColor = false;
+            btnBonus.BackColor = Color.FromArgb(224, 224, 224);
+            btnBonus.Dock = DockStyle.Fill;
+            btnBonus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnBonus.Location = new Point(444, 10);
+            btnBonus.Name = "btnBonus";
+            btnBonus.Size = new Size(288, 51);
+            btnBonus.TabIndex = 0;
+            btnBonus.Text = "Bonus";
+            btnBonus.UseVisualStyleBackColor = false;
+            btnBonus.MouseEnter += btn_MouseEnter;
+            btnBonus.MouseLeave += btn_MouseLeave;
             // 
             // FormMenuParametre
             // 
@@ -191,6 +198,8 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Menu Paramètre";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormMenuParametre_FormClosing;
+            SizeChanged += FormMenuParametre_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
@@ -206,9 +215,9 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
         private TableLayoutPanel tableLayoutPanel4;
-        private Button button1;
-        private Button button4;
-        private Button button2;
-        private Button button3;
+        private Button btnCouleur;
+        private Button btnRetour;
+        private Button btnDifficulte;
+        private Button btnBonus;
     }
 }
