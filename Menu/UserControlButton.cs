@@ -12,9 +12,12 @@ namespace Interface_PacMan
 {
     public partial class UserControlButton : UserControl
     {
-        public UserControlButton()
+        private Form form;
+
+        public UserControlButton(Form form)
         {
             InitializeComponent();
+            this.form = form;
         }
     }
 }

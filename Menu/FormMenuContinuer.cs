@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,27 @@ namespace Interface_PacMan
 {
     public partial class FormMenuContinuer : Form
     {
-        public FormMenuContinuer()
+        private FormMenuPrincipal formMenuPrincipal;
+
+        public FormMenuContinuer(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
+            this.formMenuPrincipal = formMenuPrincipal;
+        }
+
+        private void FormMenuContinuer_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormMenuContinuer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            formMenuPrincipal.Show();
+        }
+
+        private void btnRetour_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

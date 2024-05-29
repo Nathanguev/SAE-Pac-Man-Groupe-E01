@@ -93,20 +93,22 @@ namespace Menu
 
         private void btnContinuer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Continuer");
+            FormMenuContinuer formMenuContinuer = new FormMenuContinuer(this);
+            formMenuContinuer.Show();
+            this.Hide();
         }
 
         private void btnNouvellePartie_Click(object sender, EventArgs e)
         {
-            FormMenuPseudo menuPseudo = new FormMenuPseudo();
-            menuPseudo.Show();
+            FormMenuPseudo formMenuPseudo = new FormMenuPseudo();
+            formMenuPseudo.Show();
             this.Hide();
         }
 
         private async void btnOptions_Click(object sender, EventArgs e)
         {
-            FormMenuOptions menuOptions = new FormMenuOptions(this);
-            menuOptions.Show();
+            FormMenuOptions formMenuOptions = new FormMenuOptions(this);
+            formMenuOptions.Show();
             this.Hide();
         }
 
