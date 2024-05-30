@@ -1,6 +1,6 @@
 ﻿namespace Interface_PacMan
 {
-    partial class UserControlButton : System.Windows.Forms.UserControl
+    partial class UserControlCase
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -28,36 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            roundButton1 = new Bibliotheque_PacMan.RoundButton();
             SuspendLayout();
             // 
-            // roundButton1
-            // 
-            roundButton1.BackColor = Color.FromArgb(224, 224, 224);
-            roundButton1.Dock = DockStyle.Fill;
-            roundButton1.Location = new Point(0, 0);
-            roundButton1.Name = "roundButton1";
-            roundButton1.PictureBoxImage = Properties.Resources.Fleche;
-            roundButton1.Size = new Size(200, 200);
-            roundButton1.TabIndex = 0;
-            roundButton1.UseVisualStyleBackColor = false;
-            roundButton1.Click += roundButton1_Click;
-            roundButton1.MouseEnter += roundButton1_MouseEnter;
-            roundButton1.MouseLeave += roundButton1_MouseLeave;
-            // 
-            // UserControlButton
+            // UserControlCase
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
-            Controls.Add(roundButton1);
-            Name = "UserControlButton";
-            Size = new Size(200, 200);
+            Name = "UserControlCase";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Bibliotheque_PacMan.RoundButton roundButton1;
     }
 }

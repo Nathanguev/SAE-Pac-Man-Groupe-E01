@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BibliothequePacMan;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,9 @@ namespace Interface_PacMan
 
         private void UserControlSauvegarde_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("UserControlSauvegarde clicked!");
+            Partie partie = new Partie();
+            FormPartie formPartie = new FormPartie(partie);
+            formPartie.ShowDialog();
         }
 
         private void UserControlSauvegarde_MouseEnter(object sender, EventArgs e)

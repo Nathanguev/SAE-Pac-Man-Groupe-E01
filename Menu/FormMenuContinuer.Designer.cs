@@ -35,12 +35,14 @@
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel4 = new TableLayoutPanel();
+            btnRetour = new Button();
             userControlSauvegarde1 = new UserControlSauvegarde();
             userControlSauvegarde2 = new UserControlSauvegarde();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -138,6 +140,7 @@
             tableLayoutPanel4.ColumnCount = 1;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel4.Controls.Add(btnRetour, 0, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(117, 6);
             tableLayoutPanel4.Margin = new Padding(0);
@@ -147,6 +150,17 @@
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tableLayoutPanel4.Size = new Size(58, 97);
             tableLayoutPanel4.TabIndex = 0;
+            // 
+            // btnRetour
+            // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.Location = new Point(3, 3);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Size = new Size(52, 52);
+            btnRetour.TabIndex = 0;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
             // 
             // userControlSauvegarde1
             // 
@@ -183,6 +197,7 @@
             tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel4.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -197,5 +212,7 @@
         private UserControlSauvegarde userControlSauvegarde4;
         private UserControlSauvegarde userControlSauvegarde1;
         private UserControlSauvegarde userControlSauvegarde2;
+        private UserControlButton userControlButton1;
+        private Button btnRetour;
     }
 }

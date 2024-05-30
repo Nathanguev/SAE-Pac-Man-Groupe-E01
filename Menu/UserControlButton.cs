@@ -19,5 +19,20 @@ namespace Interface_PacMan
             InitializeComponent();
             this.form = form;
         }
+
+        private void roundButton1_Click(object sender, EventArgs e)
+        {
+            form.Close();
+        }
+
+        private void roundButton1_MouseEnter(object sender, EventArgs e)
+        {
+            roundButton1.BackColor = Color.LightBlue;
+        }
+
+        private void roundButton1_MouseLeave(object sender, EventArgs e)
+        {
+            roundButton1.BackColor = Color.FromArgb(224, 224, 224);
+        }
     }
 }
