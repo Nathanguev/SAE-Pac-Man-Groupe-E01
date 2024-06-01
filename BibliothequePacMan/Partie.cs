@@ -55,8 +55,8 @@ namespace BibliothequePacMan
             _level = 1;
             _seed = 0;
 
-            _hauteur = 15;
-            _largeur = 30;
+            _hauteur = 5;
+            _largeur = 10;
         }
 
         public int volumeEffets
@@ -140,6 +140,18 @@ namespace BibliothequePacMan
             set
             {
                 _toucheGauche = value;
+            }
+        }
+
+        public int difficulte
+        {
+            get
+            {
+                return _difficulte;
+            }
+            set
+            {
+                _difficulte = value;
             }
         }
 

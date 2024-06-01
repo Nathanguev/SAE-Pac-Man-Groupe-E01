@@ -21,10 +21,22 @@ namespace Interface_PacMan
 
         private Partie partie;
         private Labyrinthe labyrinthe;
+
         private TableLayoutPanel tlpLabyrinthe;
+
         private Character pacman;
         private Character fantomeAleatoire;
+
         private List<Point> positionsPiecesSuppr;
+
+        private Point pacmanSpawnPosition;
+        private Point fantomeSpawnPosition;
+
+        private UneCellule pacmanSpawnCellule;
+        private UneCellule fantomeSpawnCellule;
+
+        private int speed = 400;
+        private int nbVie;
         private bool isRunning = false;
 
         /* ---------------- Constructeur FormPartie ---------------- */
@@ -38,7 +50,7 @@ namespace Interface_PacMan
             // labyrinthe.setSeed(partie.seed);
             labyrinthe.algoParcoursProfondeur();
         }
-        
+
         /* ---------------- Au lancement du formulaire ---------------- */
 
         private void FormPartie_Load(object sender, EventArgs e)
@@ -47,7 +59,8 @@ namespace Interface_PacMan
             tlpLabyrinthe = new TableLayoutPanel();
             Init_TableLayoutPanel(tlpLabyrinthe);
             panelLabyrinthe.Controls.Add(tlpLabyrinthe);
-            
+            Init_Vies();
+
             Size autoScrollSize = new Size(panelLabyrinthe.Width, panelLabyrinthe.Height);
             tlpGrille.AutoScrollMinSize = autoScrollSize;
 
@@ -57,6 +70,7 @@ namespace Interface_PacMan
             Init_FantomeAleatoire(panelLabyrinthe);
 
             pacman.sprite.BringToFront();
+            fantomeAleatoire.sprite.BringToFront();
         }
 
         /* ---------------- Fonctions d'initialisation ---------------- */
@@ -70,7 +84,7 @@ namespace Interface_PacMan
                     Point point = new Point(j, i);
                     if (positionsPiecesSuppr.Contains(point))
                     {
-                        
+
                     }
                     else
                     {
@@ -93,6 +107,8 @@ namespace Interface_PacMan
 
             panel.Controls.Add(pacman.sprite);
             pacman.index = index;
+            pacmanSpawnPosition = pacman.position;
+            pacmanSpawnCellule = pacman.currentCellule;
         }
 
         private void Init_FantomeAleatoire(Panel panel)
@@ -100,10 +116,11 @@ namespace Interface_PacMan
             int index = (partie.largeur * (partie.hauteur / 2) + (partie.largeur / 2));
             Image image = Properties.Resources.fantomeRouge;
             fantomeAleatoire = new Character(image, labyrinthe.getCellules()[index]);
-            
+
             panel.Controls.Add(fantomeAleatoire.sprite);
             fantomeAleatoire.index = index;
-            fantomeAleatoire.sprite.BringToFront();
+            fantomeSpawnPosition = fantomeAleatoire.position;
+            fantomeSpawnCellule = fantomeAleatoire.currentCellule;
         }
 
         private void Init_TableLayoutPanel(TableLayoutPanel tlp)
@@ -145,12 +162,58 @@ namespace Interface_PacMan
             }
         }
 
-        /* ---------------- Condition de victoire ---------------- */
+        private void Init_Vies()
+        {
+            switch (partie.difficulte)
+            {
+                case 1:
+                    nbVie = 5;
+                    break;
+
+                case 2:
+                    nbVie = 3;
+                    break;
+
+                case 3:
+                    nbVie = 1;
+                    break;
+            }
+
+            for (int i = 1; i < nbVie + 1; i++)
+            {
+                PictureBox pictureBox = new PictureBox();
+                pictureBox.Margin = new Padding(10);
+                pictureBox.Dock = DockStyle.Fill;
+                pictureBox.Image = Properties.Resources.coeur;
+                pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                tlpVies.Controls.Add(pictureBox, i, 0);
+            }
+        }
+
+        /* ---------------- Fonctions de réinitialisation ---------------- */
+
+        private void Reset_PacMan()
+        {
+            pacman.position = pacmanSpawnPosition;
+            pacman.currentCellule = pacmanSpawnCellule;
+            pacman.index = pacmanSpawnCellule.getY() * partie.largeur + pacmanSpawnCellule.getX();
+        }
+
+        private void Reset_Fantome(Character fantome)
+        {
+            fantome.position = fantomeSpawnPosition;
+            fantome.currentCellule = fantomeSpawnCellule;
+            fantome.index = fantomeSpawnCellule.getY() * partie.largeur + fantomeSpawnCellule.getX();
+        }
+
+        /* ---------------- Condition de victoire et défaite ---------------- */
 
         private void IsGameVictory()
         {
             if (tlpLabyrinthe.Controls.Count == positionsPiecesSuppr.Count)
             {
+                isRunning = false;
                 MessageBox.Show("Vous avez gagné la partie");
             }
         }
@@ -182,7 +245,7 @@ namespace Interface_PacMan
         {
             Image rotateImage = Properties.Resources.pacMan;
             if (char.ToUpper(e.KeyChar) == partie.toucheHaut)
-            {                
+            {
                 if (pacman.position.Y > 2)
                 {
                     rotateImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
@@ -252,8 +315,130 @@ namespace Interface_PacMan
                     }
                 }
             }
+            Colision_PacMan_Fantome(pacman, fantomeAleatoire);
             RemoveControlAtPosition(pacman.position);
             LoopStart();
+        }
+
+        /*
+        private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Image rotateImage = Properties.Resources.pacMan;
+            if (char.ToUpper(e.KeyChar) == partie.toucheHaut)
+            {                
+                if (pacman.position.Y > 2)
+                {
+                    int index = pacman.index - partie.largeur;
+
+                    rotateImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    if (pacman.sprite.Image != rotateImage)
+                    {
+                        pacman.sprite.Image = rotateImage;
+                    }
+
+                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.Y > 2)
+                    {
+                        pacman.position = new Point(pacman.position.X, pacman.position.Y - 50);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        RemoveControlAtPosition(pacman.position);
+                        index = pacman.index - partie.largeur;
+                        await Task.Delay(speed);
+                    }
+                }
+            }
+            else if (char.ToUpper(e.KeyChar) == partie.toucheBas)
+            {
+                if (pacman.position.Y < partie.hauteur * 50 - 52)
+                {
+                    int index = pacman.index + partie.largeur;
+
+                    rotateImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    if (pacman.sprite.Image != rotateImage)
+                    {
+                        pacman.sprite.Image = rotateImage;
+                    }
+
+                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.Y < partie.hauteur * 50 - 52)
+                    {
+                        pacman.position = new Point(pacman.position.X, pacman.position.Y + 50);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        RemoveControlAtPosition(pacman.position);
+                        index = pacman.index + partie.largeur;
+                        await Task.Delay(speed);
+                    }
+                }
+            }
+            else if (char.ToUpper(e.KeyChar) == partie.toucheGauche)
+            {
+                if (pacman.position.X > 2)
+                {
+                    int index = pacman.index - 1;
+
+                    rotateImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    if (pacman.sprite.Image != rotateImage)
+                    {
+                        pacman.sprite.Image = rotateImage;
+                    }
+
+                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.X > 2)
+                    {
+                        pacman.position = new Point(pacman.position.X - 50, pacman.position.Y);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        RemoveControlAtPosition(pacman.position);
+                        index = pacman.index + partie.largeur;
+                        await Task.Delay(speed);
+                    }
+                }
+            }
+            else if (char.ToUpper(e.KeyChar) == partie.toucheDroite)
+            {
+                if (pacman.position.X < partie.largeur * 50 - 52)
+                {
+                    int index = pacman.index + 1;
+
+                    if (pacman.sprite.Image != rotateImage)
+                    {
+                        pacman.sprite.Image = rotateImage;
+                    }
+
+                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.X < partie.largeur * 50 - 52)
+                    {
+                        pacman.position = new Point(pacman.position.X + 50, pacman.position.Y);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        RemoveControlAtPosition(pacman.position);
+                        index = pacman.index + 1;
+                        await Task.Delay(speed);
+                    }
+                }
+            }
+            LoopStart();
+        }
+        */
+
+        /* ---------------- Colision PacMan Fantome ---------------- */
+
+        private void Colision_PacMan_Fantome(Character pacman, Character fantome)
+        {
+            if (fantome.position == pacman.position)
+            {
+                isRunning = false;
+                Reset_PacMan();
+                Reset_Fantome(fantome);
+                tlpVies.Controls.RemoveAt(nbVie);
+                nbVie--;
+                if (nbVie == 0)
+                {
+                    MessageBox.Show("Vous avez perdu !");
+                }
+                else
+                {
+                    MessageBox.Show($"Vous perdez une vie, il vous en reste : {nbVie}.");
+                }
+            }
         }
 
         /* ---------------- Fonction asynchrone ---------------- */
@@ -263,19 +448,50 @@ namespace Interface_PacMan
             if (!isRunning)
             {
                 isRunning = true;
-                await RunLoopAsync();
+                await RunLoopAsyncFantome2();
             }
         }
 
-        private async Task RunLoopAsync()
+        private async Task RunLoopAsyncFantome1()
         {
+            UneCellule lastCellule = fantomeAleatoire.currentCellule;
             while (isRunning)
             {
-                UneCellule nextCellule = fantomeAleatoire.currentCellule.getLiens().First();
+                UneCellule nextCellule = fantomeAleatoire.currentCellule.getLiens().First(cellule => cellule != lastCellule);
                 Point point = new Point(nextCellule.getY() * 50 + 2, nextCellule.getX() * 50 + 2);
                 fantomeAleatoire.position = point;
+                lastCellule = fantomeAleatoire.currentCellule;
                 fantomeAleatoire.currentCellule = nextCellule;
-                await Task.Delay(500); // Attendre 1 seconde avant la prochaine itération
+                Colision_PacMan_Fantome(pacman, fantomeAleatoire);
+                await Task.Delay(speed);
+            }
+        }
+
+        private async Task RunLoopAsyncFantome2()
+        {
+            Random random = new Random();
+            UneCellule lastCellule = fantomeAleatoire.currentCellule;
+            List<UneCellule> cellulesVisited = [lastCellule];
+            while (isRunning)
+            {
+                UneCellule nextCellule = fantomeAleatoire.currentCellule.getVoisins().First(cellule => cellule.isLien(fantomeAleatoire.currentCellule) && cellule != cellulesVisited.Last());
+                Point point = new Point(nextCellule.getY() * 50 + 2, nextCellule.getX() * 50 + 2);
+                fantomeAleatoire.position = point;
+                lastCellule = fantomeAleatoire.currentCellule;
+                cellulesVisited.Add(fantomeAleatoire.currentCellule);
+                fantomeAleatoire.currentCellule = nextCellule;
+
+                if (cellulesVisited.Contains(fantomeAleatoire.currentCellule))
+                {
+                    for (int i = 0; i < cellulesVisited.Count; i++)
+                    {
+                        cellulesVisited[i].randomVoisin(random);
+                    }
+                    cellulesVisited.Clear();
+                    cellulesVisited = [fantomeAleatoire.currentCellule, lastCellule];
+                }
+                Colision_PacMan_Fantome(pacman, fantomeAleatoire);
+                await Task.Delay(500);
             }
         }
 
@@ -491,7 +707,7 @@ namespace Interface_PacMan
                     return "0000";
             }
         }
-        
+
         /* ---------------- Affichage ---------------- */
 
         private void affichageLabyrinthe()
@@ -550,7 +766,7 @@ namespace Interface_PacMan
                         }
                         else
                         {
-                            
+
                         }
                     }
                     else if (currentCellule.getVoisins().Count == 3)

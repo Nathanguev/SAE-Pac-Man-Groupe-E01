@@ -36,11 +36,14 @@
             lblScore = new Label();
             tlpFondEcran = new TableLayoutPanel();
             tlpAffichage = new TableLayoutPanel();
+            tlpVies = new TableLayoutPanel();
+            label1 = new Label();
             tlpGrille.SuspendLayout();
             tlpBordure.SuspendLayout();
             tlpScore.SuspendLayout();
             tlpFondEcran.SuspendLayout();
             tlpAffichage.SuspendLayout();
+            tlpVies.SuspendLayout();
             SuspendLayout();
             // 
             // tlpGrille
@@ -112,9 +115,10 @@
             // lblScoreCount
             // 
             lblScoreCount.AutoSize = true;
-            lblScoreCount.BackColor = Color.FromArgb(224, 224, 224);
+            lblScoreCount.BackColor = Color.Transparent;
             lblScoreCount.Dock = DockStyle.Fill;
             lblScoreCount.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblScoreCount.ForeColor = Color.White;
             lblScoreCount.Location = new Point(174, 0);
             lblScoreCount.Margin = new Padding(0);
             lblScoreCount.Name = "lblScoreCount";
@@ -126,9 +130,10 @@
             // lblScore
             // 
             lblScore.AutoSize = true;
-            lblScore.BackColor = Color.FromArgb(224, 224, 224);
+            lblScore.BackColor = Color.Transparent;
             lblScore.Dock = DockStyle.Fill;
             lblScore.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblScore.ForeColor = Color.White;
             lblScore.Location = new Point(87, 0);
             lblScore.Margin = new Padding(0);
             lblScore.Name = "lblScore";
@@ -163,6 +168,7 @@
             tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlpAffichage.Controls.Add(tlpScore, 3, 1);
+            tlpAffichage.Controls.Add(tlpVies, 0, 1);
             tlpAffichage.Dock = DockStyle.Fill;
             tlpAffichage.Location = new Point(10, 0);
             tlpAffichage.Margin = new Padding(0);
@@ -175,6 +181,40 @@
             tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpAffichage.Size = new Size(1162, 62);
             tlpAffichage.TabIndex = 1;
+            // 
+            // tlpVies
+            // 
+            tlpVies.ColumnCount = 6;
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.Controls.Add(label1, 0, 0);
+            tlpVies.Dock = DockStyle.Fill;
+            tlpVies.Location = new Point(0, 10);
+            tlpVies.Margin = new Padding(0);
+            tlpVies.Name = "tlpVies";
+            tlpVies.RowCount = 1;
+            tlpVies.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpVies.Size = new Size(290, 42);
+            tlpVies.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Dock = DockStyle.Fill;
+            label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(0, 0);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(87, 42);
+            label1.TabIndex = 0;
+            label1.Text = "VIES : ";
+            label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // FormPartie
             // 
@@ -197,6 +237,8 @@
             tlpScore.PerformLayout();
             tlpFondEcran.ResumeLayout(false);
             tlpAffichage.ResumeLayout(false);
+            tlpVies.ResumeLayout(false);
+            tlpVies.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -210,5 +252,7 @@
         private TableLayoutPanel tlpAffichage;
         private Label lblScoreCount;
         private Label lblScore;
+        private TableLayoutPanel tlpVies;
+        private Label label1;
     }
 }
