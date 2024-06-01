@@ -205,6 +205,7 @@
             Text = "Menu Pseudo";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuPseudo_FormClosing;
+            Load += FormMenuPseudo_Load;
             SizeChanged += FormMenuPseudo_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

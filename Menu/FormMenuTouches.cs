@@ -9,15 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Menu;
 
 namespace Interface_PacMan
 {
     public partial class FormMenuTouches : Form
     {
-        public FormMenuTouches()
+        private FormMenuPrincipal formMenuPrincipal;
+        private FormMenuOptions formMenuOptions;
+        private bool isBtnRetourClicked = false;
+
+        public FormMenuTouches(FormMenuPrincipal formMenuPrincipal, FormMenuOptions formMenuOptions)
         {
             InitializeComponent();
-            this.FormClosing += FormMenuTouches_FormClosing;
+            this.formMenuPrincipal = formMenuPrincipal;
+            this.formMenuOptions = formMenuOptions;
         }
 
         private void FormMenuTouches_Load(object sender, EventArgs e)
@@ -57,8 +63,9 @@ namespace Interface_PacMan
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRetour_Click(object sender, EventArgs e)
         {
+            isBtnRetourClicked = true;
             this.Close();
         }
 
@@ -80,7 +87,14 @@ namespace Interface_PacMan
 
         private void FormMenuTouches_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FormManager.OnFormOptionsClosing();
+            if (isBtnRetourClicked == true)
+            {
+                formMenuOptions.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
+            }
         }
     }
 }

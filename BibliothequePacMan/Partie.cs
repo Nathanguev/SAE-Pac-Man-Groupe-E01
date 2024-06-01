@@ -55,8 +55,8 @@ namespace BibliothequePacMan
             _level = 1;
             _seed = 0;
 
-            _hauteur = 5;
-            _largeur = 10;
+            _hauteur = 8;
+            _largeur = 14;
         }
 
         public int volumeEffets

@@ -229,6 +229,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Partie";
             WindowState = FormWindowState.Maximized;
+            FormClosing += FormPartie_FormClosing;
             Load += FormPartie_Load;
             KeyPress += FormPartie_KeyPress;
             tlpGrille.ResumeLayout(false);

@@ -15,9 +15,6 @@ namespace Menu
         public FormMenuPrincipal()
         {
             InitializeComponent();
-            FormManager.FormClosing += FormManager_FormClosing;
-
-            var audioStream = Interface_PacMan.Properties.Resources.Italie;
             InitializeAudio();
         }
 
@@ -56,17 +53,6 @@ namespace Menu
             return tempFilePath;
         }
 
-        private void FormManager_FormClosing()
-        {
-            this.Invoke((Action)(() => this.Show()));
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            FormManager.FormClosing -= FormManager_FormClosing;
-        }
-
         private void FormMenuPrincipal_SizeChanged(object sender, EventArgs e)
         {
             float fontHeight = btnContinuer.Size.Height / 5;
@@ -100,7 +86,7 @@ namespace Menu
 
         private void btnNouvellePartie_Click(object sender, EventArgs e)
         {
-            FormMenuPseudo formMenuPseudo = new FormMenuPseudo();
+            FormMenuPseudo formMenuPseudo = new FormMenuPseudo(this);
             formMenuPseudo.Show();
             this.Hide();
         }

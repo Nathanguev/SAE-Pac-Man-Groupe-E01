@@ -1,4 +1,5 @@
 ﻿using BibliothequePacMan;
+using Menu;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,16 +14,22 @@ namespace Interface_PacMan
 {
     public partial class UserControlSauvegarde : UserControl
     {
-        public UserControlSauvegarde()
+        private FormMenuPrincipal formMenuPrincipal;
+        private FormMenuContinuer formMenuContinuer;
+
+        public UserControlSauvegarde(FormMenuPrincipal formMenuPrincipal, FormMenuContinuer formMenuContinuer)
         {
             InitializeComponent();
+            this.formMenuPrincipal = formMenuPrincipal;
+            this.formMenuContinuer = formMenuContinuer;
         }
 
         private void UserControlSauvegarde_Click(object sender, EventArgs e)
         {
             Partie partie = new Partie();
-            FormPartie formPartie = new FormPartie(partie);
-            formPartie.ShowDialog();
+            FormPartie formPartie = new FormPartie(formMenuPrincipal, partie);
+            formMenuContinuer.Hide();
+            formPartie.Show();
         }
 
         private void UserControlSauvegarde_MouseEnter(object sender, EventArgs e)

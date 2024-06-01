@@ -1,5 +1,6 @@
 ﻿using Bibliotheque_PacMan;
 using BibliothequePacMan;
+using Menu;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,8 @@ namespace Interface_PacMan
     public partial class FormPartie : Form
     {
         /* ---------------- Variables globales ---------------- */
+
+        private FormMenuPrincipal formMenuPrincipal;
 
         private Partie partie;
         private Labyrinthe labyrinthe;
@@ -38,13 +41,16 @@ namespace Interface_PacMan
         private int speed = 400;
         private int nbVie;
         private bool isRunning = false;
+        private bool isVictory = false;
+        private bool isDefeat = false;
 
         /* ---------------- Constructeur FormPartie ---------------- */
 
-        public FormPartie(Partie partie)
+        public FormPartie(FormMenuPrincipal formMenuPrincipal, Partie partie)
         {
             InitializeComponent();
             this.partie = partie;
+            this.formMenuPrincipal = formMenuPrincipal;
 
             labyrinthe = new Labyrinthe(partie.hauteur, partie.largeur);
             // labyrinthe.setSeed(partie.seed);
@@ -205,22 +211,41 @@ namespace Interface_PacMan
             fantome.position = fantomeSpawnPosition;
             fantome.currentCellule = fantomeSpawnCellule;
             fantome.index = fantomeSpawnCellule.getY() * partie.largeur + fantomeSpawnCellule.getX();
+            isRunning = false;
         }
 
         /* ---------------- Condition de victoire et défaite ---------------- */
+
+        private void GameClose()
+        {
+            tlpLabyrinthe.Controls.Clear();
+            panelLabyrinthe.Controls.Clear();
+            this.Close();
+        }
 
         private void IsGameVictory()
         {
             if (tlpLabyrinthe.Controls.Count == positionsPiecesSuppr.Count)
             {
                 isRunning = false;
-                MessageBox.Show("Vous avez gagné la partie");
+                isVictory = true;
+                MessageBox.Show("Vous avez gagné la partie.");
+                GameClose();
             }
         }
 
         private void IsGameDefeat()
         {
-
+            if (nbVie == 0)
+            {
+                MessageBox.Show("Vous avez perdu !");
+                isDefeat = true;
+                GameClose();
+            }
+            else
+            {
+                MessageBox.Show($"Vous perdez une vie, il vous en reste {nbVie}.");
+            }
         }
 
         /* ---------------- Récolte des pieces ---------------- */
@@ -430,14 +455,7 @@ namespace Interface_PacMan
                 Reset_Fantome(fantome);
                 tlpVies.Controls.RemoveAt(nbVie);
                 nbVie--;
-                if (nbVie == 0)
-                {
-                    MessageBox.Show("Vous avez perdu !");
-                }
-                else
-                {
-                    MessageBox.Show($"Vous perdez une vie, il vous en reste : {nbVie}.");
-                }
+                IsGameDefeat();
             }
         }
 
@@ -891,6 +909,18 @@ namespace Interface_PacMan
                     }
                     index++;
                 }
+            }
+        }
+
+        private void FormPartie_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isVictory == true || isDefeat == true)
+            {
+                formMenuPrincipal.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
             }
         }
     }

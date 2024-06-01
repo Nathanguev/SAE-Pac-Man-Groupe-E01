@@ -13,10 +13,13 @@ namespace Interface_PacMan
 {
     public partial class FormMenuPseudo : Form
     {
-        public FormMenuPseudo()
+        private FormMenuPrincipal formMenuPrincipal;
+        private bool isBtnRetourClicked = false;
+
+        public FormMenuPseudo(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
-            this.FormClosing += FormMenuPseudo_FormClosing;
+            this.formMenuPrincipal = formMenuPrincipal;
         }
 
         private void FormMenuPseudo_SizeChanged(object sender, EventArgs e)
@@ -44,12 +47,13 @@ namespace Interface_PacMan
 
         private void btnRetour_Click(object sender, EventArgs e)
         {
+            isBtnRetourClicked = true;
             this.Close();
         }
 
         private void btnSuivant_Click(object sender, EventArgs e)
         {
-            FormMenuParametre formMenuParametre = new FormMenuParametre(this);
+            FormMenuParametre formMenuParametre = new FormMenuParametre(formMenuPrincipal, this);
             formMenuParametre.Show();
             this.Hide();
         }
@@ -68,7 +72,19 @@ namespace Interface_PacMan
 
         private void FormMenuPseudo_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FormManager.OnFormClosing();
+            if (isBtnRetourClicked == true)
+            {
+                formMenuPrincipal.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
+            }
+        }
+
+        private void FormMenuPseudo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

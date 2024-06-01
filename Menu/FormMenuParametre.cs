@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Menu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,14 @@ namespace Interface_PacMan
 {
     public partial class FormMenuParametre : Form
     {
+        private FormMenuPrincipal formMenuPrincipal;
         private FormMenuPseudo formMenuPseudo;
+        private bool isBtnRetourClicked = false;
 
-        public FormMenuParametre(FormMenuPseudo formMenuPseudo)
+        public FormMenuParametre(FormMenuPrincipal formMenuPrincipal, FormMenuPseudo formMenuPseudo)
         {
             InitializeComponent();
+            this.formMenuPrincipal = formMenuPrincipal;
             this.formMenuPseudo = formMenuPseudo;
         }
 
@@ -46,13 +50,25 @@ namespace Interface_PacMan
 
         private void btnRetour_Click(object sender, EventArgs e)
         {
+            isBtnRetourClicked = true;
             this.Close();
-            formMenuPseudo.Show();
         }
 
         private void FormMenuParametre_FormClosing(object sender, FormClosingEventArgs e)
         {
-            formMenuPseudo.Show();
+            if (isBtnRetourClicked == true)
+            {
+                formMenuPseudo.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
+            }
+        }
+
+        private void FormMenuParametre_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -6,12 +6,14 @@ namespace Interface_PacMan
     public partial class FormMenuVolume : Form
     {
         private FormMenuPrincipal formMenuPrincipal;
+        private FormMenuOptions formMenuOptions;
+        private bool isBtnRetourClicked = false;
 
-        public FormMenuVolume(FormMenuPrincipal formMenuPrincipal)
+        public FormMenuVolume(FormMenuPrincipal formMenuPrincipal, FormMenuOptions formMenuOptions)
         {
             InitializeComponent();
-            this.FormClosing += FormMenuVolume_FormClosing;
             this.formMenuPrincipal = formMenuPrincipal;
+            this.formMenuOptions = formMenuOptions;
         }
 
         private void FormMenuVolume_SizeChanged(object sender, EventArgs e)
@@ -38,8 +40,9 @@ namespace Interface_PacMan
             btn.BackColor = Color.FromArgb(224, 224, 224);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRetour_Click(object sender, EventArgs e)
         {
+            isBtnRetourClicked = true;
             this.Close();
         }
 
@@ -62,7 +65,14 @@ namespace Interface_PacMan
 
         private void FormMenuVolume_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FormManager.OnFormOptionsClosing();
+            if (isBtnRetourClicked == true)
+            {
+                formMenuOptions.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
+            }
         }
 
         private void trackBarMusique_ValueChanged(object sender, EventArgs e)

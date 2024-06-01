@@ -5,24 +5,12 @@ namespace Interface_PacMan
     public partial class FormMenuOptions : Form
     {
         private FormMenuPrincipal formMenuPrincipal;
+        private bool isBtnRetourClicked = false;
 
         public FormMenuOptions(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
-            this.FormClosing += FormMenuOptions_FormClosing;
-            FormManager.FormOptionsClosing += FormManager_FormOptionsClosing;
             this.formMenuPrincipal = formMenuPrincipal;
-        }
-
-        private void FormManager_FormOptionsClosing()
-        {
-            this.Invoke((Action)(() => this.Show()));
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            FormManager.FormOptionsClosing -= FormManager_FormOptionsClosing;
         }
 
         public void FormMenuOptions_SizeChanged(object sender, EventArgs e)
@@ -50,26 +38,39 @@ namespace Interface_PacMan
 
         private void btnRetour_Click(object sender, EventArgs e)
         {
+            isBtnRetourClicked = true;
             this.Close();
         }
 
         private void btnTouches_Click(object sender, EventArgs e)
         {
-            FormMenuTouches menuTouches = new FormMenuTouches();
-            menuTouches.Show();
+            FormMenuTouches formMenuTouches = new FormMenuTouches(formMenuPrincipal, this);
+            formMenuTouches.Show();
             this.Hide();
         }
 
         private void btnVolume_Click(object sender, EventArgs e)
         {
-            FormMenuVolume menuVolume = new FormMenuVolume(formMenuPrincipal);
+            FormMenuVolume menuVolume = new FormMenuVolume(formMenuPrincipal, this);
             menuVolume.Show();
             this.Hide();
         }
 
         private void FormMenuOptions_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FormManager.OnFormClosing();
+            if (isBtnRetourClicked == true)
+            {
+                formMenuPrincipal.Show();
+            }
+            else
+            {
+                formMenuPrincipal.Close();
+            }
+        }
+
+        private void FormMenuOptions_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
