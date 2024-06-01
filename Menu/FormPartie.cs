@@ -23,10 +23,9 @@ namespace Interface_PacMan
         private Labyrinthe labyrinthe;
         private TableLayoutPanel tlpLabyrinthe;
         private Character pacman;
+        private Character fantomeAleatoire;
         private List<Point> positionsPiecesSuppr;
         private bool isRunning = false;
-        private bool isVictory = false;
-        private bool isDefeat = false;
 
         /* ---------------- Constructeur FormPartie ---------------- */
 
@@ -48,10 +47,14 @@ namespace Interface_PacMan
             tlpLabyrinthe = new TableLayoutPanel();
             Init_TableLayoutPanel(tlpLabyrinthe);
             panelLabyrinthe.Controls.Add(tlpLabyrinthe);
+            
+            Size autoScrollSize = new Size(panelLabyrinthe.Width, panelLabyrinthe.Height);
+            tlpGrille.AutoScrollMinSize = autoScrollSize;
 
             affichageLabyrinthe();
             Init_PacMan(panelLabyrinthe);
             Init_Pieces(panelLabyrinthe);
+            Init_FantomeAleatoire(panelLabyrinthe);
 
             pacman.sprite.BringToFront();
         }
@@ -83,12 +86,24 @@ namespace Interface_PacMan
 
         private void Init_PacMan(Panel panel)
         {
+            int index = partie.largeur + 1;
             Image image = Properties.Resources.pacMan;
-            pacman = new Character(image, labyrinthe.getCellules()[partie.largeur + 1]);
+            pacman = new Character(image, labyrinthe.getCellules()[index]);
             positionsPiecesSuppr = [pacman.position];
 
             panel.Controls.Add(pacman.sprite);
-            pacman.index = partie.largeur + 1;
+            pacman.index = index;
+        }
+
+        private void Init_FantomeAleatoire(Panel panel)
+        {
+            int index = (partie.largeur * (partie.hauteur / 2) + (partie.largeur / 2));
+            Image image = Properties.Resources.fantomeRouge;
+            fantomeAleatoire = new Character(image, labyrinthe.getCellules()[index]);
+            
+            panel.Controls.Add(fantomeAleatoire.sprite);
+            fantomeAleatoire.index = index;
+            fantomeAleatoire.sprite.BringToFront();
         }
 
         private void Init_TableLayoutPanel(TableLayoutPanel tlp)
@@ -136,7 +151,6 @@ namespace Interface_PacMan
         {
             if (tlpLabyrinthe.Controls.Count == positionsPiecesSuppr.Count)
             {
-                isVictory = true;
                 MessageBox.Show("Vous avez gagné la partie");
             }
         }
@@ -152,7 +166,7 @@ namespace Interface_PacMan
         {
             foreach (Control control in panelLabyrinthe.Controls)
             {
-                if (control.Location == point && control != pacman.sprite)
+                if (control.Location == point && control != pacman.sprite && control != fantomeAleatoire.sprite)
                 {
                     panelLabyrinthe.Controls.Remove(control);
                     positionsPiecesSuppr.Add(point); // enregistrement de la position des pièces supprimées
@@ -239,6 +253,7 @@ namespace Interface_PacMan
                 }
             }
             RemoveControlAtPosition(pacman.position);
+            LoopStart();
         }
 
         /* ---------------- Fonction asynchrone ---------------- */
@@ -256,7 +271,11 @@ namespace Interface_PacMan
         {
             while (isRunning)
             {
-                await Task.Delay(1000); // Attendre 1 seconde avant la prochaine itération
+                UneCellule nextCellule = fantomeAleatoire.currentCellule.getLiens().First();
+                Point point = new Point(nextCellule.getY() * 50 + 2, nextCellule.getX() * 50 + 2);
+                fantomeAleatoire.position = point;
+                fantomeAleatoire.currentCellule = nextCellule;
+                await Task.Delay(500); // Attendre 1 seconde avant la prochaine itération
             }
         }
 

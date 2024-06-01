@@ -123,6 +123,16 @@ namespace Interface_PacMan.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fantomeRouge {
+            get {
+                object obj = ResourceManager.GetObject("fantomeRouge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Fleche {
             get {
                 object obj = ResourceManager.GetObject("Fleche", resourceCulture);

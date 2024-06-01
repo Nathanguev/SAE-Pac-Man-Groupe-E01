@@ -163,7 +163,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuOptions";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Options";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuOptions_FormClosing;

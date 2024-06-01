@@ -31,14 +31,16 @@
             tlpGrille = new TableLayoutPanel();
             tlpBordure = new TableLayoutPanel();
             panelLabyrinthe = new Panel();
-            tlpAffichage = new TableLayoutPanel();
-            tableLayoutPanel3 = new TableLayoutPanel();
+            tlpScore = new TableLayoutPanel();
             lblScoreCount = new Label();
             lblScore = new Label();
+            tlpFondEcran = new TableLayoutPanel();
+            tlpAffichage = new TableLayoutPanel();
             tlpGrille.SuspendLayout();
             tlpBordure.SuspendLayout();
+            tlpScore.SuspendLayout();
+            tlpFondEcran.SuspendLayout();
             tlpAffichage.SuspendLayout();
-            tableLayoutPanel3.SuspendLayout();
             SuspendLayout();
             // 
             // tlpGrille
@@ -49,15 +51,15 @@
             tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
             tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tlpGrille.Controls.Add(tlpBordure, 1, 1);
-            tlpGrille.Controls.Add(tlpAffichage, 1, 0);
             tlpGrille.Dock = DockStyle.Fill;
-            tlpGrille.Location = new Point(0, 0);
+            tlpGrille.Location = new Point(10, 62);
+            tlpGrille.Margin = new Padding(0);
             tlpGrille.Name = "tlpGrille";
             tlpGrille.RowCount = 3;
             tlpGrille.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpGrille.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tlpGrille.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tlpGrille.Size = new Size(1182, 628);
+            tlpGrille.Size = new Size(1162, 502);
             tlpGrille.TabIndex = 0;
             // 
             // tlpBordure
@@ -69,14 +71,14 @@
             tlpBordure.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 2F));
             tlpBordure.Controls.Add(panelLabyrinthe, 1, 1);
             tlpBordure.Dock = DockStyle.Fill;
-            tlpBordure.Location = new Point(59, 62);
+            tlpBordure.Location = new Point(58, 50);
             tlpBordure.Margin = new Padding(0);
             tlpBordure.Name = "tlpBordure";
             tlpBordure.RowCount = 3;
             tlpBordure.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
             tlpBordure.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tlpBordure.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
-            tlpBordure.Size = new Size(1063, 502);
+            tlpBordure.Size = new Size(1045, 401);
             tlpBordure.TabIndex = 1;
             // 
             // panelLabyrinthe
@@ -86,43 +88,26 @@
             panelLabyrinthe.Location = new Point(2, 2);
             panelLabyrinthe.Margin = new Padding(0);
             panelLabyrinthe.Name = "panelLabyrinthe";
-            panelLabyrinthe.Size = new Size(1059, 498);
+            panelLabyrinthe.Size = new Size(1041, 397);
             panelLabyrinthe.TabIndex = 0;
             // 
-            // tlpAffichage
+            // tlpScore
             // 
-            tlpAffichage.ColumnCount = 3;
-            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpAffichage.Controls.Add(tableLayoutPanel3, 2, 0);
-            tlpAffichage.Dock = DockStyle.Fill;
-            tlpAffichage.Location = new Point(59, 0);
-            tlpAffichage.Margin = new Padding(0);
-            tlpAffichage.Name = "tlpAffichage";
-            tlpAffichage.RowCount = 1;
-            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpAffichage.Size = new Size(1063, 62);
-            tlpAffichage.TabIndex = 2;
-            // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.ColumnCount = 4;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel3.Controls.Add(lblScoreCount, 2, 1);
-            tableLayoutPanel3.Controls.Add(lblScore, 1, 1);
-            tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(852, 3);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 3;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tableLayoutPanel3.Size = new Size(208, 56);
-            tableLayoutPanel3.TabIndex = 0;
+            tlpScore.ColumnCount = 4;
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpScore.Controls.Add(lblScoreCount, 2, 0);
+            tlpScore.Controls.Add(lblScore, 1, 0);
+            tlpScore.Dock = DockStyle.Fill;
+            tlpScore.Location = new Point(870, 10);
+            tlpScore.Margin = new Padding(0);
+            tlpScore.Name = "tlpScore";
+            tlpScore.RowCount = 1;
+            tlpScore.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpScore.Size = new Size(292, 42);
+            tlpScore.TabIndex = 0;
             // 
             // lblScoreCount
             // 
@@ -130,11 +115,11 @@
             lblScoreCount.BackColor = Color.FromArgb(224, 224, 224);
             lblScoreCount.Dock = DockStyle.Fill;
             lblScoreCount.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblScoreCount.Location = new Point(103, 8);
+            lblScoreCount.Location = new Point(174, 0);
             lblScoreCount.Margin = new Padding(0);
             lblScoreCount.Name = "lblScoreCount";
-            lblScoreCount.Size = new Size(93, 39);
-            lblScoreCount.TabIndex = 3;
+            lblScoreCount.Size = new Size(58, 42);
+            lblScoreCount.TabIndex = 1;
             lblScoreCount.Text = "0";
             lblScoreCount.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -144,13 +129,52 @@
             lblScore.BackColor = Color.FromArgb(224, 224, 224);
             lblScore.Dock = DockStyle.Fill;
             lblScore.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblScore.Location = new Point(10, 8);
+            lblScore.Location = new Point(87, 0);
             lblScore.Margin = new Padding(0);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(93, 39);
+            lblScore.Size = new Size(87, 42);
             lblScore.TabIndex = 0;
             lblScore.Text = "SCORE :";
             lblScore.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // tlpFondEcran
+            // 
+            tlpFondEcran.ColumnCount = 3;
+            tlpFondEcran.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
+            tlpFondEcran.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpFondEcran.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
+            tlpFondEcran.Controls.Add(tlpGrille, 1, 1);
+            tlpFondEcran.Controls.Add(tlpAffichage, 1, 0);
+            tlpFondEcran.Dock = DockStyle.Fill;
+            tlpFondEcran.Location = new Point(0, 0);
+            tlpFondEcran.Name = "tlpFondEcran";
+            tlpFondEcran.RowCount = 3;
+            tlpFondEcran.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tlpFondEcran.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tlpFondEcran.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tlpFondEcran.Size = new Size(1182, 628);
+            tlpFondEcran.TabIndex = 1;
+            // 
+            // tlpAffichage
+            // 
+            tlpAffichage.ColumnCount = 4;
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlpAffichage.Controls.Add(tlpScore, 3, 1);
+            tlpAffichage.Dock = DockStyle.Fill;
+            tlpAffichage.Location = new Point(10, 0);
+            tlpAffichage.Margin = new Padding(0);
+            tlpAffichage.Name = "tlpAffichage";
+            tlpAffichage.RowCount = 3;
+            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpAffichage.Size = new Size(1162, 62);
+            tlpAffichage.TabIndex = 1;
             // 
             // FormPartie
             // 
@@ -158,20 +182,21 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 0, 43);
             ClientSize = new Size(1182, 628);
-            Controls.Add(tlpGrille);
+            Controls.Add(tlpFondEcran);
             MinimumSize = new Size(960, 540);
             Name = "FormPartie";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Partie";
             WindowState = FormWindowState.Maximized;
             Load += FormPartie_Load;
             KeyPress += FormPartie_KeyPress;
             tlpGrille.ResumeLayout(false);
             tlpBordure.ResumeLayout(false);
+            tlpScore.ResumeLayout(false);
+            tlpScore.PerformLayout();
+            tlpFondEcran.ResumeLayout(false);
             tlpAffichage.ResumeLayout(false);
-            tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -180,8 +205,9 @@
         private TableLayoutPanel tlpGrille;
         private Panel panelLabyrinthe;
         private TableLayoutPanel tlpBordure;
+        private TableLayoutPanel tlpScore;
+        private TableLayoutPanel tlpFondEcran;
         private TableLayoutPanel tlpAffichage;
-        private TableLayoutPanel tableLayoutPanel3;
         private Label lblScoreCount;
         private Label lblScore;
     }

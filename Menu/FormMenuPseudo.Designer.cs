@@ -201,7 +201,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuPseudo";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Pseudo";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuPseudo_FormClosing;

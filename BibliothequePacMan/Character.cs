@@ -20,9 +20,9 @@ namespace Bibliotheque_PacMan
 
         public Character(Image image, UneCellule currentCellule)
         {
+            _currentCellule = currentCellule;
             Init_Sprite();
             _sprite.Image = image;
-            _currentCellule = currentCellule;
         }
 
         public Character()
@@ -36,7 +36,7 @@ namespace Bibliotheque_PacMan
             _sprite = new PictureBox();
             _sprite.Size = new Size(46, 46);
             _sprite.SizeMode = PictureBoxSizeMode.Zoom;
-            _sprite.Location = new Point(52, 52);
+            _sprite.Location = new Point(currentCellule.getY() * 50 + 2, currentCellule.getX() * 50 + 2);
             _sprite.BackColor = Color.Transparent;
         }
 

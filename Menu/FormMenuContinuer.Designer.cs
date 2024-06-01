@@ -188,7 +188,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuContinuer";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Continuer";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuContinuer_FormClosing;

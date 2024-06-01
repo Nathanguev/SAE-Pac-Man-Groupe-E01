@@ -411,7 +411,7 @@
             MinimumSize = new Size(960, 540);
             Name = "FormMenuTouches";
             ShowIcon = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Touches";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuTouches_FormClosing;
