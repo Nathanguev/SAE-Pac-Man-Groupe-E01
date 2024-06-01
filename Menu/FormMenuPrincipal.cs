@@ -105,7 +105,7 @@ namespace Menu
             this.Hide();
         }
 
-        private async void btnOptions_Click(object sender, EventArgs e)
+        private void btnOptions_Click(object sender, EventArgs e)
         {
             FormMenuOptions formMenuOptions = new FormMenuOptions(this);
             formMenuOptions.Show();

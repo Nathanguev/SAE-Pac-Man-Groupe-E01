@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO.Pipes;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,7 +22,11 @@ namespace Interface_PacMan
         private Partie partie;
         private Labyrinthe labyrinthe;
         private TableLayoutPanel tlpLabyrinthe;
-        private PictureBox pacMan;
+        private Character pacman;
+        private List<Point> positionsPiecesSuppr;
+        private bool isRunning = false;
+        private bool isVictory = false;
+        private bool isDefeat = false;
 
         /* ---------------- Constructeur FormPartie ---------------- */
 
@@ -31,35 +36,59 @@ namespace Interface_PacMan
             this.partie = partie;
 
             labyrinthe = new Labyrinthe(partie.hauteur, partie.largeur);
-            labyrinthe.setSeed(partie.seed);
+            // labyrinthe.setSeed(partie.seed);
             labyrinthe.algoParcoursProfondeur();
         }
-
+        
         /* ---------------- Au lancement du formulaire ---------------- */
 
         private void FormPartie_Load(object sender, EventArgs e)
         {
+            Init_CenterTableLayoutPanel();
             tlpLabyrinthe = new TableLayoutPanel();
             Init_TableLayoutPanel(tlpLabyrinthe);
             panelLabyrinthe.Controls.Add(tlpLabyrinthe);
 
             affichageLabyrinthe();
             Init_PacMan(panelLabyrinthe);
+            Init_Pieces(panelLabyrinthe);
+
+            pacman.sprite.BringToFront();
         }
 
         /* ---------------- Fonctions d'initialisation ---------------- */
 
+        private void Init_Pieces(Panel panel)
+        {
+            for (int i = 2; i < partie.hauteur * 50; i = i + 50)
+            {
+                for (int j = 2; j < partie.largeur * 50; j = j + 50)
+                {
+                    Point point = new Point(j, i);
+                    if (positionsPiecesSuppr.Contains(point))
+                    {
+                        
+                    }
+                    else
+                    {
+                        Objet objet = new Objet(Properties.Resources.piece, point);
+
+                        panel.Controls.Add(objet.sprite);
+                        objet.sprite.BringToFront();
+                    }
+                }
+            }
+            lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count);
+        }
+
         private void Init_PacMan(Panel panel)
         {
-            pacMan = new PictureBox();
-            pacMan.Size = new Size(46, 46);
-            pacMan.Image = Properties.Resources.pacMan;
-            pacMan.SizeMode = PictureBoxSizeMode.Zoom;
-            pacMan.Location = new Point(52, 52);
-            pacMan.BackColor = Color.Transparent;
+            Image image = Properties.Resources.pacMan;
+            pacman = new Character(image, labyrinthe.getCellules()[partie.largeur + 1]);
+            positionsPiecesSuppr = [pacman.position];
 
-            panel.Controls.Add(pacMan);
-            pacMan.BringToFront();
+            panel.Controls.Add(pacman.sprite);
+            pacman.index = partie.largeur + 1;
         }
 
         private void Init_TableLayoutPanel(TableLayoutPanel tlp)
@@ -82,37 +111,152 @@ namespace Interface_PacMan
             }
         }
 
+        private void Init_CenterTableLayoutPanel()
+        {
+            tlpGrille.RowStyles.Clear();
+            tlpGrille.ColumnStyles.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == 1)
+                {
+                    tlpGrille.RowStyles.Add(new RowStyle(SizeType.Absolute, partie.hauteur * 50 + 4));
+                    tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, partie.largeur * 50 + 4));
+                }
+                else
+                {
+                    tlpGrille.RowStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+                    tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+                }
+            }
+        }
+
+        /* ---------------- Condition de victoire ---------------- */
+
+        private void IsGameVictory()
+        {
+            if (tlpLabyrinthe.Controls.Count == positionsPiecesSuppr.Count)
+            {
+                isVictory = true;
+                MessageBox.Show("Vous avez gagné la partie");
+            }
+        }
+
+        private void IsGameDefeat()
+        {
+
+        }
+
+        /* ---------------- Récolte des pieces ---------------- */
+
+        private void RemoveControlAtPosition(Point point)
+        {
+            foreach (Control control in panelLabyrinthe.Controls)
+            {
+                if (control.Location == point && control != pacman.sprite)
+                {
+                    panelLabyrinthe.Controls.Remove(control);
+                    positionsPiecesSuppr.Add(point); // enregistrement de la position des pièces supprimées
+                    lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count);
+                    IsGameVictory();
+                }
+            }
+        }
+
         /* ---------------- Déplacement de PacMan ---------------- */
 
         private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
+            Image rotateImage = Properties.Resources.pacMan;
             if (char.ToUpper(e.KeyChar) == partie.toucheHaut)
-            {
-                if (pacMan.Location.Y > 2)
+            {                
+                if (pacman.position.Y > 2)
                 {
-                    pacMan.Location = new Point(pacMan.Location.X, pacMan.Location.Y - 50);
+                    rotateImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    int index = pacman.index - partie.largeur;
+                    if (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]))
+                    {
+                        pacman.position = new Point(pacman.position.X, pacman.position.Y - 50);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        if (pacman.sprite.Image != rotateImage)
+                        {
+                            pacman.sprite.Image = rotateImage;
+                        }
+                    }
                 }
             }
             else if (char.ToUpper(e.KeyChar) == partie.toucheBas)
             {
-                if (pacMan.Location.Y < partie.hauteur * 50 - 52)
+                if (pacman.position.Y < partie.hauteur * 50 - 52)
                 {
-                    pacMan.Location = new Point(pacMan.Location.X, pacMan.Location.Y + 50);
+                    rotateImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    int index = pacman.index + partie.largeur;
+                    if (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]))
+                    {
+                        pacman.position = new Point(pacman.position.X, pacman.position.Y + 50);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        if (pacman.sprite.Image != rotateImage)
+                        {
+                            pacman.sprite.Image = rotateImage;
+                        }
+                    }
                 }
             }
             else if (char.ToUpper(e.KeyChar) == partie.toucheGauche)
             {
-                if (pacMan.Location.X > 2)
+                if (pacman.position.X > 2)
                 {
-                    pacMan.Location = new Point(pacMan.Location.X - 50, pacMan.Location.Y);
+                    rotateImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    int index = pacman.index - 1;
+                    if (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]))
+                    {
+                        pacman.position = new Point(pacman.position.X - 50, pacman.position.Y);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        if (pacman.sprite.Image != rotateImage)
+                        {
+                            pacman.sprite.Image = rotateImage;
+                        }
+                    }
                 }
             }
             else if (char.ToUpper(e.KeyChar) == partie.toucheDroite)
             {
-                if (pacMan.Location.X < partie.largeur * 50 - 52)
+                if (pacman.position.X < partie.largeur * 50 - 52)
                 {
-                    pacMan.Location = new Point(pacMan.Location.X + 50, pacMan.Location.Y);
+                    int index = pacman.index + 1;
+                    if (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]))
+                    {
+                        pacman.position = new Point(pacman.position.X + 50, pacman.position.Y);
+                        pacman.currentCellule = labyrinthe.getCellules()[index];
+                        pacman.index = index;
+                        if (pacman.sprite.Image != rotateImage)
+                        {
+                            pacman.sprite.Image = rotateImage;
+                        }
+                    }
                 }
+            }
+            RemoveControlAtPosition(pacman.position);
+        }
+
+        /* ---------------- Fonction asynchrone ---------------- */
+
+        private async void LoopStart()
+        {
+            if (!isRunning)
+            {
+                isRunning = true;
+                await RunLoopAsync();
+            }
+        }
+
+        private async Task RunLoopAsync()
+        {
+            while (isRunning)
+            {
+                await Task.Delay(1000); // Attendre 1 seconde avant la prochaine itération
             }
         }
 
