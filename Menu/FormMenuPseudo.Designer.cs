@@ -33,10 +33,10 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             txtPseudo = new TextBox();
-            btnRetour = new Button();
+            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel3 = new TableLayoutPanel();
             tableLayoutPanel4 = new TableLayoutPanel();
-            btnSuivant = new Button();
+            btnSuivant = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -68,10 +68,10 @@
             // 
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(3, 30);
-            pictureBox1.Margin = new Padding(3, 30, 3, 30);
+            pictureBox1.Location = new Point(30, 30);
+            pictureBox1.Margin = new Padding(30);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1176, 254);
+            pictureBox1.Size = new Size(1122, 254);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -87,13 +87,14 @@
             tableLayoutPanel2.Controls.Add(tableLayoutPanel5, 3, 1);
             tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 317);
+            tableLayoutPanel2.Location = new Point(0, 314);
+            tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 3;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel2.Size = new Size(1176, 72);
+            tableLayoutPanel2.Size = new Size(1182, 78);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel5
@@ -105,13 +106,14 @@
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tableLayoutPanel5.Controls.Add(txtPseudo, 1, 1);
             tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(442, 10);
+            tableLayoutPanel5.Location = new Point(442, 7);
+            tableLayoutPanel5.Margin = new Padding(0);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 3;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel5.Size = new Size(288, 51);
+            tableLayoutPanel5.Size = new Size(295, 62);
             tableLayoutPanel5.TabIndex = 1;
             // 
             // txtPseudo
@@ -119,12 +121,12 @@
             txtPseudo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtPseudo.BorderStyle = BorderStyle.FixedSingle;
             txtPseudo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtPseudo.Location = new Point(14, 10);
+            txtPseudo.Location = new Point(14, 15);
             txtPseudo.Margin = new Padding(0);
             txtPseudo.MaxLength = 10;
             txtPseudo.Name = "txtPseudo";
             txtPseudo.PlaceholderText = "PSEUDO";
-            txtPseudo.Size = new Size(259, 30);
+            txtPseudo.Size = new Size(265, 30);
             txtPseudo.TabIndex = 0;
             txtPseudo.TextAlign = HorizontalAlignment.Center;
             txtPseudo.TextChanged += txtPseudo_TextChanged;
@@ -132,11 +134,19 @@
             // btnRetour
             // 
             btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.BorderColor = Color.YellowGreen;
+            btnRetour.BorderRadius = 29;
+            btnRetour.BorderWidth = 0;
             btnRetour.Dock = DockStyle.Fill;
-            btnRetour.Location = new Point(120, 10);
+            btnRetour.FlatAppearance.BorderSize = 0;
+            btnRetour.FlatStyle = FlatStyle.Flat;
+            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.Location = new Point(118, 7);
+            btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
-            btnRetour.Size = new Size(52, 51);
-            btnRetour.TabIndex = 0;
+            btnRetour.Rounded = true;
+            btnRetour.Size = new Size(59, 62);
+            btnRetour.TabIndex = 2;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
@@ -149,13 +159,14 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 395);
+            tableLayoutPanel3.Location = new Point(0, 392);
+            tableLayoutPanel3.Margin = new Padding(0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 3;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel3.Size = new Size(1176, 72);
+            tableLayoutPanel3.Size = new Size(1182, 78);
             tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel4
@@ -166,24 +177,32 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel4.Controls.Add(btnSuivant, 1, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(3, 473);
+            tableLayoutPanel4.Location = new Point(0, 470);
+            tableLayoutPanel4.Margin = new Padding(0);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 3;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel4.Size = new Size(1176, 72);
+            tableLayoutPanel4.Size = new Size(1182, 78);
             tableLayoutPanel4.TabIndex = 3;
             // 
             // btnSuivant
             // 
             btnSuivant.BackColor = Color.FromArgb(224, 224, 224);
+            btnSuivant.BorderColor = Color.Transparent;
+            btnSuivant.BorderRadius = 31;
+            btnSuivant.BorderWidth = 0;
             btnSuivant.Dock = DockStyle.Fill;
             btnSuivant.Enabled = false;
+            btnSuivant.FlatAppearance.BorderSize = 0;
+            btnSuivant.FlatStyle = FlatStyle.Flat;
             btnSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnSuivant.Location = new Point(444, 10);
+            btnSuivant.Location = new Point(443, 7);
+            btnSuivant.Margin = new Padding(0);
             btnSuivant.Name = "btnSuivant";
-            btnSuivant.Size = new Size(288, 51);
+            btnSuivant.Rounded = true;
+            btnSuivant.Size = new Size(295, 62);
             btnSuivant.TabIndex = 0;
             btnSuivant.Text = "SUIVANT";
             btnSuivant.UseVisualStyleBackColor = false;
@@ -225,7 +244,7 @@
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel tableLayoutPanel5;
         private TextBox txtPseudo;
-        private Button btnRetour;
-        private Button btnSuivant;
+        private Bibliotheque_PacMan.RoundButton btnRetour;
+        private Bibliotheque_PacMan.RoundButton btnSuivant;
     }
 }

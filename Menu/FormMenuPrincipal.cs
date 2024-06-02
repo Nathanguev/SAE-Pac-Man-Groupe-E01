@@ -37,8 +37,11 @@ namespace Menu
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
-            audioFile.Position = 0;
-            waveOut.Play();
+            if (audioFile != null && audioFile.Length > 0)
+            {
+                audioFile.Position = 0;
+                waveOut.Play();                
+            }
         }
 
         private string SaveResourceToTempFile(UnmanagedMemoryStream resource, string fileName)
@@ -116,10 +119,24 @@ namespace Menu
             }
         }
 
+        private void StopAudio()
+        {
+            if (waveOut != null)
+            {
+                waveOut.Stop();
+                waveOut.Dispose();
+                waveOut = null;
+            }
+            if (audioFile != null)
+            {
+                audioFile.Dispose();
+                audioFile = null;
+            }
+        }
+
         private void FormMenuPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            waveOut.Dispose();
-            audioFile.Dispose();
+            StopAudio();
         }
     }
 }

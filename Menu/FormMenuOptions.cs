@@ -5,12 +5,21 @@ namespace Interface_PacMan
     public partial class FormMenuOptions : Form
     {
         private FormMenuPrincipal formMenuPrincipal;
+        private FormMenuPause formMenuPause;
         private bool isBtnRetourClicked = false;
 
         public FormMenuOptions(FormMenuPrincipal formMenuPrincipal)
         {
             InitializeComponent();
             this.formMenuPrincipal = formMenuPrincipal;
+            formMenuPause = null;
+        }
+
+        public FormMenuOptions(FormMenuPrincipal formMenuPrincipal, FormMenuPause formMenuPause)
+        {
+            InitializeComponent();
+            this.formMenuPrincipal = formMenuPrincipal;
+            this.formMenuPause = formMenuPause;
         }
 
         public void FormMenuOptions_SizeChanged(object sender, EventArgs e)
@@ -60,7 +69,14 @@ namespace Interface_PacMan
         {
             if (isBtnRetourClicked == true)
             {
-                formMenuPrincipal.Show();
+                if (formMenuPause != null)
+                {
+                    formMenuPause.Show();
+                }
+                else
+                {
+                    formMenuPrincipal.Show();
+                }
             }
             else
             {

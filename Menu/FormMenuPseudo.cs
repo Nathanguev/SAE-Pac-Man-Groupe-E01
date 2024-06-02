@@ -86,5 +86,13 @@ namespace Interface_PacMan
         {
 
         }
+
+        public string pseudo
+        {
+            get
+            {
+                return txtPseudo.Text;
+            }
+        }
     }
 }

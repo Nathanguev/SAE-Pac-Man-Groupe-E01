@@ -39,7 +39,6 @@
             lblHaut = new Label();
             tlpToucheHaut = new TableLayoutPanel();
             txtHaut = new TextBox();
-            btnRetour = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
             tlpBas = new TableLayoutPanel();
             lblBas = new Label();
@@ -49,6 +48,7 @@
             lblGauche = new Label();
             tlpToucheGauche = new TableLayoutPanel();
             txtGauche = new TextBox();
+            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -85,10 +85,10 @@
             // 
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(3, 30);
-            pictureBox1.Margin = new Padding(3, 30, 3, 30);
+            pictureBox1.Location = new Point(30, 30);
+            pictureBox1.Margin = new Padding(30);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1176, 254);
+            pictureBox1.Size = new Size(1122, 254);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -107,13 +107,14 @@
             tableLayoutPanel2.Controls.Add(tlpHaut, 3, 1);
             tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 317);
+            tableLayoutPanel2.Location = new Point(0, 314);
+            tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 3;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel2.Size = new Size(1176, 72);
+            tableLayoutPanel2.Size = new Size(1182, 78);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // tlpDroite
@@ -125,12 +126,12 @@
             tlpDroite.Controls.Add(lblDroite, 0, 0);
             tlpDroite.Controls.Add(tlpToucheDroite, 1, 0);
             tlpDroite.Dock = DockStyle.Fill;
-            tlpDroite.Location = new Point(615, 7);
+            tlpDroite.Location = new Point(619, 7);
             tlpDroite.Margin = new Padding(0);
             tlpDroite.Name = "tlpDroite";
             tlpDroite.RowCount = 1;
             tlpDroite.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpDroite.Size = new Size(294, 57);
+            tlpDroite.Size = new Size(295, 62);
             tlpDroite.TabIndex = 2;
             // 
             // lblDroite
@@ -140,7 +141,7 @@
             lblDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblDroite.Location = new Point(3, 0);
             lblDroite.Name = "lblDroite";
-            lblDroite.Size = new Size(170, 57);
+            lblDroite.Size = new Size(171, 62);
             lblDroite.TabIndex = 1;
             lblDroite.Text = "Droite";
             lblDroite.TextAlign = ContentAlignment.MiddleCenter;
@@ -153,14 +154,14 @@
             tlpToucheDroite.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tlpToucheDroite.Controls.Add(txtDroite, 1, 1);
             tlpToucheDroite.Dock = DockStyle.Fill;
-            tlpToucheDroite.Location = new Point(176, 0);
+            tlpToucheDroite.Location = new Point(177, 0);
             tlpToucheDroite.Margin = new Padding(0);
             tlpToucheDroite.Name = "tlpToucheDroite";
             tlpToucheDroite.RowCount = 3;
             tlpToucheDroite.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpToucheDroite.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tlpToucheDroite.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tlpToucheDroite.Size = new Size(118, 57);
+            tlpToucheDroite.Size = new Size(118, 62);
             tlpToucheDroite.TabIndex = 1;
             // 
             // txtDroite
@@ -168,7 +169,7 @@
             txtDroite.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtDroite.BorderStyle = BorderStyle.FixedSingle;
             txtDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtDroite.Location = new Point(11, 12);
+            txtDroite.Location = new Point(11, 15);
             txtDroite.Margin = new Padding(0);
             txtDroite.MaxLength = 1;
             txtDroite.Name = "txtDroite";
@@ -188,12 +189,12 @@
             tlpHaut.Controls.Add(lblHaut, 0, 0);
             tlpHaut.Controls.Add(tlpToucheHaut, 1, 0);
             tlpHaut.Dock = DockStyle.Fill;
-            tlpHaut.Location = new Point(263, 7);
+            tlpHaut.Location = new Point(265, 7);
             tlpHaut.Margin = new Padding(0);
             tlpHaut.Name = "tlpHaut";
             tlpHaut.RowCount = 1;
             tlpHaut.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpHaut.Size = new Size(294, 57);
+            tlpHaut.Size = new Size(295, 62);
             tlpHaut.TabIndex = 1;
             // 
             // lblHaut
@@ -203,7 +204,7 @@
             lblHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblHaut.Location = new Point(3, 0);
             lblHaut.Name = "lblHaut";
-            lblHaut.Size = new Size(170, 57);
+            lblHaut.Size = new Size(171, 62);
             lblHaut.TabIndex = 1;
             lblHaut.Text = "Haut";
             lblHaut.TextAlign = ContentAlignment.MiddleCenter;
@@ -216,14 +217,14 @@
             tlpToucheHaut.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tlpToucheHaut.Controls.Add(txtHaut, 1, 1);
             tlpToucheHaut.Dock = DockStyle.Fill;
-            tlpToucheHaut.Location = new Point(176, 0);
+            tlpToucheHaut.Location = new Point(177, 0);
             tlpToucheHaut.Margin = new Padding(0);
             tlpToucheHaut.Name = "tlpToucheHaut";
             tlpToucheHaut.RowCount = 3;
             tlpToucheHaut.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpToucheHaut.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tlpToucheHaut.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tlpToucheHaut.Size = new Size(118, 57);
+            tlpToucheHaut.Size = new Size(118, 62);
             tlpToucheHaut.TabIndex = 1;
             // 
             // txtHaut
@@ -231,7 +232,7 @@
             txtHaut.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtHaut.BorderStyle = BorderStyle.FixedSingle;
             txtHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtHaut.Location = new Point(11, 12);
+            txtHaut.Location = new Point(11, 15);
             txtHaut.Margin = new Padding(0);
             txtHaut.MaxLength = 1;
             txtHaut.Name = "txtHaut";
@@ -241,19 +242,6 @@
             txtHaut.TextAlign = HorizontalAlignment.Center;
             txtHaut.TextChanged += txt_TextChanged;
             txtHaut.Validated += txt_Validated;
-            // 
-            // btnRetour
-            // 
-            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
-            btnRetour.Dock = DockStyle.Fill;
-            btnRetour.Location = new Point(120, 10);
-            btnRetour.Name = "btnRetour";
-            btnRetour.Size = new Size(52, 51);
-            btnRetour.TabIndex = 0;
-            btnRetour.UseVisualStyleBackColor = false;
-            btnRetour.Click += btnRetour_Click;
-            btnRetour.MouseEnter += btn_MouseEnter;
-            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel3
             // 
@@ -266,13 +254,14 @@
             tableLayoutPanel3.Controls.Add(tlpBas, 1, 1);
             tableLayoutPanel3.Controls.Add(tlpGauche, 3, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(3, 395);
+            tableLayoutPanel3.Location = new Point(0, 392);
+            tableLayoutPanel3.Margin = new Padding(0);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 3;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel3.Size = new Size(1176, 72);
+            tableLayoutPanel3.Size = new Size(1182, 78);
             tableLayoutPanel3.TabIndex = 2;
             // 
             // tlpBas
@@ -284,12 +273,12 @@
             tlpBas.Controls.Add(lblBas, 0, 0);
             tlpBas.Controls.Add(tlpToucheBas, 1, 0);
             tlpBas.Dock = DockStyle.Fill;
-            tlpBas.Location = new Point(264, 7);
+            tlpBas.Location = new Point(265, 7);
             tlpBas.Margin = new Padding(0);
             tlpBas.Name = "tlpBas";
             tlpBas.RowCount = 1;
             tlpBas.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpBas.Size = new Size(294, 57);
+            tlpBas.Size = new Size(295, 62);
             tlpBas.TabIndex = 0;
             // 
             // lblBas
@@ -299,7 +288,7 @@
             lblBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblBas.Location = new Point(3, 0);
             lblBas.Name = "lblBas";
-            lblBas.Size = new Size(170, 57);
+            lblBas.Size = new Size(171, 62);
             lblBas.TabIndex = 1;
             lblBas.Text = "Bas";
             lblBas.TextAlign = ContentAlignment.MiddleCenter;
@@ -312,14 +301,14 @@
             tlpToucheBas.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tlpToucheBas.Controls.Add(txtBas, 1, 1);
             tlpToucheBas.Dock = DockStyle.Fill;
-            tlpToucheBas.Location = new Point(176, 0);
+            tlpToucheBas.Location = new Point(177, 0);
             tlpToucheBas.Margin = new Padding(0);
             tlpToucheBas.Name = "tlpToucheBas";
             tlpToucheBas.RowCount = 3;
             tlpToucheBas.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpToucheBas.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tlpToucheBas.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tlpToucheBas.Size = new Size(118, 57);
+            tlpToucheBas.Size = new Size(118, 62);
             tlpToucheBas.TabIndex = 1;
             // 
             // txtBas
@@ -327,7 +316,7 @@
             txtBas.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtBas.BorderStyle = BorderStyle.FixedSingle;
             txtBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtBas.Location = new Point(11, 12);
+            txtBas.Location = new Point(11, 15);
             txtBas.Margin = new Padding(0);
             txtBas.MaxLength = 1;
             txtBas.Name = "txtBas";
@@ -347,12 +336,12 @@
             tlpGauche.Controls.Add(lblGauche, 0, 0);
             tlpGauche.Controls.Add(tlpToucheGauche, 1, 0);
             tlpGauche.Dock = DockStyle.Fill;
-            tlpGauche.Location = new Point(616, 7);
+            tlpGauche.Location = new Point(619, 7);
             tlpGauche.Margin = new Padding(0);
             tlpGauche.Name = "tlpGauche";
             tlpGauche.RowCount = 1;
             tlpGauche.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpGauche.Size = new Size(294, 57);
+            tlpGauche.Size = new Size(295, 62);
             tlpGauche.TabIndex = 1;
             // 
             // lblGauche
@@ -362,7 +351,7 @@
             lblGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblGauche.Location = new Point(3, 0);
             lblGauche.Name = "lblGauche";
-            lblGauche.Size = new Size(170, 57);
+            lblGauche.Size = new Size(171, 62);
             lblGauche.TabIndex = 1;
             lblGauche.Text = "Gauche";
             lblGauche.TextAlign = ContentAlignment.MiddleCenter;
@@ -375,14 +364,14 @@
             tlpToucheGauche.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tlpToucheGauche.Controls.Add(txtGauche, 1, 1);
             tlpToucheGauche.Dock = DockStyle.Fill;
-            tlpToucheGauche.Location = new Point(176, 0);
+            tlpToucheGauche.Location = new Point(177, 0);
             tlpToucheGauche.Margin = new Padding(0);
             tlpToucheGauche.Name = "tlpToucheGauche";
             tlpToucheGauche.RowCount = 3;
             tlpToucheGauche.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tlpToucheGauche.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tlpToucheGauche.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tlpToucheGauche.Size = new Size(118, 57);
+            tlpToucheGauche.Size = new Size(118, 62);
             tlpToucheGauche.TabIndex = 1;
             // 
             // txtGauche
@@ -390,7 +379,7 @@
             txtGauche.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txtGauche.BorderStyle = BorderStyle.FixedSingle;
             txtGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtGauche.Location = new Point(11, 12);
+            txtGauche.Location = new Point(11, 15);
             txtGauche.Margin = new Padding(0);
             txtGauche.MaxLength = 1;
             txtGauche.Name = "txtGauche";
@@ -400,6 +389,27 @@
             txtGauche.TextAlign = HorizontalAlignment.Center;
             txtGauche.TextChanged += txt_TextChanged;
             txtGauche.Validated += txt_Validated;
+            // 
+            // btnRetour
+            // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.BorderColor = Color.Transparent;
+            btnRetour.BorderRadius = 29;
+            btnRetour.BorderWidth = 0;
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.FlatAppearance.BorderSize = 0;
+            btnRetour.FlatStyle = FlatStyle.Flat;
+            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.Location = new Point(118, 7);
+            btnRetour.Margin = new Padding(0);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Rounded = true;
+            btnRetour.Size = new Size(59, 62);
+            btnRetour.TabIndex = 3;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // FormMenuTouches
             // 
@@ -454,7 +464,6 @@
         private Label lblHaut;
         private Label lblBas;
         private Label lblGauche;
-        private Button btnRetour;
         private TableLayoutPanel tlpToucheDroite;
         private TableLayoutPanel tlpToucheHaut;
         private TableLayoutPanel tlpToucheBas;
@@ -463,5 +472,6 @@
         private TextBox txtHaut;
         private TextBox txtBas;
         private TextBox txtGauche;
+        private Bibliotheque_PacMan.RoundButton btnRetour;
     }
 }

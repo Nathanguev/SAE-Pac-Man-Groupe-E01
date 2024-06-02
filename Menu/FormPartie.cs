@@ -4,6 +4,7 @@ using Menu;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -39,7 +40,6 @@ namespace Interface_PacMan
         private UneCellule fantomeSpawnCellule;
 
         private int speed = 400;
-        private int nbVie;
         private bool isRunning = false;
         private bool isVictory = false;
         private bool isDefeat = false;
@@ -53,7 +53,6 @@ namespace Interface_PacMan
             this.formMenuPrincipal = formMenuPrincipal;
 
             labyrinthe = new Labyrinthe(partie.hauteur, partie.largeur);
-            // labyrinthe.setSeed(partie.seed);
             labyrinthe.algoParcoursProfondeur();
         }
 
@@ -101,7 +100,7 @@ namespace Interface_PacMan
                     }
                 }
             }
-            lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count);
+            lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count + partie.score);
         }
 
         private void Init_PacMan(Panel panel)
@@ -170,28 +169,14 @@ namespace Interface_PacMan
 
         private void Init_Vies()
         {
-            switch (partie.difficulte)
-            {
-                case 1:
-                    nbVie = 5;
-                    break;
-
-                case 2:
-                    nbVie = 3;
-                    break;
-
-                case 3:
-                    nbVie = 1;
-                    break;
-            }
-
-            for (int i = 1; i < nbVie + 1; i++)
+            for (int i = 1; i < partie.nbVie + 1; i++)
             {
                 PictureBox pictureBox = new PictureBox();
-                pictureBox.Margin = new Padding(10);
+                pictureBox.Margin = new Padding(5);
                 pictureBox.Dock = DockStyle.Fill;
                 pictureBox.Image = Properties.Resources.coeur;
                 pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox.Name = "vie" + i;
 
                 tlpVies.Controls.Add(pictureBox, i, 0);
             }
@@ -206,11 +191,11 @@ namespace Interface_PacMan
             pacman.index = pacmanSpawnCellule.getY() * partie.largeur + pacmanSpawnCellule.getX();
         }
 
-        private void Reset_Fantome(Character fantome)
+        private void Reset_Fantome()
         {
-            fantome.position = fantomeSpawnPosition;
-            fantome.currentCellule = fantomeSpawnCellule;
-            fantome.index = fantomeSpawnCellule.getY() * partie.largeur + fantomeSpawnCellule.getX();
+            fantomeAleatoire.position = fantomeSpawnPosition;
+            fantomeAleatoire.currentCellule = fantomeSpawnCellule;
+            fantomeAleatoire.index = fantomeSpawnCellule.getY() * partie.largeur + fantomeSpawnCellule.getX();
             isRunning = false;
         }
 
@@ -218,6 +203,8 @@ namespace Interface_PacMan
 
         private void GameClose()
         {
+            Reset_PacMan();
+            Reset_Fantome();
             tlpLabyrinthe.Controls.Clear();
             panelLabyrinthe.Controls.Clear();
             this.Close();
@@ -229,22 +216,26 @@ namespace Interface_PacMan
             {
                 isRunning = false;
                 isVictory = true;
-                MessageBox.Show("Vous avez gagné la partie.");
+                partie.score = Convert.ToInt32(lblScoreCount.Text);
+                partie.level += 1;
+                partie.Update_Dimensions();
                 GameClose();
             }
         }
 
         private void IsGameDefeat()
         {
-            if (nbVie == 0)
+            if (partie.nbVie == 0)
             {
-                MessageBox.Show("Vous avez perdu !");
+                isRunning = false;
                 isDefeat = true;
+                partie.score = Convert.ToInt32(lblScoreCount.Text);
                 GameClose();
             }
             else
             {
-                MessageBox.Show($"Vous perdez une vie, il vous en reste {nbVie}.");
+                isRunning = false;
+                MessageBox.Show($"Vous perdez une vie, il vous en reste {partie.nbVie}.");
             }
         }
 
@@ -258,7 +249,7 @@ namespace Interface_PacMan
                 {
                     panelLabyrinthe.Controls.Remove(control);
                     positionsPiecesSuppr.Add(point); // enregistrement de la position des pièces supprimées
-                    lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count);
+                    lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count + partie.score);
                     IsGameVictory();
                 }
             }
@@ -340,121 +331,22 @@ namespace Interface_PacMan
                     }
                 }
             }
-            Colision_PacMan_Fantome(pacman, fantomeAleatoire);
+            Colision_PacMan_Fantome(fantomeAleatoire);
             RemoveControlAtPosition(pacman.position);
             LoopStart();
         }
 
-        /*
-        private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Image rotateImage = Properties.Resources.pacMan;
-            if (char.ToUpper(e.KeyChar) == partie.toucheHaut)
-            {                
-                if (pacman.position.Y > 2)
-                {
-                    int index = pacman.index - partie.largeur;
-
-                    rotateImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    if (pacman.sprite.Image != rotateImage)
-                    {
-                        pacman.sprite.Image = rotateImage;
-                    }
-
-                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.Y > 2)
-                    {
-                        pacman.position = new Point(pacman.position.X, pacman.position.Y - 50);
-                        pacman.currentCellule = labyrinthe.getCellules()[index];
-                        pacman.index = index;
-                        RemoveControlAtPosition(pacman.position);
-                        index = pacman.index - partie.largeur;
-                        await Task.Delay(speed);
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheBas)
-            {
-                if (pacman.position.Y < partie.hauteur * 50 - 52)
-                {
-                    int index = pacman.index + partie.largeur;
-
-                    rotateImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    if (pacman.sprite.Image != rotateImage)
-                    {
-                        pacman.sprite.Image = rotateImage;
-                    }
-
-                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.Y < partie.hauteur * 50 - 52)
-                    {
-                        pacman.position = new Point(pacman.position.X, pacman.position.Y + 50);
-                        pacman.currentCellule = labyrinthe.getCellules()[index];
-                        pacman.index = index;
-                        RemoveControlAtPosition(pacman.position);
-                        index = pacman.index + partie.largeur;
-                        await Task.Delay(speed);
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheGauche)
-            {
-                if (pacman.position.X > 2)
-                {
-                    int index = pacman.index - 1;
-
-                    rotateImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                    if (pacman.sprite.Image != rotateImage)
-                    {
-                        pacman.sprite.Image = rotateImage;
-                    }
-
-                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.X > 2)
-                    {
-                        pacman.position = new Point(pacman.position.X - 50, pacman.position.Y);
-                        pacman.currentCellule = labyrinthe.getCellules()[index];
-                        pacman.index = index;
-                        RemoveControlAtPosition(pacman.position);
-                        index = pacman.index + partie.largeur;
-                        await Task.Delay(speed);
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheDroite)
-            {
-                if (pacman.position.X < partie.largeur * 50 - 52)
-                {
-                    int index = pacman.index + 1;
-
-                    if (pacman.sprite.Image != rotateImage)
-                    {
-                        pacman.sprite.Image = rotateImage;
-                    }
-
-                    while (pacman.currentCellule.isLien(labyrinthe.getCellules()[index]) && pacman.position.X < partie.largeur * 50 - 52)
-                    {
-                        pacman.position = new Point(pacman.position.X + 50, pacman.position.Y);
-                        pacman.currentCellule = labyrinthe.getCellules()[index];
-                        pacman.index = index;
-                        RemoveControlAtPosition(pacman.position);
-                        index = pacman.index + 1;
-                        await Task.Delay(speed);
-                    }
-                }
-            }
-            LoopStart();
-        }
-        */
-
         /* ---------------- Colision PacMan Fantome ---------------- */
 
-        private void Colision_PacMan_Fantome(Character pacman, Character fantome)
+        private void Colision_PacMan_Fantome(Character fantome)
         {
             if (fantome.position == pacman.position)
             {
                 isRunning = false;
                 Reset_PacMan();
-                Reset_Fantome(fantome);
-                tlpVies.Controls.RemoveAt(nbVie);
-                nbVie--;
+                Reset_Fantome();
+                tlpVies.Controls.RemoveAt(partie.nbVie);
+                partie.nbVie--;
                 IsGameDefeat();
             }
         }
@@ -463,7 +355,7 @@ namespace Interface_PacMan
 
         private async void LoopStart()
         {
-            if (!isRunning)
+            if (!isRunning && !isVictory && !isDefeat)
             {
                 isRunning = true;
                 await RunLoopAsyncFantome2();
@@ -480,7 +372,7 @@ namespace Interface_PacMan
                 fantomeAleatoire.position = point;
                 lastCellule = fantomeAleatoire.currentCellule;
                 fantomeAleatoire.currentCellule = nextCellule;
-                Colision_PacMan_Fantome(pacman, fantomeAleatoire);
+                Colision_PacMan_Fantome(fantomeAleatoire);
                 await Task.Delay(speed);
             }
         }
@@ -490,6 +382,7 @@ namespace Interface_PacMan
             Random random = new Random();
             UneCellule lastCellule = fantomeAleatoire.currentCellule;
             List<UneCellule> cellulesVisited = [lastCellule];
+
             while (isRunning)
             {
                 UneCellule nextCellule = fantomeAleatoire.currentCellule.getVoisins().First(cellule => cellule.isLien(fantomeAleatoire.currentCellule) && cellule != cellulesVisited.Last());
@@ -508,8 +401,10 @@ namespace Interface_PacMan
                     cellulesVisited.Clear();
                     cellulesVisited = [fantomeAleatoire.currentCellule, lastCellule];
                 }
-                Colision_PacMan_Fantome(pacman, fantomeAleatoire);
-                await Task.Delay(500);
+
+                Console.WriteLine($"{isRunning}");
+                Colision_PacMan_Fantome(fantomeAleatoire);
+                await Task.Delay(speed);
             }
         }
 
@@ -916,11 +811,53 @@ namespace Interface_PacMan
         {
             if (isVictory == true || isDefeat == true)
             {
-                formMenuPrincipal.Show();
+                FormFinPartie formFinPartie = new FormFinPartie(formMenuPrincipal, partie, isVictory);
+                formFinPartie.Show();
             }
             else
             {
                 formMenuPrincipal.Close();
+            }
+        }
+
+        private async Task Pause(FormMenuPause formMenuPause)
+        {
+            while (formMenuPause.IsDisposed == false)
+            {
+                isRunning = false;
+                await Task.Delay(100);
+            }
+            SaveTouches();
+        }
+
+        private void SaveTouches()
+        {
+            partie.toucheHaut = Convert.ToChar(ConfigurationManager.AppSettings["ToucheHaut"]);
+            partie.toucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
+            partie.toucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
+            partie.toucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
+        }
+
+        private async void FormPartie_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                FormMenuPause formMenuPause = new FormMenuPause(formMenuPrincipal, this);
+                formMenuPause.Show();
+                this.Hide();
+                Pause(formMenuPause);
+            }
+        }
+
+        private void FormPartie_SizeChanged(object sender, EventArgs e)
+        {
+            float fontHeight = lblScore.Size.Height / 5;
+
+            if (fontHeight > 0)
+            {
+                lblScore.Font = new Font(lblScore.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblScoreCount.Font = new Font(lblScoreCount.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblVies.Font = new Font(lblVies.Font.FontFamily, fontHeight, FontStyle.Bold);
             }
         }
     }

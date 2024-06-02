@@ -37,7 +37,7 @@
             tlpFondEcran = new TableLayoutPanel();
             tlpAffichage = new TableLayoutPanel();
             tlpVies = new TableLayoutPanel();
-            label1 = new Label();
+            lblVies = new Label();
             tlpGrille.SuspendLayout();
             tlpBordure.SuspendLayout();
             tlpScore.SuspendLayout();
@@ -191,7 +191,7 @@
             tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
             tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
             tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.Controls.Add(label1, 0, 0);
+            tlpVies.Controls.Add(lblVies, 0, 0);
             tlpVies.Dock = DockStyle.Fill;
             tlpVies.Location = new Point(0, 10);
             tlpVies.Margin = new Padding(0);
@@ -201,20 +201,20 @@
             tlpVies.Size = new Size(290, 42);
             tlpVies.TabIndex = 1;
             // 
-            // label1
+            // lblVies
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 0);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(87, 42);
-            label1.TabIndex = 0;
-            label1.Text = "VIES : ";
-            label1.TextAlign = ContentAlignment.MiddleRight;
+            lblVies.AutoSize = true;
+            lblVies.BackColor = Color.Transparent;
+            lblVies.Dock = DockStyle.Fill;
+            lblVies.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVies.ForeColor = Color.White;
+            lblVies.Location = new Point(0, 0);
+            lblVies.Margin = new Padding(0, 0, 0, 5);
+            lblVies.Name = "lblVies";
+            lblVies.Size = new Size(87, 37);
+            lblVies.TabIndex = 0;
+            lblVies.Text = "VIES : ";
+            lblVies.TextAlign = ContentAlignment.MiddleRight;
             // 
             // FormPartie
             // 
@@ -223,14 +223,18 @@
             BackColor = Color.FromArgb(0, 0, 43);
             ClientSize = new Size(1182, 628);
             Controls.Add(tlpFondEcran);
+            MinimizeBox = false;
             MinimumSize = new Size(960, 540);
             Name = "FormPartie";
             ShowIcon = false;
+            SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Partie";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormPartie_FormClosing;
             Load += FormPartie_Load;
+            SizeChanged += FormPartie_SizeChanged;
+            KeyDown += FormPartie_KeyDown;
             KeyPress += FormPartie_KeyPress;
             tlpGrille.ResumeLayout(false);
             tlpBordure.ResumeLayout(false);
@@ -254,6 +258,6 @@
         private Label lblScoreCount;
         private Label lblScore;
         private TableLayoutPanel tlpVies;
-        private Label label1;
+        private Label lblVies;
     }
 }

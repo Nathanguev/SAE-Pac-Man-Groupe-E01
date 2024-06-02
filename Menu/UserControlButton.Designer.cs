@@ -37,7 +37,6 @@
             roundButton1.Dock = DockStyle.Fill;
             roundButton1.Location = new Point(0, 0);
             roundButton1.Name = "roundButton1";
-            roundButton1.PictureBoxImage = Properties.Resources.Fleche;
             roundButton1.Size = new Size(200, 200);
             roundButton1.TabIndex = 0;
             roundButton1.UseVisualStyleBackColor = false;

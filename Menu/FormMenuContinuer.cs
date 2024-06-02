@@ -20,16 +20,26 @@ namespace Interface_PacMan
         {
             InitializeComponent();
             this.formMenuPrincipal = formMenuPrincipal;
+        }
 
+        private void FormMenuContinuer_Load(object sender, EventArgs e)
+        {
             UserControlSauvegarde sauvegarde = new UserControlSauvegarde(formMenuPrincipal, this);
             tableLayoutPanel2.Controls.Add(sauvegarde, 3, 1);
             sauvegarde.Dock = DockStyle.Fill;
             sauvegarde.Margin = new Padding(0);
         }
 
-        private void FormMenuContinuer_Load(object sender, EventArgs e)
+        private void btn_MouseEnter(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.LightBlue;
+        }
 
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.BackColor = Color.FromArgb(224, 224, 224);
         }
 
         private void FormMenuContinuer_FormClosing(object sender, FormClosingEventArgs e)
