@@ -32,14 +32,14 @@
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnRetour = new Bibliotheque_PacMan.RoundButton();
-            tableLayoutPanel3 = new TableLayoutPanel();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            tableLayoutPanel5 = new TableLayoutPanel();
-            panelFondEcran = new Panel();
             btnCouleur = new Bibliotheque_PacMan.RoundButton();
+            tableLayoutPanel3 = new TableLayoutPanel();
             btnDifficulte = new Bibliotheque_PacMan.RoundButton();
+            tableLayoutPanel4 = new TableLayoutPanel();
             btnBonus = new Bibliotheque_PacMan.RoundButton();
+            tableLayoutPanel5 = new TableLayoutPanel();
             btnJouer = new Bibliotheque_PacMan.RoundButton();
+            panelFondEcran = new Panel();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -118,11 +118,32 @@
             btnRetour.Name = "btnRetour";
             btnRetour.Rounded = true;
             btnRetour.Size = new Size(59, 62);
-            btnRetour.TabIndex = 1;
+            btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
             btnRetour.MouseLeave += btn_MouseLeave;
+            // 
+            // btnCouleur
+            // 
+            btnCouleur.BackColor = Color.FromArgb(224, 224, 224);
+            btnCouleur.BorderColor = Color.Transparent;
+            btnCouleur.BorderRadius = 31;
+            btnCouleur.BorderWidth = 0;
+            btnCouleur.Dock = DockStyle.Fill;
+            btnCouleur.FlatAppearance.BorderSize = 0;
+            btnCouleur.FlatStyle = FlatStyle.Flat;
+            btnCouleur.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnCouleur.Location = new Point(442, 7);
+            btnCouleur.Margin = new Padding(0);
+            btnCouleur.Name = "btnCouleur";
+            btnCouleur.Rounded = true;
+            btnCouleur.Size = new Size(295, 62);
+            btnCouleur.TabIndex = 1;
+            btnCouleur.Text = "Couleur Pac-Man";
+            btnCouleur.UseVisualStyleBackColor = false;
+            btnCouleur.MouseEnter += btn_MouseEnter;
+            btnCouleur.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel3
             // 
@@ -141,73 +162,6 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel3.Size = new Size(1182, 78);
             tableLayoutPanel3.TabIndex = 2;
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.ColumnCount = 3;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel4.Controls.Add(btnBonus, 1, 1);
-            tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(0, 470);
-            tableLayoutPanel4.Margin = new Padding(0);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 3;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel4.Size = new Size(1182, 78);
-            tableLayoutPanel4.TabIndex = 3;
-            // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.ColumnCount = 3;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel5.Controls.Add(btnJouer, 1, 1);
-            tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(0, 548);
-            tableLayoutPanel5.Margin = new Padding(0);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 3;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel5.Size = new Size(1182, 80);
-            tableLayoutPanel5.TabIndex = 4;
-            // 
-            // panelFondEcran
-            // 
-            panelFondEcran.Controls.Add(tableLayoutPanel1);
-            panelFondEcran.Dock = DockStyle.Fill;
-            panelFondEcran.Location = new Point(0, 0);
-            panelFondEcran.Margin = new Padding(0);
-            panelFondEcran.Name = "panelFondEcran";
-            panelFondEcran.Size = new Size(1182, 628);
-            panelFondEcran.TabIndex = 1;
-            // 
-            // btnCouleur
-            // 
-            btnCouleur.BackColor = Color.FromArgb(224, 224, 224);
-            btnCouleur.BorderColor = Color.Transparent;
-            btnCouleur.BorderRadius = 31;
-            btnCouleur.BorderWidth = 0;
-            btnCouleur.Dock = DockStyle.Fill;
-            btnCouleur.FlatAppearance.BorderSize = 0;
-            btnCouleur.FlatStyle = FlatStyle.Flat;
-            btnCouleur.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCouleur.Location = new Point(442, 7);
-            btnCouleur.Margin = new Padding(0);
-            btnCouleur.Name = "btnCouleur";
-            btnCouleur.Rounded = true;
-            btnCouleur.Size = new Size(295, 62);
-            btnCouleur.TabIndex = 2;
-            btnCouleur.Text = "Couleur Pac-Man";
-            btnCouleur.UseVisualStyleBackColor = false;
-            btnCouleur.MouseEnter += btn_MouseEnter;
-            btnCouleur.MouseLeave += btn_MouseLeave;
             // 
             // btnDifficulte
             // 
@@ -231,6 +185,24 @@
             btnDifficulte.MouseEnter += btn_MouseEnter;
             btnDifficulte.MouseLeave += btn_MouseLeave;
             // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 3;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel4.Controls.Add(btnBonus, 1, 1);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(0, 470);
+            tableLayoutPanel4.Margin = new Padding(0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 3;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel4.Size = new Size(1182, 78);
+            tableLayoutPanel4.TabIndex = 3;
+            // 
             // btnBonus
             // 
             btnBonus.BackColor = Color.FromArgb(224, 224, 224);
@@ -251,6 +223,24 @@
             btnBonus.UseVisualStyleBackColor = false;
             btnBonus.MouseEnter += btn_MouseEnter;
             btnBonus.MouseLeave += btn_MouseLeave;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.ColumnCount = 3;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel5.Controls.Add(btnJouer, 1, 1);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(0, 548);
+            tableLayoutPanel5.Margin = new Padding(0);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.Size = new Size(1182, 80);
+            tableLayoutPanel5.TabIndex = 4;
             // 
             // btnJouer
             // 
@@ -273,6 +263,16 @@
             btnJouer.Click += btnJouer_Click;
             btnJouer.MouseEnter += btn_MouseEnter;
             btnJouer.MouseLeave += btn_MouseLeave;
+            // 
+            // panelFondEcran
+            // 
+            panelFondEcran.Controls.Add(tableLayoutPanel1);
+            panelFondEcran.Dock = DockStyle.Fill;
+            panelFondEcran.Location = new Point(0, 0);
+            panelFondEcran.Margin = new Padding(0);
+            panelFondEcran.Name = "panelFondEcran";
+            panelFondEcran.Size = new Size(1182, 628);
+            panelFondEcran.TabIndex = 1;
             // 
             // FormMenuParametre
             // 

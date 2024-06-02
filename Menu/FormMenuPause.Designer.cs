@@ -30,11 +30,11 @@
         {
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
-            btnContinuer = new Button();
+            btnContinuer = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel3 = new TableLayoutPanel();
-            btnOptions = new Button();
+            btnOptions = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel4 = new TableLayoutPanel();
-            btnQuitter = new Button();
+            btnQuitter = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -82,13 +82,19 @@
             // btnContinuer
             // 
             btnContinuer.BackColor = Color.FromArgb(224, 224, 224);
+            btnContinuer.BorderColor = Color.Transparent;
+            btnContinuer.BorderRadius = 31;
+            btnContinuer.BorderWidth = 0;
             btnContinuer.Dock = DockStyle.Fill;
+            btnContinuer.FlatAppearance.BorderSize = 0;
+            btnContinuer.FlatStyle = FlatStyle.Flat;
             btnContinuer.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnContinuer.Location = new Point(0, 7);
             btnContinuer.Margin = new Padding(0);
             btnContinuer.Name = "btnContinuer";
+            btnContinuer.Rounded = true;
             btnContinuer.Size = new Size(295, 62);
-            btnContinuer.TabIndex = 0;
+            btnContinuer.TabIndex = 1;
             btnContinuer.Text = "CONTINUER";
             btnContinuer.UseVisualStyleBackColor = false;
             btnContinuer.Click += btnContinuer_Click;
@@ -115,13 +121,19 @@
             // btnOptions
             // 
             btnOptions.BackColor = Color.FromArgb(224, 224, 224);
+            btnOptions.BorderColor = Color.Transparent;
+            btnOptions.BorderRadius = 31;
+            btnOptions.BorderWidth = 0;
             btnOptions.Dock = DockStyle.Fill;
+            btnOptions.FlatAppearance.BorderSize = 0;
+            btnOptions.FlatStyle = FlatStyle.Flat;
             btnOptions.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnOptions.Location = new Point(0, 7);
             btnOptions.Margin = new Padding(0);
             btnOptions.Name = "btnOptions";
+            btnOptions.Rounded = true;
             btnOptions.Size = new Size(295, 62);
-            btnOptions.TabIndex = 1;
+            btnOptions.TabIndex = 2;
             btnOptions.Text = "OPTIONS";
             btnOptions.UseVisualStyleBackColor = false;
             btnOptions.Click += btnOptions_Click;
@@ -148,13 +160,19 @@
             // btnQuitter
             // 
             btnQuitter.BackColor = Color.FromArgb(224, 224, 224);
+            btnQuitter.BorderColor = Color.Transparent;
+            btnQuitter.BorderRadius = 31;
+            btnQuitter.BorderWidth = 0;
             btnQuitter.Dock = DockStyle.Fill;
+            btnQuitter.FlatAppearance.BorderSize = 0;
+            btnQuitter.FlatStyle = FlatStyle.Flat;
             btnQuitter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnQuitter.Location = new Point(0, 7);
             btnQuitter.Margin = new Padding(0);
             btnQuitter.Name = "btnQuitter";
+            btnQuitter.Rounded = true;
             btnQuitter.Size = new Size(295, 62);
-            btnQuitter.TabIndex = 1;
+            btnQuitter.TabIndex = 3;
             btnQuitter.Text = "QUITTER";
             btnQuitter.UseVisualStyleBackColor = false;
             btnQuitter.Click += btnQuitter_Click;
@@ -187,10 +205,10 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
-        private Button btnContinuer;
         private TableLayoutPanel tableLayoutPanel3;
-        private Button btnOptions;
         private TableLayoutPanel tableLayoutPanel4;
-        private Button btnQuitter;
+        private Bibliotheque_PacMan.RoundButton btnContinuer;
+        private Bibliotheque_PacMan.RoundButton btnOptions;
+        private Bibliotheque_PacMan.RoundButton btnQuitter;
     }
 }

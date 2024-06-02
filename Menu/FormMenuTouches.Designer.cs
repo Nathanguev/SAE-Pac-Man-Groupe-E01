@@ -39,6 +39,7 @@
             lblHaut = new Label();
             tlpToucheHaut = new TableLayoutPanel();
             txtHaut = new TextBox();
+            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel3 = new TableLayoutPanel();
             tlpBas = new TableLayoutPanel();
             lblBas = new Label();
@@ -48,7 +49,6 @@
             lblGauche = new Label();
             tlpToucheGauche = new TableLayoutPanel();
             txtGauche = new TextBox();
-            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -243,6 +243,27 @@
             txtHaut.TextChanged += txt_TextChanged;
             txtHaut.Validated += txt_Validated;
             // 
+            // btnRetour
+            // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.BorderColor = Color.Transparent;
+            btnRetour.BorderRadius = 29;
+            btnRetour.BorderWidth = 0;
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.FlatAppearance.BorderSize = 0;
+            btnRetour.FlatStyle = FlatStyle.Flat;
+            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.Location = new Point(118, 7);
+            btnRetour.Margin = new Padding(0);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Rounded = true;
+            btnRetour.Size = new Size(59, 62);
+            btnRetour.TabIndex = 0;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
+            // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 5;
@@ -389,27 +410,6 @@
             txtGauche.TextAlign = HorizontalAlignment.Center;
             txtGauche.TextChanged += txt_TextChanged;
             txtGauche.Validated += txt_Validated;
-            // 
-            // btnRetour
-            // 
-            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
-            btnRetour.BorderColor = Color.Transparent;
-            btnRetour.BorderRadius = 29;
-            btnRetour.BorderWidth = 0;
-            btnRetour.Dock = DockStyle.Fill;
-            btnRetour.FlatAppearance.BorderSize = 0;
-            btnRetour.FlatStyle = FlatStyle.Flat;
-            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnRetour.Location = new Point(118, 7);
-            btnRetour.Margin = new Padding(0);
-            btnRetour.Name = "btnRetour";
-            btnRetour.Rounded = true;
-            btnRetour.Size = new Size(59, 62);
-            btnRetour.TabIndex = 3;
-            btnRetour.UseVisualStyleBackColor = false;
-            btnRetour.Click += btnRetour_Click;
-            btnRetour.MouseEnter += btn_MouseEnter;
-            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // FormMenuTouches
             // 

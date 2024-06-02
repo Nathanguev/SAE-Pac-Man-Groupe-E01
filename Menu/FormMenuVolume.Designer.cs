@@ -33,13 +33,13 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             lblVolumeEffets = new Label();
             trackBarEffets = new TrackBar();
+            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel3 = new TableLayoutPanel();
             lblVolumeGlobal = new Label();
             trackBarGlobal = new TrackBar();
             tableLayoutPanel4 = new TableLayoutPanel();
             lblVolumeMusique = new Label();
             trackBarMusique = new TrackBar();
-            btnRetour = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -136,6 +136,27 @@
             trackBarEffets.Value = 80;
             trackBarEffets.Validated += trackBar_Validated;
             // 
+            // btnRetour
+            // 
+            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetour.BorderColor = Color.Transparent;
+            btnRetour.BorderRadius = 29;
+            btnRetour.BorderWidth = 0;
+            btnRetour.Dock = DockStyle.Fill;
+            btnRetour.FlatAppearance.BorderSize = 0;
+            btnRetour.FlatStyle = FlatStyle.Flat;
+            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.Location = new Point(118, 7);
+            btnRetour.Margin = new Padding(0);
+            btnRetour.Name = "btnRetour";
+            btnRetour.Rounded = true;
+            btnRetour.Size = new Size(59, 62);
+            btnRetour.TabIndex = 0;
+            btnRetour.UseVisualStyleBackColor = false;
+            btnRetour.Click += btnRetour_Click;
+            btnRetour.MouseEnter += btn_MouseEnter;
+            btnRetour.MouseLeave += btn_MouseLeave;
+            // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 5;
@@ -181,7 +202,7 @@
             trackBarGlobal.Name = "trackBarGlobal";
             trackBarGlobal.Size = new Size(295, 62);
             trackBarGlobal.SmallChange = 5;
-            trackBarGlobal.TabIndex = 2;
+            trackBarGlobal.TabIndex = 1;
             trackBarGlobal.Tag = "VolumeGlobal";
             trackBarGlobal.TickFrequency = 10;
             trackBarGlobal.Value = 80;
@@ -232,33 +253,12 @@
             trackBarMusique.Name = "trackBarMusique";
             trackBarMusique.Size = new Size(295, 62);
             trackBarMusique.SmallChange = 5;
-            trackBarMusique.TabIndex = 2;
+            trackBarMusique.TabIndex = 1;
             trackBarMusique.Tag = "VolumeMusique";
             trackBarMusique.TickFrequency = 10;
             trackBarMusique.Value = 80;
             trackBarMusique.ValueChanged += trackBarMusique_ValueChanged;
             trackBarMusique.Validated += trackBar_Validated;
-            // 
-            // btnRetour
-            // 
-            btnRetour.BackColor = Color.FromArgb(224, 224, 224);
-            btnRetour.BorderColor = Color.Transparent;
-            btnRetour.BorderRadius = 29;
-            btnRetour.BorderWidth = 0;
-            btnRetour.Dock = DockStyle.Fill;
-            btnRetour.FlatAppearance.BorderSize = 0;
-            btnRetour.FlatStyle = FlatStyle.Flat;
-            btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnRetour.Location = new Point(118, 7);
-            btnRetour.Margin = new Padding(0);
-            btnRetour.Name = "btnRetour";
-            btnRetour.Rounded = true;
-            btnRetour.Size = new Size(59, 62);
-            btnRetour.TabIndex = 3;
-            btnRetour.UseVisualStyleBackColor = false;
-            btnRetour.Click += btnRetour_Click;
-            btnRetour.MouseEnter += btn_MouseEnter;
-            btnRetour.MouseLeave += btn_MouseLeave;
             // 
             // FormMenuVolume
             // 

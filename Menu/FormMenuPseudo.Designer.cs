@@ -146,7 +146,7 @@
             btnRetour.Name = "btnRetour";
             btnRetour.Rounded = true;
             btnRetour.Size = new Size(59, 62);
-            btnRetour.TabIndex = 2;
+            btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;

@@ -31,9 +31,9 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            tableLayoutPanel3 = new TableLayoutPanel();
             btnRetour = new Bibliotheque_PacMan.RoundButton();
             btnTouches = new Bibliotheque_PacMan.RoundButton();
+            tableLayoutPanel3 = new TableLayoutPanel();
             btnVolume = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -93,24 +93,6 @@
             tableLayoutPanel2.Size = new Size(1182, 78);
             tableLayoutPanel2.TabIndex = 1;
             // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel3.Controls.Add(btnVolume, 1, 1);
-            tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(0, 392);
-            tableLayoutPanel3.Margin = new Padding(0);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 3;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel3.Size = new Size(1182, 78);
-            tableLayoutPanel3.TabIndex = 2;
-            // 
             // btnRetour
             // 
             btnRetour.BackColor = Color.FromArgb(224, 224, 224);
@@ -126,7 +108,7 @@
             btnRetour.Name = "btnRetour";
             btnRetour.Rounded = true;
             btnRetour.Size = new Size(59, 62);
-            btnRetour.TabIndex = 2;
+            btnRetour.TabIndex = 0;
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
@@ -147,12 +129,30 @@
             btnTouches.Name = "btnTouches";
             btnTouches.Rounded = true;
             btnTouches.Size = new Size(295, 62);
-            btnTouches.TabIndex = 3;
+            btnTouches.TabIndex = 1;
             btnTouches.Text = "TOUCHES";
             btnTouches.UseVisualStyleBackColor = false;
             btnTouches.Click += btnTouches_Click;
             btnTouches.MouseEnter += btn_MouseEnter;
             btnTouches.MouseLeave += btn_MouseLeave;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tableLayoutPanel3.Controls.Add(btnVolume, 1, 1);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(0, 392);
+            tableLayoutPanel3.Margin = new Padding(0);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 3;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel3.Size = new Size(1182, 78);
+            tableLayoutPanel3.TabIndex = 2;
             // 
             // btnVolume
             // 
