@@ -22,6 +22,7 @@ namespace Interface_PacMan
         /* ---------------- Variables globales ---------------- */
 
         private FormMenuPrincipal formMenuPrincipal;
+        private System.Windows.Forms.Timer timer;
 
         private Partie partie;
         private Labyrinthe labyrinthe;
@@ -65,6 +66,8 @@ namespace Interface_PacMan
             Init_TableLayoutPanel(tlpLabyrinthe);
             panelLabyrinthe.Controls.Add(tlpLabyrinthe);
             Init_Vies();
+            Init_Timer();
+            lblPseudoChange.Text = partie.pseudo;
 
             Size autoScrollSize = new Size(panelLabyrinthe.Width, panelLabyrinthe.Height);
             tlpGrille.AutoScrollMinSize = autoScrollSize;
@@ -182,6 +185,13 @@ namespace Interface_PacMan
             }
         }
 
+        private void Init_Timer()
+        {
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = 1000;
+            lblTimerChange.Text = "02:00";
+        }
+
         /* ---------------- Fonctions de réinitialisation ---------------- */
 
         private void Reset_PacMan()
@@ -218,7 +228,7 @@ namespace Interface_PacMan
                 isVictory = true;
                 partie.score = Convert.ToInt32(lblScoreCount.Text);
                 partie.level += 1;
-                partie.Update_Dimensions();
+                partie.Init_Dimensions();
                 GameClose();
             }
         }
@@ -858,6 +868,10 @@ namespace Interface_PacMan
                 lblScore.Font = new Font(lblScore.Font.FontFamily, fontHeight, FontStyle.Bold);
                 lblScoreCount.Font = new Font(lblScoreCount.Font.FontFamily, fontHeight, FontStyle.Bold);
                 lblVies.Font = new Font(lblVies.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblPseudo.Font = new Font(lblPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblPseudoChange.Font = new Font(lblPseudoChange.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblTimer.Font = new Font(lblTimer.Font.FontFamily, fontHeight, FontStyle.Bold);
+                lblTimerChange.Font = new Font(lblTimerChange.Font.FontFamily, fontHeight, FontStyle.Bold);
             }
         }
     }

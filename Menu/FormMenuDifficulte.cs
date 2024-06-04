@@ -14,13 +14,14 @@ namespace Interface_PacMan
     public partial class FormMenuDifficulte : Form
     {
         private FormMenuParametre formMenuParametre;
-        private Button btnSelected;
+        private RoundButton btnSelected;
         private bool isBtnRetourClicked = false;
 
         public FormMenuDifficulte(FormMenuParametre formMenuParametre)
         {
             InitializeComponent();
             this.formMenuParametre = formMenuParametre;
+            btnSelected = new RoundButton();
         }
 
         private void btnRetour_Click(object sender, EventArgs e)

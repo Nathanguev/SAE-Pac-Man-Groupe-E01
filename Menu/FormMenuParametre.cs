@@ -37,7 +37,7 @@ namespace Interface_PacMan
 
             _pseudo = formMenuPseudo.pseudo;
             _difficulte = 2;
-            _couleur = "jaune";
+            _couleur = "#ffcb01";
 
             _bonusVitesse = true;
             _bonusScore = true;
@@ -106,6 +106,13 @@ namespace Interface_PacMan
         {
             FormMenuDifficulte formMenuDifficulte = new FormMenuDifficulte(this);
             formMenuDifficulte.Show();
+            this.Hide();
+        }
+
+        private void btnCouleur_Click(object sender, EventArgs e)
+        {
+            FormMenuCouleur formMenuCouleur = new FormMenuCouleur(this);
+            formMenuCouleur.Show();
             this.Hide();
         }
 

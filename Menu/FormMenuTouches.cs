@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using Menu;
+using Bibliotheque_PacMan;
 
 namespace Interface_PacMan
 {
@@ -48,7 +49,7 @@ namespace Interface_PacMan
 
         private void FormMenuTouches_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblHaut.Size.Height / 5;
+            float fontHeight = lblHaut.Size.Height / 4;
 
             if (fontHeight > 0)
             {
@@ -67,6 +68,19 @@ namespace Interface_PacMan
         {
             isBtnRetourClicked = true;
             this.Close();
+        }
+
+        private void tlp_Click(object sender, EventArgs e)
+        {
+            RoundTableLayoutPanel tlp = (RoundTableLayoutPanel)sender;
+            foreach (Control child in tlp.Controls)
+            {
+                if (child.Tag != null && child.Tag.Equals(tlp.Tag))
+                {
+                    child.Focus();
+                    break;
+                }
+            }
         }
 
         private void txt_TextChanged(object sender, EventArgs e)

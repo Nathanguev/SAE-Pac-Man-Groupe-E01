@@ -27,6 +27,7 @@ namespace BibliothequePacMan
         private int _level;
         private int _seed;
         private int _score;
+        private int _timerStartValue;
 
         private int _hauteur;
         private int _largeur;
@@ -51,6 +52,7 @@ namespace BibliothequePacMan
             Init_Touches();
             Init_NbVie();
             Init_Dimensions();
+            Init_TimerStatValue();
         }
 
         public Partie(string pseudo, int difficulte, string couleur, bool bonusVitesse, bool bonusScore, bool bonusVie, bool bonusTrainee, bool bonusFantome)
@@ -72,6 +74,7 @@ namespace BibliothequePacMan
             Init_Touches();
             Init_NbVie();
             Init_Dimensions();
+            Init_TimerStatValue();
         }
 
         private void Init_Volumes()
@@ -87,6 +90,11 @@ namespace BibliothequePacMan
             _toucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
             _toucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
             _toucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
+        }
+
+        public void Init_TimerStatValue()
+        {
+            _timerStartValue = 120 + 10 * _level;
         }
 
         private void Init_NbVie()
@@ -107,16 +115,10 @@ namespace BibliothequePacMan
             }
         }
 
-        private void Init_Dimensions()
+        public void Init_Dimensions()
         {
-            _hauteur = 8;
-            _largeur = 14;
-        }
-
-        public void Update_Dimensions()
-        {
-            _hauteur += 1 * _level;
-            _largeur += 2 * _level;
+            _hauteur = 8 + 1 * _level;
+            _largeur = 14 + 2 * _level;
         }
 
         public int volumeEffets

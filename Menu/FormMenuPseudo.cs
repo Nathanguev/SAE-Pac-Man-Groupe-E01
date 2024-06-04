@@ -87,6 +87,11 @@ namespace Interface_PacMan
 
         }
 
+        private void tlpPseudo_Click(object sender, EventArgs e)
+        {
+            txtPseudo.Focus();
+        }
+
         public string pseudo
         {
             get

@@ -113,6 +113,7 @@
             btnRetour.FlatAppearance.BorderSize = 0;
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.HexaColor = "";
             btnRetour.Location = new Point(118, 7);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
@@ -134,6 +135,7 @@
             btnCouleur.FlatAppearance.BorderSize = 0;
             btnCouleur.FlatStyle = FlatStyle.Flat;
             btnCouleur.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnCouleur.HexaColor = "";
             btnCouleur.Location = new Point(442, 7);
             btnCouleur.Margin = new Padding(0);
             btnCouleur.Name = "btnCouleur";
@@ -142,6 +144,7 @@
             btnCouleur.TabIndex = 1;
             btnCouleur.Text = "Couleur Pac-Man";
             btnCouleur.UseVisualStyleBackColor = false;
+            btnCouleur.Click += btnCouleur_Click;
             btnCouleur.MouseEnter += btn_MouseEnter;
             btnCouleur.MouseLeave += btn_MouseLeave;
             // 
@@ -173,6 +176,7 @@
             btnDifficulte.FlatAppearance.BorderSize = 0;
             btnDifficulte.FlatStyle = FlatStyle.Flat;
             btnDifficulte.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnDifficulte.HexaColor = "";
             btnDifficulte.Location = new Point(443, 7);
             btnDifficulte.Margin = new Padding(0);
             btnDifficulte.Name = "btnDifficulte";
@@ -213,6 +217,7 @@
             btnBonus.FlatAppearance.BorderSize = 0;
             btnBonus.FlatStyle = FlatStyle.Flat;
             btnBonus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnBonus.HexaColor = "";
             btnBonus.Location = new Point(443, 7);
             btnBonus.Margin = new Padding(0);
             btnBonus.Name = "btnBonus";
@@ -252,6 +257,7 @@
             btnJouer.FlatAppearance.BorderSize = 0;
             btnJouer.FlatStyle = FlatStyle.Flat;
             btnJouer.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnJouer.HexaColor = "";
             btnJouer.Location = new Point(443, 8);
             btnJouer.Margin = new Padding(0);
             btnJouer.Name = "btnJouer";

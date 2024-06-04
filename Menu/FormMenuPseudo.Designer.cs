@@ -31,16 +31,18 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            tableLayoutPanel5 = new TableLayoutPanel();
-            txtPseudo = new TextBox();
             btnRetour = new Bibliotheque_PacMan.RoundButton();
+            roundTableLayoutPanel1 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
+            tlpPseudo = new Bibliotheque_PacMan.RoundTableLayoutPanel();
+            txtPseudo = new TextBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             tableLayoutPanel4 = new TableLayoutPanel();
             btnSuivant = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
-            tableLayoutPanel5.SuspendLayout();
+            roundTableLayoutPanel1.SuspendLayout();
+            tlpPseudo.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
@@ -84,8 +86,8 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel2.Controls.Add(tableLayoutPanel5, 3, 1);
             tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
+            tableLayoutPanel2.Controls.Add(roundTableLayoutPanel1, 3, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(0, 314);
             tableLayoutPanel2.Margin = new Padding(0);
@@ -96,40 +98,6 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.Size = new Size(1182, 78);
             tableLayoutPanel2.TabIndex = 1;
-            // 
-            // tableLayoutPanel5
-            // 
-            tableLayoutPanel5.BackColor = Color.FromArgb(224, 224, 224);
-            tableLayoutPanel5.ColumnCount = 3;
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
-            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel5.Controls.Add(txtPseudo, 1, 1);
-            tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(442, 7);
-            tableLayoutPanel5.Margin = new Padding(0);
-            tableLayoutPanel5.Name = "tableLayoutPanel5";
-            tableLayoutPanel5.RowCount = 3;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel5.Size = new Size(295, 62);
-            tableLayoutPanel5.TabIndex = 1;
-            // 
-            // txtPseudo
-            // 
-            txtPseudo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtPseudo.BorderStyle = BorderStyle.FixedSingle;
-            txtPseudo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtPseudo.Location = new Point(14, 15);
-            txtPseudo.Margin = new Padding(0);
-            txtPseudo.MaxLength = 10;
-            txtPseudo.Name = "txtPseudo";
-            txtPseudo.PlaceholderText = "PSEUDO";
-            txtPseudo.Size = new Size(265, 30);
-            txtPseudo.TabIndex = 0;
-            txtPseudo.TextAlign = HorizontalAlignment.Center;
-            txtPseudo.TextChanged += txtPseudo_TextChanged;
             // 
             // btnRetour
             // 
@@ -151,6 +119,64 @@
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
             btnRetour.MouseLeave += btn_MouseLeave;
+            // 
+            // roundTableLayoutPanel1
+            // 
+            roundTableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            roundTableLayoutPanel1.BorderColor = Color.Transparent;
+            roundTableLayoutPanel1.BorderRadius = 31;
+            roundTableLayoutPanel1.BorderWidth = 0;
+            roundTableLayoutPanel1.ColumnCount = 3;
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            roundTableLayoutPanel1.Controls.Add(tlpPseudo, 1, 1);
+            roundTableLayoutPanel1.Dock = DockStyle.Fill;
+            roundTableLayoutPanel1.Location = new Point(442, 7);
+            roundTableLayoutPanel1.Margin = new Padding(0);
+            roundTableLayoutPanel1.Name = "roundTableLayoutPanel1";
+            roundTableLayoutPanel1.RowCount = 3;
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.Size = new Size(295, 62);
+            roundTableLayoutPanel1.TabIndex = 1;
+            // 
+            // tlpPseudo
+            // 
+            tlpPseudo.BackColor = Color.White;
+            tlpPseudo.BorderColor = Color.Transparent;
+            tlpPseudo.BorderRadius = 21;
+            tlpPseudo.BorderWidth = 0;
+            tlpPseudo.ColumnCount = 1;
+            tlpPseudo.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tlpPseudo.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tlpPseudo.Controls.Add(txtPseudo, 0, 0);
+            tlpPseudo.Dock = DockStyle.Fill;
+            tlpPseudo.Location = new Point(14, 9);
+            tlpPseudo.Margin = new Padding(0);
+            tlpPseudo.Name = "tlpPseudo";
+            tlpPseudo.RowCount = 1;
+            tlpPseudo.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpPseudo.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tlpPseudo.Size = new Size(265, 43);
+            tlpPseudo.TabIndex = 0;
+            tlpPseudo.Click += tlpPseudo_Click;
+            // 
+            // txtPseudo
+            // 
+            txtPseudo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtPseudo.BorderStyle = BorderStyle.None;
+            txtPseudo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            txtPseudo.Location = new Point(0, 10);
+            txtPseudo.Margin = new Padding(0);
+            txtPseudo.MaxLength = 15;
+            txtPseudo.Name = "txtPseudo";
+            txtPseudo.PlaceholderText = "PSEUDO";
+            txtPseudo.Size = new Size(265, 23);
+            txtPseudo.TabIndex = 0;
+            txtPseudo.TextAlign = HorizontalAlignment.Center;
+            txtPseudo.TextChanged += txtPseudo_TextChanged;
             // 
             // tableLayoutPanel3
             // 
@@ -229,8 +255,9 @@
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel5.ResumeLayout(false);
-            tableLayoutPanel5.PerformLayout();
+            roundTableLayoutPanel1.ResumeLayout(false);
+            tlpPseudo.ResumeLayout(false);
+            tlpPseudo.PerformLayout();
             tableLayoutPanel4.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -242,9 +269,10 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
         private TableLayoutPanel tableLayoutPanel4;
-        private TableLayoutPanel tableLayoutPanel5;
-        private TextBox txtPseudo;
         private Bibliotheque_PacMan.RoundButton btnRetour;
         private Bibliotheque_PacMan.RoundButton btnSuivant;
+        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel1;
+        private Bibliotheque_PacMan.RoundTableLayoutPanel tlpPseudo;
+        private TextBox txtPseudo;
     }
 }

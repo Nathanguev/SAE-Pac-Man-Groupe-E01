@@ -30,21 +30,21 @@
         {
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
+            btnQuitter = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel4 = new TableLayoutPanel();
+            btnNiveauSuivant = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel2 = new TableLayoutPanel();
             pictureBoxMessage = new PictureBox();
             tableLayoutPanel3 = new TableLayoutPanel();
-            tableLayoutPanel6 = new TableLayoutPanel();
-            lblScore = new Label();
-            btnNiveauSuivant = new Bibliotheque_PacMan.RoundButton();
-            btnQuitter = new Bibliotheque_PacMan.RoundButton();
+            roundTableLayoutPanel1 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
+            lblScore = new Bibliotheque_PacMan.RoundLabel();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMessage).BeginInit();
             tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel6.SuspendLayout();
+            roundTableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -86,6 +86,28 @@
             tableLayoutPanel5.Size = new Size(1182, 78);
             tableLayoutPanel5.TabIndex = 3;
             // 
+            // btnQuitter
+            // 
+            btnQuitter.BackColor = Color.FromArgb(224, 224, 224);
+            btnQuitter.BorderColor = Color.Transparent;
+            btnQuitter.BorderRadius = 31;
+            btnQuitter.BorderWidth = 0;
+            btnQuitter.Dock = DockStyle.Fill;
+            btnQuitter.FlatAppearance.BorderSize = 0;
+            btnQuitter.FlatStyle = FlatStyle.Flat;
+            btnQuitter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnQuitter.Location = new Point(443, 7);
+            btnQuitter.Margin = new Padding(0);
+            btnQuitter.Name = "btnQuitter";
+            btnQuitter.Rounded = true;
+            btnQuitter.Size = new Size(295, 62);
+            btnQuitter.TabIndex = 0;
+            btnQuitter.Text = "QUITTER";
+            btnQuitter.UseVisualStyleBackColor = false;
+            btnQuitter.Click += btnQuitter_Click;
+            btnQuitter.MouseEnter += btn_MouseEnter;
+            btnQuitter.MouseLeave += btn_MouseLeave;
+            // 
             // tableLayoutPanel4
             // 
             tableLayoutPanel4.ColumnCount = 3;
@@ -103,6 +125,28 @@
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel4.Size = new Size(1182, 78);
             tableLayoutPanel4.TabIndex = 2;
+            // 
+            // btnNiveauSuivant
+            // 
+            btnNiveauSuivant.BackColor = Color.FromArgb(224, 224, 224);
+            btnNiveauSuivant.BorderColor = Color.Transparent;
+            btnNiveauSuivant.BorderRadius = 31;
+            btnNiveauSuivant.BorderWidth = 0;
+            btnNiveauSuivant.Dock = DockStyle.Fill;
+            btnNiveauSuivant.FlatAppearance.BorderSize = 0;
+            btnNiveauSuivant.FlatStyle = FlatStyle.Flat;
+            btnNiveauSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnNiveauSuivant.Location = new Point(443, 7);
+            btnNiveauSuivant.Margin = new Padding(0);
+            btnNiveauSuivant.Name = "btnNiveauSuivant";
+            btnNiveauSuivant.Rounded = true;
+            btnNiveauSuivant.Size = new Size(295, 62);
+            btnNiveauSuivant.TabIndex = 0;
+            btnNiveauSuivant.Text = "NIVEAU SUIVANT";
+            btnNiveauSuivant.UseVisualStyleBackColor = false;
+            btnNiveauSuivant.Click += btnNiveauSuivant_Click;
+            btnNiveauSuivant.MouseEnter += btn_MouseEnter;
+            btnNiveauSuivant.MouseLeave += btn_MouseLeave;
             // 
             // tableLayoutPanel2
             // 
@@ -139,7 +183,7 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tableLayoutPanel3.Controls.Add(tableLayoutPanel6, 1, 1);
+            tableLayoutPanel3.Controls.Add(roundTableLayoutPanel1, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(0, 314);
             tableLayoutPanel3.Margin = new Padding(0);
@@ -151,81 +195,44 @@
             tableLayoutPanel3.Size = new Size(1182, 78);
             tableLayoutPanel3.TabIndex = 1;
             // 
-            // tableLayoutPanel6
+            // roundTableLayoutPanel1
             // 
-            tableLayoutPanel6.BackColor = Color.FromArgb(224, 224, 224);
-            tableLayoutPanel6.ColumnCount = 3;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            tableLayoutPanel6.Controls.Add(lblScore, 1, 1);
-            tableLayoutPanel6.Dock = DockStyle.Fill;
-            tableLayoutPanel6.Location = new Point(443, 7);
-            tableLayoutPanel6.Margin = new Padding(0);
-            tableLayoutPanel6.Name = "tableLayoutPanel6";
-            tableLayoutPanel6.RowCount = 3;
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel6.Size = new Size(295, 62);
-            tableLayoutPanel6.TabIndex = 0;
+            roundTableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            roundTableLayoutPanel1.BorderColor = Color.Transparent;
+            roundTableLayoutPanel1.BorderRadius = 31;
+            roundTableLayoutPanel1.BorderWidth = 0;
+            roundTableLayoutPanel1.ColumnCount = 3;
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            roundTableLayoutPanel1.Controls.Add(lblScore, 1, 1);
+            roundTableLayoutPanel1.Dock = DockStyle.Fill;
+            roundTableLayoutPanel1.Location = new Point(443, 7);
+            roundTableLayoutPanel1.Margin = new Padding(0);
+            roundTableLayoutPanel1.Name = "roundTableLayoutPanel1";
+            roundTableLayoutPanel1.RowCount = 3;
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.Size = new Size(295, 62);
+            roundTableLayoutPanel1.TabIndex = 0;
             // 
             // lblScore
             // 
             lblScore.AutoSize = true;
             lblScore.BackColor = Color.White;
+            lblScore.BorderColor = Color.Transparent;
+            lblScore.BorderRadius = 21;
+            lblScore.BorderWidth = 0;
             lblScore.Dock = DockStyle.Fill;
+            lblScore.FlatStyle = FlatStyle.Flat;
             lblScore.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblScore.Location = new Point(17, 9);
-            lblScore.Margin = new Padding(3);
+            lblScore.Location = new Point(14, 9);
+            lblScore.Margin = new Padding(0);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(259, 43);
+            lblScore.Size = new Size(265, 43);
             lblScore.TabIndex = 0;
             lblScore.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnNiveauSuivant
-            // 
-            btnNiveauSuivant.BackColor = Color.FromArgb(224, 224, 224);
-            btnNiveauSuivant.BorderColor = Color.Transparent;
-            btnNiveauSuivant.BorderRadius = 31;
-            btnNiveauSuivant.BorderWidth = 0;
-            btnNiveauSuivant.Dock = DockStyle.Fill;
-            btnNiveauSuivant.FlatAppearance.BorderSize = 0;
-            btnNiveauSuivant.FlatStyle = FlatStyle.Flat;
-            btnNiveauSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnNiveauSuivant.Location = new Point(443, 7);
-            btnNiveauSuivant.Margin = new Padding(0);
-            btnNiveauSuivant.Name = "btnNiveauSuivant";
-            btnNiveauSuivant.Rounded = true;
-            btnNiveauSuivant.Size = new Size(295, 62);
-            btnNiveauSuivant.TabIndex = 0;
-            btnNiveauSuivant.Text = "NIVEAU SUIVANT";
-            btnNiveauSuivant.UseVisualStyleBackColor = false;
-            btnNiveauSuivant.Click += btnNiveauSuivant_Click;
-            btnNiveauSuivant.MouseEnter += btn_MouseEnter;
-            btnNiveauSuivant.MouseLeave += btn_MouseLeave;
-            // 
-            // btnQuitter
-            // 
-            btnQuitter.BackColor = Color.FromArgb(224, 224, 224);
-            btnQuitter.BorderColor = Color.Transparent;
-            btnQuitter.BorderRadius = 31;
-            btnQuitter.BorderWidth = 0;
-            btnQuitter.Dock = DockStyle.Fill;
-            btnQuitter.FlatAppearance.BorderSize = 0;
-            btnQuitter.FlatStyle = FlatStyle.Flat;
-            btnQuitter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnQuitter.Location = new Point(443, 7);
-            btnQuitter.Margin = new Padding(0);
-            btnQuitter.Name = "btnQuitter";
-            btnQuitter.Rounded = true;
-            btnQuitter.Size = new Size(295, 62);
-            btnQuitter.TabIndex = 0;
-            btnQuitter.Text = "QUITTER";
-            btnQuitter.UseVisualStyleBackColor = false;
-            btnQuitter.Click += btnQuitter_Click;
-            btnQuitter.MouseEnter += btn_MouseEnter;
-            btnQuitter.MouseLeave += btn_MouseLeave;
             // 
             // FormFinPartie
             // 
@@ -249,8 +256,8 @@
             tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxMessage).EndInit();
             tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel6.ResumeLayout(false);
-            tableLayoutPanel6.PerformLayout();
+            roundTableLayoutPanel1.ResumeLayout(false);
+            roundTableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -261,10 +268,10 @@
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
-        private TableLayoutPanel tableLayoutPanel6;
-        private Label lblScore;
         private PictureBox pictureBoxMessage;
         private Bibliotheque_PacMan.RoundButton btnQuitter;
         private Bibliotheque_PacMan.RoundButton btnNiveauSuivant;
+        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel1;
+        private Bibliotheque_PacMan.RoundLabel lblScore;
     }
 }

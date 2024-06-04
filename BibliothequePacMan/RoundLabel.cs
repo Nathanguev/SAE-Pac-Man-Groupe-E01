@@ -5,25 +5,25 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Bibliotheque_PacMan
 {
-    public class RoundButton : Button
+    public class RoundLabel : Label
     {
         private int _borderRadius = 10;
         private int _borderWidth = 0;
         private Color _borderColor = Color.Transparent;
-        private bool _rounded = true;
-        private string _hexaColor = "";
 
-        public RoundButton()
+        public RoundLabel()
         {
             this.BackColor = Color.FromArgb(224, 224, 224);
             this.FlatStyle = FlatStyle.Flat;
-            this.FlatAppearance.BorderSize = 0;
             this.Margin = new Padding(0);
             this.Dock = DockStyle.Fill;
             this.Font = new Font(this.Font.FontFamily, 10, FontStyle.Bold);
+            this.TextAlign = ContentAlignment.MiddleCenter;
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -35,22 +35,8 @@ namespace Bibliotheque_PacMan
             }
             set
             {
-                if (!_rounded)
-                {
-                    _borderRadius = value;
-                    this.Invalidate();
-                }
-                else
-                {
-                    if (this.Height < this.Width)
-                    {
-                        _borderRadius = this.Height / 2;
-                    }
-                    else
-                    {
-                        _borderRadius = this.Width / 2;
-                    }
-                }
+                _borderRadius = value;
+                this.Invalidate();
             }
         }
 
@@ -82,48 +68,6 @@ namespace Bibliotheque_PacMan
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public bool Rounded
-        {
-            get
-            {
-                return _rounded;
-            }
-            set
-            {
-                _rounded = value;
-                if (_rounded)
-                {
-                    if (this.Height < this.Width)
-                    {
-                        _borderRadius = this.Height / 2;
-                    }
-                    else
-                    {
-                        _borderRadius = this.Width / 2;
-                    }
-                }
-                this.Invalidate();
-            }
-        }
-
-        public string HexaColor
-        {
-            get
-            {
-                return _hexaColor;
-            }
-            set
-            {
-                _hexaColor = value;
-                if (_hexaColor != "")
-                {
-                    this.BackColor = ColorTranslator.FromHtml(_hexaColor);
-                }
-                this.Invalidate();
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -147,16 +91,13 @@ namespace Bibliotheque_PacMan
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (Rounded)
+            if (this.Height < this.Width)
             {
-                if (this.Height < this.Width)
-                {
-                    BorderRadius = this.Height / 2;
-                }
-                else
-                {
-                    BorderRadius = this.Width / 2;
-                }
+                BorderRadius = this.Height / 2;
+            }
+            else
+            {
+                BorderRadius = this.Width / 2;
             }
             this.Invalidate();
         }

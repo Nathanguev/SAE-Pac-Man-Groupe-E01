@@ -31,15 +31,15 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            lblVolumeEffets = new Label();
             trackBarEffets = new TrackBar();
             btnRetour = new Bibliotheque_PacMan.RoundButton();
+            lblVolumeEffets = new Bibliotheque_PacMan.RoundLabel();
             tableLayoutPanel3 = new TableLayoutPanel();
-            lblVolumeGlobal = new Label();
             trackBarGlobal = new TrackBar();
+            lblVolumeGlobal = new Bibliotheque_PacMan.RoundLabel();
             tableLayoutPanel4 = new TableLayoutPanel();
-            lblVolumeMusique = new Label();
             trackBarMusique = new TrackBar();
+            lblVolumeMusique = new Bibliotheque_PacMan.RoundLabel();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -92,9 +92,9 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
-            tableLayoutPanel2.Controls.Add(lblVolumeEffets, 3, 1);
             tableLayoutPanel2.Controls.Add(trackBarEffets, 5, 1);
             tableLayoutPanel2.Controls.Add(btnRetour, 1, 1);
+            tableLayoutPanel2.Controls.Add(lblVolumeEffets, 3, 1);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(0, 314);
             tableLayoutPanel2.Margin = new Padding(0);
@@ -106,29 +106,16 @@
             tableLayoutPanel2.Size = new Size(1182, 78);
             tableLayoutPanel2.TabIndex = 1;
             // 
-            // lblVolumeEffets
-            // 
-            lblVolumeEffets.AutoSize = true;
-            lblVolumeEffets.BackColor = Color.FromArgb(224, 224, 224);
-            lblVolumeEffets.Dock = DockStyle.Fill;
-            lblVolumeEffets.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblVolumeEffets.Location = new Point(268, 7);
-            lblVolumeEffets.Name = "lblVolumeEffets";
-            lblVolumeEffets.Size = new Size(289, 62);
-            lblVolumeEffets.TabIndex = 1;
-            lblVolumeEffets.Text = "Volume Effets";
-            lblVolumeEffets.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // trackBarEffets
             // 
+            trackBarEffets.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             trackBarEffets.Cursor = Cursors.Hand;
-            trackBarEffets.Dock = DockStyle.Fill;
             trackBarEffets.LargeChange = 10;
-            trackBarEffets.Location = new Point(619, 7);
+            trackBarEffets.Location = new Point(619, 10);
             trackBarEffets.Margin = new Padding(0);
             trackBarEffets.Maximum = 100;
             trackBarEffets.Name = "trackBarEffets";
-            trackBarEffets.Size = new Size(295, 62);
+            trackBarEffets.Size = new Size(295, 56);
             trackBarEffets.SmallChange = 5;
             trackBarEffets.TabIndex = 2;
             trackBarEffets.Tag = "VolumeEffets";
@@ -157,6 +144,24 @@
             btnRetour.MouseEnter += btn_MouseEnter;
             btnRetour.MouseLeave += btn_MouseLeave;
             // 
+            // lblVolumeEffets
+            // 
+            lblVolumeEffets.AutoSize = true;
+            lblVolumeEffets.BackColor = Color.FromArgb(224, 224, 224);
+            lblVolumeEffets.BorderColor = Color.Transparent;
+            lblVolumeEffets.BorderRadius = 31;
+            lblVolumeEffets.BorderWidth = 0;
+            lblVolumeEffets.Dock = DockStyle.Fill;
+            lblVolumeEffets.FlatStyle = FlatStyle.Flat;
+            lblVolumeEffets.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVolumeEffets.Location = new Point(265, 7);
+            lblVolumeEffets.Margin = new Padding(0);
+            lblVolumeEffets.Name = "lblVolumeEffets";
+            lblVolumeEffets.Size = new Size(295, 62);
+            lblVolumeEffets.TabIndex = 3;
+            lblVolumeEffets.Text = "Volume Effets";
+            lblVolumeEffets.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 5;
@@ -165,8 +170,8 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
-            tableLayoutPanel3.Controls.Add(lblVolumeGlobal, 1, 1);
             tableLayoutPanel3.Controls.Add(trackBarGlobal, 3, 1);
+            tableLayoutPanel3.Controls.Add(lblVolumeGlobal, 1, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(0, 392);
             tableLayoutPanel3.Margin = new Padding(0);
@@ -178,35 +183,40 @@
             tableLayoutPanel3.Size = new Size(1182, 78);
             tableLayoutPanel3.TabIndex = 2;
             // 
-            // lblVolumeGlobal
-            // 
-            lblVolumeGlobal.AutoSize = true;
-            lblVolumeGlobal.BackColor = Color.FromArgb(224, 224, 224);
-            lblVolumeGlobal.Dock = DockStyle.Fill;
-            lblVolumeGlobal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblVolumeGlobal.Location = new Point(268, 7);
-            lblVolumeGlobal.Name = "lblVolumeGlobal";
-            lblVolumeGlobal.Size = new Size(289, 62);
-            lblVolumeGlobal.TabIndex = 0;
-            lblVolumeGlobal.Text = "Volume Global";
-            lblVolumeGlobal.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // trackBarGlobal
             // 
+            trackBarGlobal.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             trackBarGlobal.Cursor = Cursors.Hand;
-            trackBarGlobal.Dock = DockStyle.Fill;
             trackBarGlobal.LargeChange = 10;
-            trackBarGlobal.Location = new Point(619, 7);
+            trackBarGlobal.Location = new Point(619, 10);
             trackBarGlobal.Margin = new Padding(0);
             trackBarGlobal.Maximum = 100;
             trackBarGlobal.Name = "trackBarGlobal";
-            trackBarGlobal.Size = new Size(295, 62);
+            trackBarGlobal.Size = new Size(295, 56);
             trackBarGlobal.SmallChange = 5;
             trackBarGlobal.TabIndex = 1;
             trackBarGlobal.Tag = "VolumeGlobal";
             trackBarGlobal.TickFrequency = 10;
             trackBarGlobal.Value = 80;
             trackBarGlobal.Validated += trackBar_Validated;
+            // 
+            // lblVolumeGlobal
+            // 
+            lblVolumeGlobal.AutoSize = true;
+            lblVolumeGlobal.BackColor = Color.FromArgb(224, 224, 224);
+            lblVolumeGlobal.BorderColor = Color.Transparent;
+            lblVolumeGlobal.BorderRadius = 31;
+            lblVolumeGlobal.BorderWidth = 0;
+            lblVolumeGlobal.Dock = DockStyle.Fill;
+            lblVolumeGlobal.FlatStyle = FlatStyle.Flat;
+            lblVolumeGlobal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVolumeGlobal.Location = new Point(265, 7);
+            lblVolumeGlobal.Margin = new Padding(0);
+            lblVolumeGlobal.Name = "lblVolumeGlobal";
+            lblVolumeGlobal.Size = new Size(295, 62);
+            lblVolumeGlobal.TabIndex = 2;
+            lblVolumeGlobal.Text = "Volume Global";
+            lblVolumeGlobal.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel4
             // 
@@ -216,8 +226,8 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.5F));
-            tableLayoutPanel4.Controls.Add(lblVolumeMusique, 1, 1);
             tableLayoutPanel4.Controls.Add(trackBarMusique, 3, 1);
+            tableLayoutPanel4.Controls.Add(lblVolumeMusique, 1, 1);
             tableLayoutPanel4.Dock = DockStyle.Fill;
             tableLayoutPanel4.Location = new Point(0, 470);
             tableLayoutPanel4.Margin = new Padding(0);
@@ -229,29 +239,16 @@
             tableLayoutPanel4.Size = new Size(1182, 78);
             tableLayoutPanel4.TabIndex = 3;
             // 
-            // lblVolumeMusique
-            // 
-            lblVolumeMusique.AutoSize = true;
-            lblVolumeMusique.BackColor = Color.FromArgb(224, 224, 224);
-            lblVolumeMusique.Dock = DockStyle.Fill;
-            lblVolumeMusique.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblVolumeMusique.Location = new Point(268, 7);
-            lblVolumeMusique.Name = "lblVolumeMusique";
-            lblVolumeMusique.Size = new Size(289, 62);
-            lblVolumeMusique.TabIndex = 0;
-            lblVolumeMusique.Text = "Volume Musique";
-            lblVolumeMusique.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // trackBarMusique
             // 
+            trackBarMusique.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             trackBarMusique.Cursor = Cursors.Hand;
-            trackBarMusique.Dock = DockStyle.Fill;
             trackBarMusique.LargeChange = 10;
-            trackBarMusique.Location = new Point(619, 7);
+            trackBarMusique.Location = new Point(619, 10);
             trackBarMusique.Margin = new Padding(0);
             trackBarMusique.Maximum = 100;
             trackBarMusique.Name = "trackBarMusique";
-            trackBarMusique.Size = new Size(295, 62);
+            trackBarMusique.Size = new Size(295, 56);
             trackBarMusique.SmallChange = 5;
             trackBarMusique.TabIndex = 1;
             trackBarMusique.Tag = "VolumeMusique";
@@ -259,6 +256,24 @@
             trackBarMusique.Value = 80;
             trackBarMusique.ValueChanged += trackBarMusique_ValueChanged;
             trackBarMusique.Validated += trackBar_Validated;
+            // 
+            // lblVolumeMusique
+            // 
+            lblVolumeMusique.AutoSize = true;
+            lblVolumeMusique.BackColor = Color.FromArgb(224, 224, 224);
+            lblVolumeMusique.BorderColor = Color.Transparent;
+            lblVolumeMusique.BorderRadius = 31;
+            lblVolumeMusique.BorderWidth = 0;
+            lblVolumeMusique.Dock = DockStyle.Fill;
+            lblVolumeMusique.FlatStyle = FlatStyle.Flat;
+            lblVolumeMusique.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVolumeMusique.Location = new Point(265, 7);
+            lblVolumeMusique.Margin = new Padding(0);
+            lblVolumeMusique.Name = "lblVolumeMusique";
+            lblVolumeMusique.Size = new Size(295, 62);
+            lblVolumeMusique.TabIndex = 2;
+            lblVolumeMusique.Text = "Volume Musique";
+            lblVolumeMusique.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // FormMenuVolume
             // 
@@ -297,12 +312,12 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
         private TableLayoutPanel tableLayoutPanel4;
-        private Label lblVolumeEffets;
-        private Label lblVolumeGlobal;
-        private Label lblVolumeMusique;
         private TrackBar trackBarGlobal;
         private TrackBar trackBarMusique;
         private TrackBar trackBarEffets;
         private Bibliotheque_PacMan.RoundButton btnRetour;
+        private Bibliotheque_PacMan.RoundLabel lblVolumeMusique;
+        private Bibliotheque_PacMan.RoundLabel lblVolumeEffets;
+        private Bibliotheque_PacMan.RoundLabel lblVolumeGlobal;
     }
 }
