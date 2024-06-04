@@ -27,9 +27,10 @@ namespace Bibliotheque_PacMan
         {
             this._hexaColor = hexaColor;
             this._currentCellule = currentCellule;
+            Init_Label();
 
             _animationtimer = new System.Windows.Forms.Timer();
-            _animationtimer.Interval = 200;
+            _animationtimer.Interval = 50;
             _animationtimer.Tick += AnimationTick;
             _animationtimer.Start();
         }
@@ -39,7 +40,7 @@ namespace Bibliotheque_PacMan
             this.BackColor = Color.Transparent;
             this.ForeColor = ColorTranslator.FromHtml(_hexaColor);
             this.Margin = new Padding(0);
-            this.Size = new Size(50, 50);
+            this.Size = new Size(46, 46);
             this.Location = new Point(_currentCellule.getY() * 50 + 2, _currentCellule.getX() * 50 + 2);
         }
 
@@ -94,7 +95,7 @@ namespace Bibliotheque_PacMan
 
         private void AnimationTick(object sender, EventArgs e)
         {
-            _animationStep = (_animationStep + 1) % 4;
+            _animationStep = (_animationStep + 1) % 14;
             this.Invalidate();
         }
 
@@ -104,8 +105,8 @@ namespace Bibliotheque_PacMan
 
             e.Graphics.Clear(this.BackColor);
 
-            float startAngle = GetStartAngle();
             float sweepAngle = GetSweepAngle();
+            float startAngle = GetStartAngle(sweepAngle);
             float padding = 0;
 
             RectangleF pacmanRect = new RectangleF(
@@ -121,21 +122,28 @@ namespace Bibliotheque_PacMan
             }
         }
 
-        private float GetStartAngle()
+        private float GetStartAngle(float sweepAngle)
         {
+            float midAngle;
             switch (_direction)
             {
                 case PacManDirection.Up:
-                    return 300;
+                    midAngle = 90;
+                    break;
                 case PacManDirection.Down:
-                    return 120;
+                    midAngle = 270;
+                    break;
                 case PacManDirection.Left:
-                    return 210;
+                    midAngle = 0;
+                    break;
                 case PacManDirection.Right:
-                    return 30;
+                    midAngle = 180;
+                    break;
                 default:
-                    return 30;
+                    midAngle = 180;
+                    break;
             }
+            return midAngle - (sweepAngle / 2);
         }
 
         private float GetSweepAngle()
@@ -143,15 +151,37 @@ namespace Bibliotheque_PacMan
             switch (_animationStep)
             {
                 case 0:
-                    return 300;
+                    return 280;
                 case 1:
-                    return 320;
+                    return 290;
                 case 2:
-                    return 340;
-                case 3:
-                    return 320;
-                default:
                     return 300;
+                case 3:
+                    return 310;
+                case 4:
+                    return 320;
+                case 5:
+                    return 330;
+                case 6:
+                    return 340;
+                case 7:
+                    return 350;
+                case 8:
+                    return 340;
+                case 9:
+                    return 330;
+                case 10:
+                    return 320;
+                case 11:
+                    return 310;
+                case 12:
+                    return 300;
+                case 13:
+                    return 290;
+                case 14:
+                    return 380;
+                default:
+                    return 280;
             }
         }
     }

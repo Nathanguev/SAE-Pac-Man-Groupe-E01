@@ -42,7 +42,7 @@ namespace BibliothequePacMan
 
             _pseudo = "Idaho";
             _difficulte = 1;
-            _couleur = "#000000";
+            _couleur = "#ffcb01";
 
             _level = 0;
             _seed = 0;
