@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,13 +25,7 @@ namespace Interface_PacMan
 
         private void FormMenuPseudo_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnSuivant.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnSuivant.Font = new Font(btnSuivant.Font.FontFamily, fontHeight, FontStyle.Bold);
-                txtPseudo.Font = new Font(txtPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
@@ -90,6 +85,11 @@ namespace Interface_PacMan
         private void tlpPseudo_Click(object sender, EventArgs e)
         {
             txtPseudo.Focus();
+        }
+
+        private void txtPseudo_Validated(object sender, EventArgs e)
+        {
+
         }
 
         public string pseudo

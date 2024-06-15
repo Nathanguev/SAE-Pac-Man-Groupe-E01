@@ -36,22 +36,22 @@
             lblScore = new Label();
             tlpFondEcran = new TableLayoutPanel();
             tlpAffichage = new TableLayoutPanel();
-            tlpVies = new TableLayoutPanel();
-            lblVies = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             lblPseudo = new Label();
             lblPseudoChange = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             lblTimerChange = new Label();
             lblTimer = new Label();
+            tlpVies = new TableLayoutPanel();
+            lblVies = new Label();
             tlpGrille.SuspendLayout();
             tlpBordure.SuspendLayout();
             tlpScore.SuspendLayout();
             tlpFondEcran.SuspendLayout();
             tlpAffichage.SuspendLayout();
-            tlpVies.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
+            tlpVies.SuspendLayout();
             SuspendLayout();
             // 
             // tlpGrille
@@ -192,40 +192,6 @@
             tlpAffichage.Size = new Size(1162, 62);
             tlpAffichage.TabIndex = 1;
             // 
-            // tlpVies
-            // 
-            tlpVies.ColumnCount = 6;
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
-            tlpVies.Controls.Add(lblVies, 0, 0);
-            tlpVies.Dock = DockStyle.Fill;
-            tlpVies.Location = new Point(870, 10);
-            tlpVies.Margin = new Padding(0);
-            tlpVies.Name = "tlpVies";
-            tlpVies.RowCount = 1;
-            tlpVies.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpVies.Size = new Size(292, 42);
-            tlpVies.TabIndex = 1;
-            // 
-            // lblVies
-            // 
-            lblVies.AutoSize = true;
-            lblVies.BackColor = Color.Transparent;
-            lblVies.Dock = DockStyle.Fill;
-            lblVies.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblVies.ForeColor = Color.White;
-            lblVies.Location = new Point(0, 0);
-            lblVies.Margin = new Padding(0, 0, 0, 5);
-            lblVies.Name = "lblVies";
-            lblVies.Size = new Size(87, 37);
-            lblVies.TabIndex = 0;
-            lblVies.Text = "VIES : ";
-            lblVies.TextAlign = ContentAlignment.MiddleRight;
-            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
@@ -314,6 +280,40 @@
             lblTimer.Text = "TIMER :";
             lblTimer.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // tlpVies
+            // 
+            tlpVies.ColumnCount = 6;
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
+            tlpVies.Controls.Add(lblVies, 0, 0);
+            tlpVies.Dock = DockStyle.Fill;
+            tlpVies.Location = new Point(870, 10);
+            tlpVies.Margin = new Padding(0);
+            tlpVies.Name = "tlpVies";
+            tlpVies.RowCount = 1;
+            tlpVies.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpVies.Size = new Size(292, 42);
+            tlpVies.TabIndex = 1;
+            // 
+            // lblVies
+            // 
+            lblVies.AutoSize = true;
+            lblVies.BackColor = Color.Transparent;
+            lblVies.Dock = DockStyle.Fill;
+            lblVies.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblVies.ForeColor = Color.White;
+            lblVies.Location = new Point(0, 0);
+            lblVies.Margin = new Padding(0, 0, 0, 5);
+            lblVies.Name = "lblVies";
+            lblVies.Size = new Size(87, 37);
+            lblVies.TabIndex = 0;
+            lblVies.Text = "VIES : ";
+            lblVies.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // FormPartie
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -340,12 +340,12 @@
             tlpScore.PerformLayout();
             tlpFondEcran.ResumeLayout(false);
             tlpAffichage.ResumeLayout(false);
-            tlpVies.ResumeLayout(false);
-            tlpVies.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
+            tlpVies.ResumeLayout(false);
+            tlpVies.PerformLayout();
             ResumeLayout(false);
         }
 

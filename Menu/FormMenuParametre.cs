@@ -48,15 +48,7 @@ namespace Interface_PacMan
 
         private void FormMenuParametre_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnCouleur.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnCouleur.Font = new Font(btnCouleur.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnDifficulte.Font = new Font(btnDifficulte.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnBonus.Font = new Font(btnBonus.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnJouer.Font = new Font(btnJouer.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

@@ -44,14 +44,7 @@ namespace Interface_PacMan
 
         private void FormMenuDifficulte_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnFacile.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnFacile.Font = new Font(btnFacile.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnMoyen.Font = new Font(btnMoyen.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnDifficile.Font = new Font(btnDifficile.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

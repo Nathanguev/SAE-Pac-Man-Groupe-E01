@@ -109,6 +109,7 @@
             btnRetour.FlatAppearance.BorderSize = 0;
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.HexaColor = "";
             btnRetour.Location = new Point(118, 7);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
@@ -177,6 +178,7 @@
             txtPseudo.TabIndex = 0;
             txtPseudo.TextAlign = HorizontalAlignment.Center;
             txtPseudo.TextChanged += txtPseudo_TextChanged;
+            txtPseudo.Validated += txtPseudo_Validated;
             // 
             // tableLayoutPanel3
             // 
@@ -224,6 +226,7 @@
             btnSuivant.FlatAppearance.BorderSize = 0;
             btnSuivant.FlatStyle = FlatStyle.Flat;
             btnSuivant.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnSuivant.HexaColor = "";
             btnSuivant.Location = new Point(443, 7);
             btnSuivant.Margin = new Padding(0);
             btnSuivant.Name = "btnSuivant";

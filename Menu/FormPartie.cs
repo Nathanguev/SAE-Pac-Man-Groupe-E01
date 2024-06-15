@@ -14,6 +14,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using System.Threading;
+using System.Linq.Expressions;
+using NAudio.Utils;
 
 namespace Interface_PacMan
 {
@@ -31,19 +36,28 @@ namespace Interface_PacMan
 
         private PacMan pacMan;
         private Character fantomeAleatoire;
+        private Character fantomePCC;
 
-        private List<Point> positionsPiecesSuppr;
+        private List<Point> positionsPieces;
+        private List<Point> positionsBonus;
 
         private Point pacmanSpawnPosition;
         private Point fantomeSpawnPosition;
 
         private UneCellule pacmanSpawnCellule;
-        private UneCellule fantomeSpawnCellule;
 
-        private int speed = 400;
+        private int timeLeft;
+        private int pacManSpeed = 8;
+
+        private bool isMoving = false;
         private bool isRunning = false;
         private bool isVictory = false;
         private bool isDefeat = false;
+
+        private char currentDirection = '\0';
+
+        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource pacManTokenSource;
 
         /* ---------------- Constructeur FormPartie ---------------- */
 
@@ -52,65 +66,119 @@ namespace Interface_PacMan
             InitializeComponent();
             this.partie = partie;
             this.formMenuPrincipal = formMenuPrincipal;
-
-            labyrinthe = new Labyrinthe(partie.hauteur, partie.largeur);
-            labyrinthe.algoParcoursProfondeur();
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
-        /* ---------------- Au lancement du formulaire ---------------- */
+        /* ---------------- Fonction lancement du formulaire ---------------- */
 
         private void FormPartie_Load(object sender, EventArgs e)
         {
+            Init_DimensionsMax();
+            partie.Init_Dimensions();
+
+            labyrinthe = new Labyrinthe(partie.Hauteur, partie.Largeur);
+            labyrinthe.algoParcoursProfondeur();
+
             Init_CenterTableLayoutPanel();
             tlpLabyrinthe = new TableLayoutPanel();
             Init_TableLayoutPanel(tlpLabyrinthe);
             panelLabyrinthe.Controls.Add(tlpLabyrinthe);
             Init_Vies();
             Init_Timer();
-            lblPseudoChange.Text = partie.pseudo;
+            lblPseudoChange.Text = partie.Pseudo;
 
-            Size autoScrollSize = new Size(panelLabyrinthe.Width, panelLabyrinthe.Height);
+            Size autoScrollSize = new(panelLabyrinthe.Width, panelLabyrinthe.Height);
             tlpGrille.AutoScrollMinSize = autoScrollSize;
 
-            affichageLabyrinthe();
+            AffichageLabyrinthe();
             Init_PacMan(panelLabyrinthe);
+            Init_Bonus(panelLabyrinthe);
             Init_Pieces(panelLabyrinthe);
-            Init_FantomeAleatoire(panelLabyrinthe);
-
             pacMan.BringToFront();
-            fantomeAleatoire.sprite.BringToFront();
+
+            Init_FantomePCC(panelLabyrinthe);
+            Init_FantomeAleatoire(panelLabyrinthe);
         }
 
         /* ---------------- Fonctions d'initialisation ---------------- */
 
+        private void Init_DimensionsMax()
+        {
+            partie.HauteurMax = (this.Height * 0.80) / 50;
+            partie.LargeurMax = (this.Width - 20) / 50;
+        }
+
         private void Init_Pieces(Panel panel)
         {
-            for (int i = 2; i < partie.hauteur * 50; i = i + 50)
+            positionsPieces = new List<Point>();
+
+            for (int i = 2; i < partie.Hauteur * 50; i += 50)
             {
-                for (int j = 2; j < partie.largeur * 50; j = j + 50)
+                for (int j = 2; j < partie.Largeur * 50; j += 50)
                 {
-                    Point point = new Point(j, i);
-                    if (positionsPiecesSuppr.Contains(point))
+                    Point point = new(j, i);
+                    if (!point.Equals(pacmanSpawnPosition) && !positionsBonus.Contains(point))
                     {
+                        Objet piece = new(Properties.Resources.piece, point);
 
-                    }
-                    else
-                    {
-                        Objet objet = new Objet(Properties.Resources.piece, point);
-
-                        panel.Controls.Add(objet.sprite);
-                        objet.sprite.BringToFront();
+                        positionsPieces.Add(point);
+                        panel.Controls.Add(piece.sprite);
+                        piece.sprite.BringToFront();
                     }
                 }
             }
-            lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count + partie.score);
+            lblScoreCount.Text = Convert.ToString(partie.Score);
+        }
+
+        private Objet Select_Bonus(Random random, Point point)
+        {
+            Objet bonus;
+            switch (random.Next(3))
+            {
+                case 0:
+                    bonus = new Objet(Properties.Resources.bonus_vie, point);
+                    bonus.sprite.Tag = "bonusVie";
+                    break;
+
+                case 1:
+                    bonus = new Objet(Properties.Resources.bonus_vitesse, point);
+                    bonus.sprite.Tag = "bonusVitesse";
+                    break;
+
+                default:
+                    bonus = new Objet(Properties.Resources.bonus_temps, point);
+                    bonus.sprite.Tag = "bonusTemps";
+                    break;
+            }
+            return bonus;
+        }
+
+        private void Init_Bonus(Panel panel)
+        {
+            Random random = new Random();
+            positionsBonus = new List<Point>();
+            
+            for (int i = 0; i < 3 + partie.Level; i++)
+            {
+                Point point;
+
+                do
+                {
+                    point = new Point(random.Next(partie.Largeur) * 50 + 2, random.Next(partie.Hauteur) * 50 + 2);
+                } while (positionsBonus.Contains(point) && point.Equals(pacmanSpawnPosition));
+
+                Objet bonus = Select_Bonus(random, point);
+
+                positionsBonus.Add(bonus.position);
+                panel.Controls.Add(bonus.sprite);
+                bonus.sprite.BringToFront();
+            }
         }
 
         private void Init_PacMan(Panel panel)
         {
-            int index = partie.largeur + 1;
-            pacMan = new PacMan(partie.couleur, labyrinthe.getCellules()[index]);
-            positionsPiecesSuppr = [pacMan.Position];
+            int index = partie.Largeur + 1;
+            pacMan = new PacMan(partie.Couleur, labyrinthe.getCellules()[index]);
 
             panel.Controls.Add(pacMan);
             pacMan.Index = index;
@@ -120,20 +188,32 @@ namespace Interface_PacMan
 
         private void Init_FantomeAleatoire(Panel panel)
         {
-            int index = (partie.largeur * (partie.hauteur / 2) + (partie.largeur / 2));
+            int index = (partie.Largeur * (partie.Hauteur / 2) + (partie.Largeur / 2));
             Image image = Properties.Resources.fantomeRouge;
             fantomeAleatoire = new Character(image, labyrinthe.getCellules()[index]);
 
-            panel.Controls.Add(fantomeAleatoire.sprite);
-            fantomeAleatoire.index = index;
-            fantomeSpawnPosition = fantomeAleatoire.position;
-            fantomeSpawnCellule = fantomeAleatoire.currentCellule;
+            panel.Controls.Add(fantomeAleatoire.Sprite);
+            fantomeAleatoire.Index = index;
+            fantomeAleatoire.Sprite.BringToFront();
+
+            fantomeSpawnPosition = fantomeAleatoire.Position;
+        }
+
+        private void Init_FantomePCC(Panel panel)
+        {
+            int index = (partie.Largeur * (partie.Hauteur / 2) + (partie.Largeur / 2) + 1);
+            Image image = Properties.Resources.fantomeBleu;
+            fantomePCC = new Character(image, labyrinthe.getCellules()[index]);
+
+            panel.Controls.Add(fantomePCC.Sprite);
+            fantomePCC.Index = index;
+            fantomePCC.Sprite.BringToFront();
         }
 
         private void Init_TableLayoutPanel(TableLayoutPanel tlp)
         {
-            tlp.RowCount = partie.hauteur;
-            tlp.ColumnCount = partie.largeur;
+            tlp.RowCount = partie.Hauteur;
+            tlp.ColumnCount = partie.Largeur;
             tlp.Margin = new Padding(0);
             tlp.Location = new Point(0, 0);
             tlp.AutoSize = true;
@@ -158,8 +238,8 @@ namespace Interface_PacMan
             {
                 if (i == 1)
                 {
-                    tlpGrille.RowStyles.Add(new RowStyle(SizeType.Absolute, partie.hauteur * 50 + 4));
-                    tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, partie.largeur * 50 + 4));
+                    tlpGrille.RowStyles.Add(new RowStyle(SizeType.Absolute, partie.Hauteur * 50 + 4));
+                    tlpGrille.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, partie.Largeur * 50 + 4));
                 }
                 else
                 {
@@ -171,14 +251,16 @@ namespace Interface_PacMan
 
         private void Init_Vies()
         {
-            for (int i = 1; i < partie.nbVie + 1; i++)
+            for (int i = 1; i < partie.NbVie + 1; i++)
             {
-                PictureBox pictureBox = new PictureBox();
-                pictureBox.Margin = new Padding(5);
-                pictureBox.Dock = DockStyle.Fill;
-                pictureBox.Image = Properties.Resources.coeur;
-                pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                pictureBox.Name = "vie" + i;
+                PictureBox pictureBox = new()
+                {
+                    Margin = new Padding(5),
+                    Dock = DockStyle.Fill,
+                    Image = Properties.Resources.coeur,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Name = "vie" + i
+                };
 
                 tlpVies.Controls.Add(pictureBox, i, 0);
             }
@@ -186,32 +268,82 @@ namespace Interface_PacMan
 
         private void Init_Timer()
         {
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = 1000;
-            lblTimerChange.Text = "02:00";
+            timeLeft = partie.Init_TimerStatValue();
+            timer = new System.Windows.Forms.Timer
+            {
+                Interval = 1000,
+            };
+            timer.Tick += Timer_Tick;
+            UpdateTimerDisplay();
+        }
+
+        /* ---------------- Fonctions Timer ---------------- */
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (timeLeft > 0)
+            {
+                timeLeft--;
+                UpdateTimerDisplay();
+            }
+            else
+            {
+                timer.Stop();
+                lblTimerChange.Text = "00:00";
+                partie.NbVie = 0;
+                IsGameDefeat();
+            }
+        }
+
+        private void UpdateTimerDisplay()
+        {
+            int minutes = timeLeft / 60;
+            int seconds = timeLeft % 60;
+            lblTimerChange.Text = $"{minutes:D2}:{seconds:D2}";
+
+            if (timeLeft <= 20)
+            {
+                lblTimer.ForeColor = Color.Red;
+                lblTimerChange.ForeColor = Color.Red;
+            }
         }
 
         /* ---------------- Fonctions de réinitialisation ---------------- */
+        // Réinitialisation de PacMan
+        // Réinitialisation du fantome
+        // Réinitialisation de toutes les fonctions asyncrones
 
         private void Reset_PacMan()
         {
             pacMan.Position = pacmanSpawnPosition;
             pacMan.CurrentCellule = pacmanSpawnCellule;
-            pacMan.Index = pacmanSpawnCellule.getY() * partie.largeur + pacmanSpawnCellule.getX();
+            pacMan.Index = pacmanSpawnCellule.getY() * partie.Largeur + pacmanSpawnCellule.getX();
+            isMoving = false;
         }
 
+        
         private void Reset_Fantome()
         {
-            fantomeAleatoire.position = fantomeSpawnPosition;
-            fantomeAleatoire.currentCellule = fantomeSpawnCellule;
-            fantomeAleatoire.index = fantomeSpawnCellule.getY() * partie.largeur + fantomeSpawnCellule.getX();
+            fantomeAleatoire.Position = fantomeSpawnPosition;
+            fantomePCC.Position = new(fantomeSpawnPosition.X + 50, fantomeSpawnPosition.Y);
+
+            fantomeAleatoire.CurrentCellule = labyrinthe.getCellules()[fantomeAleatoire.Index];
+            fantomePCC.CurrentCellule = labyrinthe.getCellules()[fantomePCC.Index];
+
             isRunning = false;
         }
 
-        /* ---------------- Condition de victoire et défaite ---------------- */
+        private void Reset_Token()
+        {
+            if (cancellationTokenSource.IsCancellationRequested)
+                cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        /* ---------------- Fermeture du jeu ---------------- */
 
         private void GameClose()
         {
+            cancellationTokenSource.Cancel();
             Reset_PacMan();
             Reset_Fantome();
             tlpLabyrinthe.Controls.Clear();
@@ -219,14 +351,17 @@ namespace Interface_PacMan
             this.Close();
         }
 
+        /* ---------------- Condition de victoire et défaite ---------------- */
+
         private void IsGameVictory()
         {
-            if (tlpLabyrinthe.Controls.Count == positionsPiecesSuppr.Count)
+            if (positionsPieces.Count == 0)
             {
+                timer.Stop();
                 isRunning = false;
                 isVictory = true;
-                partie.score = Convert.ToInt32(lblScoreCount.Text);
-                partie.level += 1;
+                partie.Score = Convert.ToInt32(lblScoreCount.Text);
+                partie.Level += 1;
                 partie.Init_Dimensions();
                 GameClose();
             }
@@ -234,556 +369,681 @@ namespace Interface_PacMan
 
         private void IsGameDefeat()
         {
-            if (partie.nbVie == 0)
+            if (partie.NbVie == 0)
             {
                 isRunning = false;
                 isDefeat = true;
-                partie.score = Convert.ToInt32(lblScoreCount.Text);
+                partie.Score = Convert.ToInt32(lblScoreCount.Text);
                 GameClose();
             }
             else
             {
                 isRunning = false;
-                MessageBox.Show($"Vous perdez une vie, il vous en reste {partie.nbVie}.");
+                MessageBox.Show($"Vous perdez une vie, il vous en reste {partie.NbVie}.");
             }
         }
 
-        /* ---------------- Récolte des pieces ---------------- */
+        /* ---------------- Récolte des pieces et/ou bonus ---------------- */
 
         private void RemoveControlAtPosition(Point point)
         {
             foreach (Control control in panelLabyrinthe.Controls)
             {
-                if (control.Location == point && control != pacMan && control != fantomeAleatoire.sprite)
+                if (control.Location == point && control != pacMan && control != fantomeAleatoire.Sprite)
                 {
+                    if (positionsPieces.Contains(point))
+                    {
+                        positionsPieces.Remove(point);
+                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 1);
+                    }
+                    else if (positionsBonus.Contains(point))
+                    {
+                        switch (control.Tag)
+                        {
+                            case "bonusVie":
+                                if (tlpVies.Controls.Count < 6)
+                                {
+                                    PictureBox pictureBox = new()
+                                    {
+                                        Margin = new Padding(5),
+                                        Dock = DockStyle.Fill,
+                                        Image = Properties.Resources.coeur,
+                                        SizeMode = PictureBoxSizeMode.Zoom,
+                                        Name = "vie" + tlpVies.Controls.Count
+                                    };
+
+                                    tlpVies.Controls.Add(pictureBox, tlpVies.Controls.Count, 0);
+                                    partie.NbVie++;
+                                }
+                                break;
+
+                            case "bonusTemps":
+                                timeLeft += 10;
+                                break;
+                        }
+                        positionsBonus.Remove(point);
+                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 10);
+                    }
                     panelLabyrinthe.Controls.Remove(control);
-                    positionsPiecesSuppr.Add(point); // enregistrement de la position des pièces supprimées
-                    lblScoreCount.Text = Convert.ToString(positionsPiecesSuppr.Count + partie.score);
                     IsGameVictory();
                 }
             }
         }
 
         /* ---------------- Déplacement de PacMan ---------------- */
+        // Ces 4 fonctions asyncrones permettent le mouvement fluide de PacMan à l'interieur du labyrinthe
+
+        private async Task Up(CancellationToken cancellationToken)
+        {
+            if (pacMan.Position.Y > 2 && !isMoving)
+            {
+                int index = pacMan.Index - partie.Largeur;
+
+                isMoving = true;
+                Point point = new Point(pacMan.Position.X, pacMan.Position.Y - 50);
+
+                if (pacMan.Direction != PacManDirection.Up)
+                {
+                    pacMan.Direction = PacManDirection.Up;
+                }
+
+                while (pacMan.Position != point)
+                {
+                    pacMan.Position = new Point(pacMan.Position.X, pacMan.Position.Y - 2);
+                    try
+                    {
+                        Colision_PacMan_Fantome(fantomeAleatoire);
+                        await Task.Delay(pacManSpeed, cancellationToken);
+                    }
+                    catch
+                    {
+                        Reset_PacMan();
+                        return;
+                    }
+                }
+
+                pacMan.Index = index;
+                pacMan.CurrentCellule = labyrinthe.getCellules()[index];
+                isMoving = false;
+            }
+            VerifApresDeplacement();
+        }
+
+        private async Task Down(CancellationToken cancellationToken)
+        {
+            if (pacMan.Position.Y < partie.Hauteur * 50 - 52 && !isMoving)
+            {
+                int index = pacMan.Index + partie.Largeur;
+
+                isMoving = true;
+                Point point = new Point(pacMan.Position.X, pacMan.Position.Y + 50);
+
+                if (pacMan.Direction != PacManDirection.Down)
+                {
+                    pacMan.Direction = PacManDirection.Down;
+                }
+
+                while (pacMan.Position != point)
+                {
+                    pacMan.Position = new Point(pacMan.Position.X, pacMan.Position.Y + 2);
+                    try
+                    {
+                        Colision_PacMan_Fantome(fantomeAleatoire);
+                        await Task.Delay(pacManSpeed, cancellationToken);
+                    }
+                    catch
+                    {
+                        Reset_PacMan();
+                        return;
+                    }
+                }
+
+                pacMan.Index = index;
+                pacMan.CurrentCellule = labyrinthe.getCellules()[index];
+                isMoving = false;
+            }
+            VerifApresDeplacement();
+        }
+
+        private async Task Left(CancellationToken cancellationToken)
+        {
+            if (pacMan.Position.X > 2 && !isMoving)
+            {
+                int index = pacMan.Index - 1;
+
+                isMoving = true;
+                Point point = new Point(pacMan.Position.X - 50, pacMan.Position.Y);
+
+                if (pacMan.Direction != PacManDirection.Left)
+                {
+                    pacMan.Direction = PacManDirection.Left;
+                }
+
+                while (pacMan.Position != point)
+                {
+                    pacMan.Position = new Point(pacMan.Position.X - 2, pacMan.Position.Y);
+                    try
+                    {
+                        Colision_PacMan_Fantome(fantomeAleatoire);
+                        await Task.Delay(pacManSpeed, cancellationToken);
+                    }
+                    catch
+                    {
+                        Reset_PacMan();
+                        return;
+                    }
+                }
+
+                pacMan.Index = index;
+                pacMan.CurrentCellule = labyrinthe.getCellules()[index];
+                isMoving = false;
+            }
+            VerifApresDeplacement();
+        }
+
+        private async Task Right(CancellationToken cancellationToken)
+        {
+            if (pacMan.Position.X < partie.Largeur * 50 - 52 && !isMoving)
+            {
+                int index = pacMan.Index + 1;
+
+                isMoving = true;
+                Point point = new Point(pacMan.Position.X + 50, pacMan.Position.Y);
+
+                if (pacMan.Direction != PacManDirection.Right)
+                {
+                    pacMan.Direction = PacManDirection.Right;
+                }
+
+                while (pacMan.Position != point)
+                {
+                    pacMan.Position = new Point(pacMan.Position.X + 2, pacMan.Position.Y);
+                    try
+                    {
+                        Colision_PacMan_Fantome(fantomeAleatoire);
+                        await Task.Delay(pacManSpeed, cancellationToken);
+                    }
+                    catch
+                    {
+                        Reset_PacMan();
+                        return;
+                    }
+                }
+
+                pacMan.Index = index;
+                pacMan.CurrentCellule = labyrinthe.getCellules()[index];
+                isMoving = false;
+            }
+            VerifApresDeplacement();
+        }
+
+        /* ---------------- Fonctions de vérifications du déplacement de PacMan ---------------- */
+        // Ces 4 fonctions permettent de vérifier si le mouvement de PacMan est possible
+        // Mouvement possible si la cellule cible existe et elle est liée a la cellule actuelle
+
+        private bool MouvementPossibleHaut()
+        {
+            try
+            {
+                int index = pacMan.Index - partie.Largeur;
+                currentDirection = partie.ToucheHaut;
+                return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool MouvementPossibleBas()
+        {
+            try
+            {
+                int index = pacMan.Index + partie.Largeur;
+                currentDirection = partie.ToucheBas;
+                return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool MouvementPossibleGauche()
+        {
+            try
+            {
+                int index = pacMan.Index - 1;
+                currentDirection = partie.ToucheGauche;
+                return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool MouvementPossibleDroite()
+        {
+            try
+            {
+                int index = pacMan.Index + 1;
+                currentDirection = partie.ToucheDroite;
+                return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /* ---------------- Fonction de vérification des touches ---------------- */
+
+        /*
+        private async void Deplacement(KeyPressEventArgs e)
+        {
+            char newDirection = char.ToUpper(e.KeyChar);
+
+            if (newDirection == partie.ToucheHaut && currentDirection != partie.ToucheHaut)
+            {
+                isKeyPressed = false;
+                while (MouvementPossibleHaut() && !isKeyPressed)
+                {
+                    await Up(cancellationTokenSource.Token);
+                    // await Task.Delay(10);
+                }
+            }
+            else if (newDirection == partie.ToucheBas && currentDirection != partie.ToucheBas)
+            {
+                isKeyPressed = false;
+                while (MouvementPossibleBas() && !isKeyPressed)
+                {
+                    await Down(cancellationTokenSource.Token);
+                    // await Task.Delay(10);
+                }
+            }
+            else if (newDirection == partie.ToucheGauche && currentDirection != partie.ToucheGauche)
+            {
+                isKeyPressed = false;
+                while (MouvementPossibleGauche() && !isKeyPressed)
+                {
+                    await Left(cancellationTokenSource.Token);
+                    // await Task.Delay(10);
+                }
+            }
+            else if (newDirection == partie.ToucheDroite && currentDirection != partie.ToucheDroite)
+            {
+                isKeyPressed = false;
+                while (MouvementPossibleDroite() && !isKeyPressed)
+                {
+                    await Right(cancellationTokenSource.Token);
+                    // await Task.Delay(10);
+                }
+            }
+        }
+        */
+
+        private async void Deplacement(char touche)
+        {
+            Reset_Token();
+
+            if (touche == partie.ToucheHaut && MouvementPossibleHaut())
+            {
+                await Up(cancellationTokenSource.Token);
+            }
+            else if (touche == partie.ToucheBas && MouvementPossibleBas())
+            {
+                await Down(cancellationTokenSource.Token);
+            }
+            else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
+            {
+                await Left(cancellationTokenSource.Token);
+            }
+            else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
+            {
+                await Right(cancellationTokenSource.Token);
+            }
+        }
+
+        /* ---------------- Touches alpha-numériques ---------------- */
 
         private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Image rotateImage = Properties.Resources.pacMan;
-            if (char.ToUpper(e.KeyChar) == partie.toucheHaut)
-            {
-                if (pacMan.Position.Y > 2)
-                {
-                    rotateImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    int index = pacMan.Index - partie.largeur;
-                    if (pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]))
-                    {
-                        pacMan.Position = new Point(pacMan.Position.X, pacMan.Position.Y - 50);
-                        pacMan.CurrentCellule = labyrinthe.getCellules()[index];
-                        pacMan.Index = index;
-                        if (pacMan.Direction != PacManDirection.Up)
-                        {
-                            pacMan.Direction = PacManDirection.Up;
-                        }
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheBas)
-            {
-                if (pacMan.Position.Y < partie.hauteur * 50 - 52)
-                {
-                    rotateImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    int index = pacMan.Index + partie.largeur;
-                    if (pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]))
-                    {
-                        pacMan.Position = new Point(pacMan.Position.X, pacMan.Position.Y + 50);
-                        pacMan.CurrentCellule = labyrinthe.getCellules()[index];
-                        pacMan.Index = index;
-                        if (pacMan.Direction != PacManDirection.Down)
-                        {
-                            pacMan.Direction = PacManDirection.Down;
-                        }
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheGauche)
-            {
-                if (pacMan.Position.X > 2)
-                {
-                    rotateImage.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                    int index = pacMan.Index - 1;
-                    if (pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]))
-                    {
-                        pacMan.Position = new Point(pacMan.Position.X - 50, pacMan.Position.Y);
-                        pacMan.CurrentCellule = labyrinthe.getCellules()[index];
-                        pacMan.Index = index;
-                        if (pacMan.Direction != PacManDirection.Left)
-                        {
-                            pacMan.Direction = PacManDirection.Left;
-                        }
-                    }
-                }
-            }
-            else if (char.ToUpper(e.KeyChar) == partie.toucheDroite)
-            {
-                if (pacMan.Position.X < partie.largeur * 50 - 52)
-                {
-                    int index = pacMan.Index + 1;
-                    if (pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]))
-                    {
-                        pacMan.Position = new Point(pacMan.Position.X + 50, pacMan.Position.Y);
-                        pacMan.CurrentCellule = labyrinthe.getCellules()[index];
-                        pacMan.Index = index;
-                        if (pacMan.Direction != PacManDirection.Right)
-                        {
-                            pacMan.Direction = PacManDirection.Right;
-                        }
-                    }
-                }
-            }
-            Colision_PacMan_Fantome(fantomeAleatoire);
-            RemoveControlAtPosition(pacMan.Position);
+            char touche = char.ToUpper(e.KeyChar);
+            Deplacement(touche);
+        }
+
+        /* ---------------- Vérifications après le déplacement de PacMan ---------------- */
+
+        private void VerifApresDeplacement()
+        {
+            partie.PacManPosition = pacMan.Position;
+
             LoopStart();
+            timer.Start();
+            RemoveControlAtPosition(pacMan.Position);
         }
 
         /* ---------------- Colision PacMan Fantome ---------------- */
 
+        private static bool Colision(Point fantomePosition, Point pacManPosition)
+        {
+            int deltaX = Math.Abs(fantomePosition.X - pacManPosition.X);
+            int deltaY = Math.Abs(fantomePosition.Y - pacManPosition.Y);
+
+            return deltaX <= 24 && deltaY <= 24;
+        }
+
         private void Colision_PacMan_Fantome(Character fantome)
         {
-            if (fantome.position == pacMan.Position)
+            if (Colision(fantome.Position, pacMan.Position) && fantome.Position != pacMan.Position)
             {
+                cancellationTokenSource.Cancel();
                 isRunning = false;
                 Reset_PacMan();
                 Reset_Fantome();
-                tlpVies.Controls.RemoveAt(partie.nbVie);
-                partie.nbVie--;
+                tlpVies.Controls.RemoveAt(partie.NbVie);
+                partie.NbVie--;
                 IsGameDefeat();
             }
         }
 
-        /* ---------------- Fonction asynchrone ---------------- */
+        /* ---------------- Mise en marche du fantome ---------------- */
 
         private async void LoopStart()
         {
             if (!isRunning && !isVictory && !isDefeat)
             {
                 isRunning = true;
-                await RunLoopAsyncFantome2();
+                FantomeAleatoireLoop();
+                FantomePCCLoop();
             }
         }
 
-        private async Task RunLoopAsyncFantome1()
-        {
-            UneCellule lastCellule = fantomeAleatoire.currentCellule;
-            while (isRunning)
-            {
-                UneCellule nextCellule = fantomeAleatoire.currentCellule.getLiens().First(cellule => cellule != lastCellule);
-                Point point = new Point(nextCellule.getY() * 50 + 2, nextCellule.getX() * 50 + 2);
-                fantomeAleatoire.position = point;
-                lastCellule = fantomeAleatoire.currentCellule;
-                fantomeAleatoire.currentCellule = nextCellule;
-                Colision_PacMan_Fantome(fantomeAleatoire);
-                await Task.Delay(speed);
-            }
-        }
+        /* ---------------- Fonction asyncrone (Actions du fantome) ---------------- */
 
-        private async Task RunLoopAsyncFantome2()
+        private async void FantomeAleatoireLoop()
         {
-            Random random = new Random();
-            UneCellule lastCellule = fantomeAleatoire.currentCellule;
-            List<UneCellule> cellulesVisited = [lastCellule];
+            Random random = new();
+            UneCellule lastCellule = fantomeAleatoire.CurrentCellule;
+            List<UneCellule> cellulesVisited = new() { lastCellule };
 
             while (isRunning)
             {
-                UneCellule nextCellule = fantomeAleatoire.currentCellule.getVoisins().First(cellule => cellule.isLien(fantomeAleatoire.currentCellule) && cellule != cellulesVisited.Last());
-                Point point = new Point(nextCellule.getY() * 50 + 2, nextCellule.getX() * 50 + 2);
-                fantomeAleatoire.position = point;
-                lastCellule = fantomeAleatoire.currentCellule;
-                cellulesVisited.Add(fantomeAleatoire.currentCellule);
-                fantomeAleatoire.currentCellule = nextCellule;
+                UneCellule nextCellule = fantomeAleatoire.CurrentCellule.getVoisins().First(cellule => cellule.isLien(fantomeAleatoire.CurrentCellule) && cellule != cellulesVisited.Last());
 
-                if (cellulesVisited.Contains(fantomeAleatoire.currentCellule))
+                await FantomeDeplacement(fantomeAleatoire, nextCellule, 14, cancellationTokenSource.Token);
+                if (cancellationTokenSource.IsCancellationRequested)
+                    return;
+
+                lastCellule = fantomeAleatoire.CurrentCellule;
+                cellulesVisited.Add(fantomeAleatoire.CurrentCellule);
+                fantomeAleatoire.CurrentCellule = nextCellule;
+
+                if (cellulesVisited.Contains(fantomeAleatoire.CurrentCellule))
                 {
                     for (int i = 0; i < cellulesVisited.Count; i++)
                     {
                         cellulesVisited[i].randomVoisin(random);
                     }
                     cellulesVisited.Clear();
-                    cellulesVisited = [fantomeAleatoire.currentCellule, lastCellule];
+                    cellulesVisited = new() { fantomeAleatoire.CurrentCellule, lastCellule };
+                }
+            }
+        }
+
+        private async void FantomePCCLoop()
+        {
+            List<UneCellule> Chemin = new();
+
+            while (isRunning)
+            {
+                Chemin = AlgoPlusCourtChemin(fantomePCC.CurrentCellule);
+                Chemin.Remove(fantomePCC.CurrentCellule);
+
+                await FantomeDeplacement(fantomePCC, Chemin.First(), 16, cancellationTokenSource.Token);
+                if (cancellationTokenSource.IsCancellationRequested)
+                    return;
+
+                fantomePCC.CurrentCellule = Chemin.First();
+            }
+        }
+
+        private List<UneCellule> AlgoPlusCourtChemin(UneCellule depart)
+        {
+            // Initialisation de la file et du dictionnaire des parents
+            Queue<UneCellule> file = new Queue<UneCellule>();
+            Dictionary<UneCellule, UneCellule> parents = new Dictionary<UneCellule, UneCellule>();
+
+            file.Enqueue(depart);
+            parents[depart] = null; // La cellule de départ n'a pas de parent
+
+            while (file.Count > 0)
+            {
+                UneCellule current = file.Dequeue();
+
+                // Vérifier si nous avons atteint la cellule cible
+                if (current.Equals(pacMan.CurrentCellule))
+                {
+                    return ConstruireChemin(parents, current);
                 }
 
-                Console.WriteLine($"{isRunning}");
-                Colision_PacMan_Fantome(fantomeAleatoire);
-                await Task.Delay(speed);
+                // Explorer les voisins
+                foreach (UneCellule voisin in current.getLiens())
+                {
+                    if (!parents.ContainsKey(voisin)) // Si le voisin n'a pas encore été visité
+                    {
+                        file.Enqueue(voisin);
+                        parents[voisin] = current; // Enregistrer le parent du voisin
+                    }
+                }
             }
+
+            // Si aucun chemin trouvé, retourner une liste vide
+            return new List<UneCellule>();
         }
 
-        /* ---------------- Binaire ---------------- */
-
-        public string binaireConvert(UneCellule currentCellule, int index, int mode)
+        private List<UneCellule> ConstruireChemin(Dictionary<UneCellule, UneCellule> parents, UneCellule cible)
         {
-            switch (mode)
+            List<UneCellule> chemin = new List<UneCellule>();
+
+            for (UneCellule cellule = cible; cellule != null; cellule = parents[cellule])
             {
-                case 1:
-                    if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1111";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1110";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1101";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1100";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1011";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1010";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1001";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1000";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0111";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0110";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0101";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0100";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0011";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0010";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0001";
-                    }
-                    else
-                    {
-                        return "0000"; // haut, bas, gauche, droite
-                    }
+                chemin.Insert(0, cellule); // Ajouter à la tête pour reconstruire le chemin dans le bon ordre
+            }
 
-                case 2:
-                    if (currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0111";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0110";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0101";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0100";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0011";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0010";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0001";
-                    }
-                    else
-                    {
-                        return "0000"; // haut, bas, gauche, droite
-                    }
+            return chemin;
+        }
 
-                case 3:
-                    if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1011";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1010";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1001";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1000";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0011";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0010";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0001";
-                    }
-                    else
-                    {
-                        return "0000"; // haut, bas, gauche, droite
-                    }
+        /* ---------------- Déplacement du fantome ---------------- */
 
-                case 4:
-                    if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1101";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1100";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1001";
-                    }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "1000";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0101";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0100";
-                    }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
-                    {
-                        return "0001";
-                    }
-                    else
-                    {
-                        return "0000"; // haut, bas, gauche, droite
-                    }
+        private async Task FantomeDeplacement(Character fantome, UneCellule cellule, int speed, CancellationToken cancellationToken)
+        {
+            Point point = new(cellule.getY() * 50 + 2, cellule.getX() * 50 + 2);
 
-                case 5:
-                    if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+            if (fantome.Position.X < point.X)
+            {
+                while (fantome.Position != point)
+                {
+                    fantome.Position = new Point(fantome.Position.X + 2, fantome.Position.Y);
+                    try
                     {
-                        return "1110";
+                        Colision_PacMan_Fantome(fantome);
+                        await Task.Delay(speed, cancellationToken);
                     }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                    catch (TaskCanceledException)
                     {
-                        return "1100";
+                        Reset_Fantome();
+                        return;
                     }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                }
+            }
+            else if (fantome.Position.X > point.X)
+            {
+                while (fantome.Position != point)
+                {
+                    fantome.Position = new Point(fantome.Position.X - 2, fantome.Position.Y);
+                    try
                     {
-                        return "1010";
+                        Colision_PacMan_Fantome(fantome);
+                        await Task.Delay(speed, cancellationToken);
                     }
-                    else if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                    catch (TaskCanceledException)
                     {
-                        return "1000";
+                        Reset_Fantome();
+                        return;
                     }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                }
+            }
+            else if (fantome.Position.Y < point.Y)
+            {
+                while (fantome.Position != point)
+                {
+                    fantome.Position = new Point(fantome.Position.X, fantome.Position.Y + 2);
+                    try
                     {
-                        return "0110";
+                        Colision_PacMan_Fantome(fantome);
+                        await Task.Delay(speed, cancellationToken);
                     }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                    catch (TaskCanceledException)
                     {
-                        return "0100";
+                        Reset_Fantome();
+                        return;
                     }
-                    else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
+                }
+            }
+            else if (fantome.Position.Y > point.Y)
+            {
+                while (fantome.Position != point)
+                {
+                    fantome.Position = new Point(fantome.Position.X, fantome.Position.Y - 2);
+                    try
                     {
-                        return "0010";
+                        Colision_PacMan_Fantome(fantome);
+                        await Task.Delay(speed, cancellationToken);
                     }
-                    else
+                    catch (TaskCanceledException)
                     {
-                        return "0000"; // haut, bas, gauche, droite
+                        Reset_Fantome();
+                        return;
                     }
-
-                default:
-                    return "0000";
+                }
             }
         }
 
-        /* ---------------- Affichage ---------------- */
+        /* ---------------- Affichage du labyrinthe ---------------- */
 
-        private void affichageLabyrinthe()
+        private void AffichageLabyrinthe()
         {
             int index = 0;
             UneCellule currentCellule;
 
-            for (int i = 0; i < partie.hauteur; i++)
+            for (int i = 0; i < partie.Hauteur; i++)
             {
-                for (int j = 0; j < partie.largeur; j++)
+                for (int j = 0; j < partie.Largeur; j++)
                 {
-                    CaseLabyrinthe caseLabyrinthe = new CaseLabyrinthe(tlpLabyrinthe);
+                    CaseLabyrinthe caseLabyrinthe = new(tlpLabyrinthe);
                     currentCellule = labyrinthe.getCellules()[index];
 
                     if (currentCellule.getVoisins().Count == 4)
                     {
-                        if (binaireConvert(currentCellule, index, 1) == "1110")
-                        {
+                        if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1110")
                             caseLabyrinthe.Image = Properties.Resources.droite;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "1101")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.gauche;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "1011")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.bas;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "0111")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.haut;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "1100")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.gauche_droite;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "1001")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "0011")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.haut_bas;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "0110")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "1010")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
-                        }
-                        else if (binaireConvert(currentCellule, index, 1) == "0101")
-                        {
-                            caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
-                        }
-                        else
-                        {
 
-                        }
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1101")
+                            caseLabyrinthe.Image = Properties.Resources.gauche;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1011")
+                            caseLabyrinthe.Image = Properties.Resources.bas;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "0111")
+                            caseLabyrinthe.Image = Properties.Resources.haut;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1100")
+                            caseLabyrinthe.Image = Properties.Resources.gauche_droite;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1001")
+                            caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "0011")
+                            caseLabyrinthe.Image = Properties.Resources.haut_bas;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "0110")
+                            caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "1010")
+                            caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
+
+                        else if (Utils.BinaireConvert(currentCellule, index, 1, labyrinthe, partie) == "0101")
+                            caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
+
+                        else { }
                     }
                     else if (currentCellule.getVoisins().Count == 3)
                     {
                         if (i == 0)
                         {
-                            if (binaireConvert(currentCellule, index, 2) == "0111")
-                            {
+                            if (Utils.BinaireConvert(currentCellule, index, 2, labyrinthe, partie) == "0111")
                                 caseLabyrinthe.Image = Properties.Resources.haut;
-                            }
-                            else if (binaireConvert(currentCellule, index, 2) == "0011")
-                            {
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 2, labyrinthe, partie) == "0011")
                                 caseLabyrinthe.Image = Properties.Resources.haut_bas;
-                            }
-                            else if (binaireConvert(currentCellule, index, 2) == "0110")
-                            {
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 2, labyrinthe, partie) == "0110")
                                 caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
-                            }
-                            else if (binaireConvert(currentCellule, index, 2) == "0101")
-                            {
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 2, labyrinthe, partie) == "0101")
                                 caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
-                            }
-                            else
-                            {
 
-                            }
+                            else { }
                         }
-                        else if (i == partie.hauteur - 1)
+                        else if (i == partie.Hauteur - 1)
                         {
-                            if (binaireConvert(currentCellule, index, 3) == "1011")
-                            {
+                            if (Utils.BinaireConvert(currentCellule, index, 3, labyrinthe, partie) == "1011")
                                 caseLabyrinthe.Image = Properties.Resources.bas;
-                            }
-                            else if (binaireConvert(currentCellule, index, 3) == "1001")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
-                            }
-                            else if (binaireConvert(currentCellule, index, 3) == "0011")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.haut_bas;
-                            }
-                            else if (binaireConvert(currentCellule, index, 3) == "1010")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
-                            }
-                            else
-                            {
 
-                            }
+                            else if (Utils.BinaireConvert(currentCellule, index, 3, labyrinthe, partie) == "1001")
+                                caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 3, labyrinthe, partie) == "0011")
+                                caseLabyrinthe.Image = Properties.Resources.haut_bas;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 3, labyrinthe, partie) == "1010")
+                                caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
+
+                            else { }
                         }
                         else if (j == 0)
                         {
-                            if (binaireConvert(currentCellule, index, 4) == "1101")
-                            {
+                            if (Utils.BinaireConvert(currentCellule, index, 4, labyrinthe, partie) == "1101")
                                 caseLabyrinthe.Image = Properties.Resources.gauche;
-                            }
-                            else if (binaireConvert(currentCellule, index, 4) == "1100")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.gauche_droite;
-                            }
-                            else if (binaireConvert(currentCellule, index, 4) == "1001")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
-                            }
-                            else if (binaireConvert(currentCellule, index, 4) == "0101")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
-                            }
-                            else
-                            {
 
-                            }
+                            else if (Utils.BinaireConvert(currentCellule, index, 4, labyrinthe, partie) == "1100")
+                                caseLabyrinthe.Image = Properties.Resources.gauche_droite;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 4, labyrinthe, partie) == "1001")
+                                caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 4, labyrinthe, partie) == "0101")
+                                caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
+
+                            else { }
                         }
                         else
                         {
-                            if (binaireConvert(currentCellule, index, 5) == "1110")
-                            {
+                            if (Utils.BinaireConvert(currentCellule, index, 5, labyrinthe, partie) == "1110")
                                 caseLabyrinthe.Image = Properties.Resources.droite;
-                            }
-                            else if (binaireConvert(currentCellule, index, 5) == "1100")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.gauche_droite;
-                            }
-                            else if (binaireConvert(currentCellule, index, 5) == "0110")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
-                            }
-                            else if (binaireConvert(currentCellule, index, 5) == "1010")
-                            {
-                                caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
-                            }
-                            else
-                            {
 
-                            }
+                            else if (Utils.BinaireConvert(currentCellule, index, 5, labyrinthe, partie) == "1100")
+                                caseLabyrinthe.Image = Properties.Resources.gauche_droite;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 5, labyrinthe, partie) == "0110")
+                                caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
+
+                            else if (Utils.BinaireConvert(currentCellule, index, 5, labyrinthe, partie) == "1010")
+                                caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
+
+                            else { }
                         }
                     }
                     else
@@ -791,24 +1051,16 @@ namespace Interface_PacMan
                         if (i == 0)
                         {
                             if (j == 0)
-                            {
                                 caseLabyrinthe.Image = Properties.Resources.angle_haut_gauche;
-                            }
                             else
-                            {
                                 caseLabyrinthe.Image = Properties.Resources.angle_haut_droite;
-                            }
                         }
                         else
                         {
                             if (j == 0)
-                            {
                                 caseLabyrinthe.Image = Properties.Resources.angle_bas_gauche;
-                            }
                             else
-                            {
                                 caseLabyrinthe.Image = Properties.Resources.angle_bas_droite;
-                            }
                         }
                     }
                     index++;
@@ -816,62 +1068,81 @@ namespace Interface_PacMan
             }
         }
 
+        /* ---------------- Fermeture du formulaire ---------------- */
+
         private void FormPartie_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isVictory == true || isDefeat == true)
             {
-                FormFinPartie formFinPartie = new FormFinPartie(formMenuPrincipal, partie, isVictory);
+                FormFinPartie formFinPartie = new(formMenuPrincipal, partie, isVictory);
                 formFinPartie.Show();
             }
             else
             {
+                cancellationTokenSource.Cancel();
                 formMenuPrincipal.Close();
             }
         }
+
+        /* ---------------- Mise en pause du formulaire ---------------- */
 
         private async Task Pause(FormMenuPause formMenuPause)
         {
             while (formMenuPause.IsDisposed == false)
             {
                 isRunning = false;
+                timer.Stop();
                 await Task.Delay(100);
             }
             SaveTouches();
         }
 
+        /* ---------------- Sauvegarde des touches ---------------- */
+
         private void SaveTouches()
         {
-            partie.toucheHaut = Convert.ToChar(ConfigurationManager.AppSettings["ToucheHaut"]);
-            partie.toucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
-            partie.toucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
-            partie.toucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
+            partie.ToucheHaut = Convert.ToChar(ConfigurationManager.AppSettings["ToucheHaut"]);
+            partie.ToucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
+            partie.ToucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
+            partie.ToucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
         }
+
+        /* ---------------- Flèches directionnelles + Touche échap ---------------- */
 
         private async void FormPartie_KeyDown(object sender, KeyEventArgs e)
         {
+            Reset_Token();
+
             if (e.KeyCode == Keys.Escape)
             {
-                FormMenuPause formMenuPause = new FormMenuPause(formMenuPrincipal, this);
+                FormMenuPause formMenuPause = new(formMenuPrincipal, this);
                 formMenuPause.Show();
                 this.Hide();
                 Pause(formMenuPause);
             }
+            else if (e.KeyCode == Keys.Up && MouvementPossibleHaut())
+            {
+                Up(cancellationTokenSource.Token);
+            }
+            else if (e.KeyCode == Keys.Down && MouvementPossibleBas())
+            {
+                Down(cancellationTokenSource.Token);
+            }
+            else if (e.KeyCode == Keys.Left && MouvementPossibleGauche())
+            {
+                Left(cancellationTokenSource.Token);
+            }
+            else if (e.KeyCode == Keys.Right && MouvementPossibleDroite())
+            {
+                Right(cancellationTokenSource.Token);
+            }
         }
+
+        /* ---------------- Changement de taille du formulaire ---------------- */
 
         private void FormPartie_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblScore.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                lblScore.Font = new Font(lblScore.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblScoreCount.Font = new Font(lblScoreCount.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblVies.Font = new Font(lblVies.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblPseudo.Font = new Font(lblPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblPseudoChange.Font = new Font(lblPseudoChange.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblTimer.Font = new Font(lblTimer.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblTimerChange.Font = new Font(lblTimerChange.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
     }
 }

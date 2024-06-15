@@ -18,6 +18,7 @@ namespace Interface_PacMan
     {
         private FormMenuPrincipal formMenuPrincipal;
         private FormMenuOptions formMenuOptions;
+        private List<TextBox> textBoxes;
         private bool isBtnRetourClicked = false;
 
         public FormMenuTouches(FormMenuPrincipal formMenuPrincipal, FormMenuOptions formMenuOptions)
@@ -29,6 +30,8 @@ namespace Interface_PacMan
 
         private void FormMenuTouches_Load(object sender, EventArgs e)
         {
+            textBoxes = [txtHaut, txtBas, txtGauche, txtDroite];
+
             txtHaut.Text = ConfigurationManager.AppSettings["ToucheHaut"];
             txtBas.Text = ConfigurationManager.AppSettings["ToucheBas"];
             txtGauche.Text = ConfigurationManager.AppSettings["ToucheGauche"];
@@ -87,6 +90,23 @@ namespace Interface_PacMan
         {
             TextBox textBox = (TextBox)sender;
             textBox.Text = textBox.Text.ToUpper();
+
+            foreach (TextBox txt in textBoxes)
+            {
+                if (textBox.Text == txt.Text && textBox != txt && textBox.Text.Length != 0)
+                {
+                    DialogResult result = MessageBox.Show("Cette touche est déjà assignée", "Voulez vous continuer ?", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        txt.Text = "";
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        textBox.Text = "";
+                    }
+                }
+            }
         }
 
         private void txt_Validated(object sender, EventArgs e)

@@ -84,26 +84,24 @@ namespace Interface_PacMan
             btn_Select();
         }
 
-        private void Txt_SizeChanged(Control parent)
-        {
-            foreach (Control control in parent.Controls)
-            {
-                if (control is Label || control is RoundButton || control is RoundLabel)
-                {
-                    float fontHeight = control.Height / 5.0f;
-                    control.Font = new Font(control.Font.FontFamily, fontHeight, FontStyle.Bold);
-                }
-
-                if (control.HasChildren)
-                {
-                    Txt_SizeChanged(control);
-                }
-            }
-        }
-
         private void FormMenuCouleur_SizeChanged(object sender, EventArgs e)
         {
-            Txt_SizeChanged(tableLayoutPanel1);
+            Utils.Txt_AutoSize(tableLayoutPanel1);
+        }
+
+        private void btnPerso_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog())
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Color selectedColor = colorDialog.Color;
+                    btnPerso.BackColor = selectedColor;
+                    btnPerso.HexaColor = $"#{btnPerso.BackColor.A:X2}{btnPerso.BackColor.R:X2}{btnPerso.BackColor.G:X2}{btnPerso.BackColor.B:X2}";
+                    formMenuParametre.couleur = btnPerso.HexaColor;
+                    btn_Select();
+                }
+            }
         }
     }
 }

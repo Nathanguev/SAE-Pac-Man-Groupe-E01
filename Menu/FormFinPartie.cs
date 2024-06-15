@@ -30,7 +30,7 @@ namespace Interface_PacMan
 
         private void FormVictory_Load(object sender, EventArgs e)
         {
-            lblScore.Text = "SCORE : " + partie.score;
+            lblScore.Text = "SCORE : " + partie.Score;
             if (isVictory)
             {
                 pictureBoxMessage.Image = Properties.Resources.victory;

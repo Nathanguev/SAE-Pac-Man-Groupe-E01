@@ -11,11 +11,12 @@ namespace Menu
     {
         private WaveOutEvent waveOut;
         private AudioFileReader audioFile;
+        private string currentAudioFilePath;
 
         public FormMenuPrincipal()
         {
             InitializeComponent();
-            InitializeAudio();
+            InitializeAudio(Interface_PacMan.Properties.Resources.Italie, "Italie.wav");
         }
 
         private void OnConfigFileChanged(object sender, FileSystemEventArgs e)
@@ -23,9 +24,10 @@ namespace Menu
             waveOut.Stop();
         }
 
-        private void InitializeAudio()
+        private void InitializeAudio(UnmanagedMemoryStream resource, string fileName)
         {
-            string tempFilePath = SaveResourceToTempFile(Interface_PacMan.Properties.Resources.Italie, "Italie.wav");
+            string tempFilePath = SaveResourceToTempFile(resource, fileName);
+            currentAudioFilePath = tempFilePath;
 
             waveOut = new WaveOutEvent();
             audioFile = new AudioFileReader(tempFilePath);
@@ -35,6 +37,16 @@ namespace Menu
             waveOut.Init(audioFile);
         }
 
+        public void Play()
+        {
+            waveOut.Play();
+        }
+
+        public void Stop()
+        {
+            waveOut.Stop();
+        }
+
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (audioFile != null && audioFile.Length > 0)
@@ -42,6 +54,21 @@ namespace Menu
                 audioFile.Position = 0;
                 waveOut.Play();                
             }
+        }
+
+        public void ChangeTrack(UnmanagedMemoryStream newResource, string newFileName)
+        {
+            waveOut.Stop();
+
+            audioFile.Dispose();
+
+            string newTempFilePath = SaveResourceToTempFile(newResource, newFileName);
+            currentAudioFilePath = newTempFilePath;
+
+            audioFile = new AudioFileReader(newTempFilePath);
+            waveOut.Init(audioFile);
+
+            waveOut.Play();
         }
 
         private string SaveResourceToTempFile(UnmanagedMemoryStream resource, string fileName)
@@ -58,14 +85,7 @@ namespace Menu
 
         private void FormMenuPrincipal_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnContinuer.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnContinuer.Font = new Font(btnContinuer.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnNouvellePartie.Font = new Font(btnNouvellePartie.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnOptions.Font = new Font(btnOptions.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

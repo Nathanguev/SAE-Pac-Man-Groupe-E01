@@ -293,6 +293,7 @@
             btnPerso.TabIndex = 1;
             btnPerso.Text = "+";
             btnPerso.UseVisualStyleBackColor = false;
+            btnPerso.Click += btnPerso_Click;
             // 
             // FormMenuCouleur
             // 

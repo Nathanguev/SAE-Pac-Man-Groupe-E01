@@ -113,6 +113,36 @@ namespace Interface_PacMan.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bonus_temps {
+            get {
+                object obj = ResourceManager.GetObject("bonus_temps", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bonus_vie {
+            get {
+                object obj = ResourceManager.GetObject("bonus_vie", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bonus_vitesse {
+            get {
+                object obj = ResourceManager.GetObject("bonus_vitesse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap coeur {
             get {
                 object obj = ResourceManager.GetObject("coeur", resourceCulture);
@@ -126,6 +156,16 @@ namespace Interface_PacMan.Properties {
         internal static System.Drawing.Bitmap droite {
             get {
                 object obj = ResourceManager.GetObject("droite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fantomeBleu {
+            get {
+                object obj = ResourceManager.GetObject("fantomeBleu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,6 +256,15 @@ namespace Interface_PacMan.Properties {
         internal static System.IO.UnmanagedMemoryStream Italie {
             get {
                 return ResourceManager.GetStream("Italie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Lam {
+            get {
+                return ResourceManager.GetStream("Lam", resourceCulture);
             }
         }
         

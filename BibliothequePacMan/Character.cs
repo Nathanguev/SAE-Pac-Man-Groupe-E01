@@ -12,12 +12,6 @@ namespace Bibliotheque_PacMan
         private UneCellule _currentCellule;
         private int _index;
 
-        public Character(PictureBox sprite, UneCellule currentCellule)
-        {
-            _sprite = sprite;
-            _currentCellule = currentCellule;
-        }
-
         public Character(Image image, UneCellule currentCellule)
         {
             _currentCellule = currentCellule;
@@ -25,72 +19,40 @@ namespace Bibliotheque_PacMan
             _sprite.Image = image;
         }
 
-        public Character()
-        {
-            Init_Sprite();
-            Init_Position();
-        }
-
         private void Init_Sprite()
         {
-            _sprite = new PictureBox();
-            _sprite.Size = new Size(46, 46);
-            _sprite.SizeMode = PictureBoxSizeMode.Zoom;
-            _sprite.Location = new Point(currentCellule.getY() * 50 + 2, currentCellule.getX() * 50 + 2);
-            _sprite.BackColor = Color.Transparent;
+            _sprite = new PictureBox
+            {
+                Size = new Size(46, 46),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Location = new Point(CurrentCellule.getY() * 50 + 2, CurrentCellule.getX() * 50 + 2),
+                BackColor = Color.Transparent
+            };
+            _sprite.BringToFront();
         }
 
-        private void Init_Position()
+        public UneCellule CurrentCellule
         {
-            _currentCellule = new UneCellule(1,1);
+            get { return _currentCellule; }
+            set { _currentCellule = value; }
         }
 
-        public UneCellule currentCellule
+        public Point Position
         {
-            get
-            {
-                return _currentCellule;
-            }
-            set
-            {
-                _currentCellule = value;
-            }
+            get { return _sprite.Location; }
+            set { _sprite.Location = value; }
         }
 
-        public Point position
+        public PictureBox Sprite
         {
-            get
-            {
-                return _sprite.Location;
-            }
-            set
-            {
-                _sprite.Location = value;
-            }
+            get { return _sprite; }
+            set { _sprite = value; }
         }
 
-        public PictureBox sprite
+        public int Index
         {
-            get
-            {
-                return _sprite;
-            }
-            set
-            {
-                _sprite = value;
-            }
-        }
-
-        public int index
-        {
-            get
-            {
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
+            get { return _index; }
+            set { _index = value; }
         }
     }
 }
