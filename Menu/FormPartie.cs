@@ -67,6 +67,7 @@ namespace Interface_PacMan
             this.partie = partie;
             this.formMenuPrincipal = formMenuPrincipal;
             cancellationTokenSource = new CancellationTokenSource();
+            pacManTokenSource = new CancellationTokenSource();
         }
 
         /* ---------------- Fonction lancement du formulaire ---------------- */
@@ -165,7 +166,7 @@ namespace Interface_PacMan
                 do
                 {
                     point = new Point(random.Next(partie.Largeur) * 50 + 2, random.Next(partie.Hauteur) * 50 + 2);
-                } while (positionsBonus.Contains(point) && point.Equals(pacmanSpawnPosition));
+                } while (positionsBonus.Contains(point) && point == pacmanSpawnPosition); // point.Equals(pacmanSpawnPosition);
 
                 Objet bonus = Select_Bonus(random, point);
 
@@ -320,7 +321,6 @@ namespace Interface_PacMan
             pacMan.Index = pacmanSpawnCellule.getY() * partie.Largeur + pacmanSpawnCellule.getX();
             isMoving = false;
         }
-
         
         private void Reset_Fantome()
         {
@@ -337,6 +337,12 @@ namespace Interface_PacMan
         {
             if (cancellationTokenSource.IsCancellationRequested)
                 cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        private void Reset_PacManToken()
+        {
+            pacManTokenSource.Cancel();
+            pacManTokenSource = new CancellationTokenSource();
         }
 
         /* ---------------- Fermeture du jeu ---------------- */
@@ -369,6 +375,7 @@ namespace Interface_PacMan
 
         private void IsGameDefeat()
         {
+            timer.Stop();
             if (partie.NbVie == 0)
             {
                 isRunning = false;
@@ -639,70 +646,53 @@ namespace Interface_PacMan
 
         /* ---------------- Fonction de vérification des touches ---------------- */
 
-        /*
-        private async void Deplacement(KeyPressEventArgs e)
-        {
-            char newDirection = char.ToUpper(e.KeyChar);
-
-            if (newDirection == partie.ToucheHaut && currentDirection != partie.ToucheHaut)
-            {
-                isKeyPressed = false;
-                while (MouvementPossibleHaut() && !isKeyPressed)
-                {
-                    await Up(cancellationTokenSource.Token);
-                    // await Task.Delay(10);
-                }
-            }
-            else if (newDirection == partie.ToucheBas && currentDirection != partie.ToucheBas)
-            {
-                isKeyPressed = false;
-                while (MouvementPossibleBas() && !isKeyPressed)
-                {
-                    await Down(cancellationTokenSource.Token);
-                    // await Task.Delay(10);
-                }
-            }
-            else if (newDirection == partie.ToucheGauche && currentDirection != partie.ToucheGauche)
-            {
-                isKeyPressed = false;
-                while (MouvementPossibleGauche() && !isKeyPressed)
-                {
-                    await Left(cancellationTokenSource.Token);
-                    // await Task.Delay(10);
-                }
-            }
-            else if (newDirection == partie.ToucheDroite && currentDirection != partie.ToucheDroite)
-            {
-                isKeyPressed = false;
-                while (MouvementPossibleDroite() && !isKeyPressed)
-                {
-                    await Right(cancellationTokenSource.Token);
-                    // await Task.Delay(10);
-                }
-            }
-        }
-        */
-
         private async void Deplacement(char touche)
         {
             Reset_Token();
 
-            if (touche == partie.ToucheHaut && MouvementPossibleHaut())
+            if (touche == currentDirection)
+                return;
+
+            Reset_PacManToken();
+            currentDirection = touche;
+
+            while (!pacManTokenSource.Token.IsCancellationRequested && currentDirection == touche)
             {
-                await Up(cancellationTokenSource.Token);
+                try
+                {
+                    await Task.Delay(pacManSpeed, pacManTokenSource.Token);
+                    if (touche == partie.ToucheHaut && MouvementPossibleHaut())
+                    {
+                        Console.WriteLine("Touche Haut");
+                        await Up(cancellationTokenSource.Token);
+                    }
+                    else if (touche == partie.ToucheBas && MouvementPossibleBas())
+                    {
+                        Console.WriteLine("Touche Bas");
+                        await Down(cancellationTokenSource.Token);
+                    }
+                    else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
+                    {
+                        Console.WriteLine("Touche Gauche");
+                        await Left(cancellationTokenSource.Token);
+                    }
+                    else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
+                    {
+                        Console.WriteLine("Touche Droite");
+                        await Right(cancellationTokenSource.Token);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
             }
-            else if (touche == partie.ToucheBas && MouvementPossibleBas())
-            {
-                await Down(cancellationTokenSource.Token);
-            }
-            else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
-            {
-                await Left(cancellationTokenSource.Token);
-            }
-            else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
-            {
-                await Right(cancellationTokenSource.Token);
-            }
+
+            currentDirection = '\0';
         }
 
         /* ---------------- Touches alpha-numériques ---------------- */
@@ -710,7 +700,10 @@ namespace Interface_PacMan
         private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
             char touche = char.ToUpper(e.KeyChar);
-            Deplacement(touche);
+            if (touche == partie.ToucheHaut || touche == partie.ToucheBas || touche == partie.ToucheGauche || touche == partie.ToucheDroite)
+            {
+                Deplacement(touche);
+            }
         }
 
         /* ---------------- Vérifications après le déplacement de PacMan ---------------- */
@@ -739,6 +732,7 @@ namespace Interface_PacMan
             if (Colision(fantome.Position, pacMan.Position) && fantome.Position != pacMan.Position)
             {
                 cancellationTokenSource.Cancel();
+                pacManTokenSource.Cancel();
                 isRunning = false;
                 Reset_PacMan();
                 Reset_Fantome();
@@ -1120,21 +1114,21 @@ namespace Interface_PacMan
                 this.Hide();
                 Pause(formMenuPause);
             }
-            else if (e.KeyCode == Keys.Up && MouvementPossibleHaut())
+            else if (e.KeyCode == Keys.Up)
             {
-                Up(cancellationTokenSource.Token);
+                Deplacement(partie.ToucheHaut);
             }
-            else if (e.KeyCode == Keys.Down && MouvementPossibleBas())
+            else if (e.KeyCode == Keys.Down)
             {
-                Down(cancellationTokenSource.Token);
+                Deplacement(partie.ToucheBas);
             }
-            else if (e.KeyCode == Keys.Left && MouvementPossibleGauche())
+            else if (e.KeyCode == Keys.Left)
             {
-                Left(cancellationTokenSource.Token);
+                Deplacement(partie.ToucheGauche);
             }
-            else if (e.KeyCode == Keys.Right && MouvementPossibleDroite())
+            else if (e.KeyCode == Keys.Right)
             {
-                Right(cancellationTokenSource.Token);
+                Deplacement(partie.ToucheDroite);
             }
         }
 
