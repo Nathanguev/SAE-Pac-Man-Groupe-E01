@@ -54,7 +54,8 @@ namespace Interface_PacMan
         private bool isVictory = false;
         private bool isDefeat = false;
 
-        private char currentDirection = '\0';
+        private char lastTouche = '\0';
+        private Queue<char> toucheQueue = new Queue<char>();
 
         private CancellationTokenSource cancellationTokenSource;
         private CancellationTokenSource pacManTokenSource;
@@ -593,7 +594,6 @@ namespace Interface_PacMan
             try
             {
                 int index = pacMan.Index - partie.Largeur;
-                currentDirection = partie.ToucheHaut;
                 return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
             }
             catch
@@ -607,7 +607,6 @@ namespace Interface_PacMan
             try
             {
                 int index = pacMan.Index + partie.Largeur;
-                currentDirection = partie.ToucheBas;
                 return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
             }
             catch
@@ -621,7 +620,6 @@ namespace Interface_PacMan
             try
             {
                 int index = pacMan.Index - 1;
-                currentDirection = partie.ToucheGauche;
                 return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
             }
             catch
@@ -635,7 +633,6 @@ namespace Interface_PacMan
             try
             {
                 int index = pacMan.Index + 1;
-                currentDirection = partie.ToucheDroite;
                 return pacMan.CurrentCellule.isLien(labyrinthe.getCellules()[index]);
             }
             catch
@@ -646,53 +643,54 @@ namespace Interface_PacMan
 
         /* ---------------- Fonction de vérification des touches ---------------- */
 
-        private async void Deplacement(char touche)
+        private async void Deplacement()
         {
             Reset_Token();
 
-            if (touche == currentDirection)
-                return;
-
-            Reset_PacManToken();
-            currentDirection = touche;
-
-            while (!pacManTokenSource.Token.IsCancellationRequested && currentDirection == touche)
+            while (!cancellationTokenSource.IsCancellationRequested)
             {
-                try
+                char touche;
+                if (toucheQueue.Count > 0)
                 {
-                    await Task.Delay(pacManSpeed, pacManTokenSource.Token);
-                    if (touche == partie.ToucheHaut && MouvementPossibleHaut())
-                    {
-                        Console.WriteLine("Touche Haut");
-                        await Up(cancellationTokenSource.Token);
-                    }
-                    else if (touche == partie.ToucheBas && MouvementPossibleBas())
-                    {
-                        Console.WriteLine("Touche Bas");
-                        await Down(cancellationTokenSource.Token);
-                    }
-                    else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
-                    {
-                        Console.WriteLine("Touche Gauche");
-                        await Left(cancellationTokenSource.Token);
-                    }
-                    else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
-                    {
-                        Console.WriteLine("Touche Droite");
-                        await Right(cancellationTokenSource.Token);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    touche = toucheQueue.Dequeue();
+                    lastTouche = touche;
                 }
-                catch (OperationCanceledException)
+                else
+                {
+                    touche = lastTouche;
+                }
+
+                bool moved = false;
+
+                if (touche == partie.ToucheHaut && MouvementPossibleHaut())
+                {
+                    await Up(cancellationTokenSource.Token);
+                    moved = true;
+                }
+                else if (touche == partie.ToucheBas && MouvementPossibleBas())
+                {
+                    await Down(cancellationTokenSource.Token);
+                    moved = true;
+                }
+                else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
+                {
+                    await Left(cancellationTokenSource.Token);
+                    moved = true;
+                }
+                else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
+                {
+                    await Right(cancellationTokenSource.Token);
+                    moved = true;
+                }
+
+                // Si aucun mouvement n'a été possible, sortir de la boucle
+                if (!moved)
                 {
                     break;
                 }
-            }
 
-            currentDirection = '\0';
+                await Task.Delay(pacManSpeed);
+            }
         }
 
         /* ---------------- Touches alpha-numériques ---------------- */
@@ -700,10 +698,8 @@ namespace Interface_PacMan
         private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
             char touche = char.ToUpper(e.KeyChar);
-            if (touche == partie.ToucheHaut || touche == partie.ToucheBas || touche == partie.ToucheGauche || touche == partie.ToucheDroite)
-            {
-                Deplacement(touche);
-            }
+            toucheQueue.Enqueue(touche);
+            Deplacement();
         }
 
         /* ---------------- Vérifications après le déplacement de PacMan ---------------- */
@@ -1116,19 +1112,27 @@ namespace Interface_PacMan
             }
             else if (e.KeyCode == Keys.Up)
             {
-                Deplacement(partie.ToucheHaut);
+                char touche = partie.ToucheHaut;
+                toucheQueue.Enqueue(touche);
+                Deplacement();
             }
             else if (e.KeyCode == Keys.Down)
             {
-                Deplacement(partie.ToucheBas);
+                char touche = partie.ToucheBas;
+                toucheQueue.Enqueue(touche);
+                Deplacement();
             }
             else if (e.KeyCode == Keys.Left)
             {
-                Deplacement(partie.ToucheGauche);
+                char touche = partie.ToucheGauche;
+                toucheQueue.Enqueue(touche);
+                Deplacement();
             }
             else if (e.KeyCode == Keys.Right)
             {
-                Deplacement(partie.ToucheDroite);
+                char touche = partie.ToucheDroite;
+                toucheQueue.Enqueue(touche);
+                Deplacement();
             }
         }
 
