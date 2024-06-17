@@ -58,7 +58,6 @@ namespace Interface_PacMan
         private Queue<char> toucheQueue = new Queue<char>();
 
         private CancellationTokenSource cancellationTokenSource;
-        private CancellationTokenSource pacManTokenSource;
 
         /* ---------------- Constructeur FormPartie ---------------- */
 
@@ -68,10 +67,9 @@ namespace Interface_PacMan
             this.partie = partie;
             this.formMenuPrincipal = formMenuPrincipal;
             cancellationTokenSource = new CancellationTokenSource();
-            pacManTokenSource = new CancellationTokenSource();
         }
 
-        /* ---------------- Fonction lancement du formulaire ---------------- */
+        /* ---------------- Lancement du formulaire ---------------- */
 
         private void FormPartie_Load(object sender, EventArgs e)
         {
@@ -268,43 +266,47 @@ namespace Interface_PacMan
             }
         }
 
+        /* ---------------- Fonctions Timer ---------------- */
+        // Initialisation du timer
+        // Tick du timer (toutes les secondes)
+        // Affichage du timer au format Minutes : Secondes
+
         private void Init_Timer()
         {
             timeLeft = partie.Init_TimerStatValue();
             timer = new System.Windows.Forms.Timer
             {
-                Interval = 1000,
+                Interval = 1000, // Intervalle de 1 seconde
             };
-            timer.Tick += Timer_Tick;
-            UpdateTimerDisplay();
+            timer.Tick += Timer_Tick; // Événement déclenché à chaque tick du timer
+            UpdateTimerDisplay(); // Initialisation de l'affichage du timer
         }
-
-        /* ---------------- Fonctions Timer ---------------- */
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (timeLeft > 0)
             {
-                timeLeft--;
-                UpdateTimerDisplay();
+                timeLeft--; // Décrémentation du temps restant
+                UpdateTimerDisplay(); // Mise à jour de l'affichage du timer
             }
             else
             {
-                timer.Stop();
-                lblTimerChange.Text = "00:00";
-                partie.NbVie = 0;
-                IsGameDefeat();
+                timer.Stop(); // Arrêt du timer
+                lblTimerChange.Text = "00:00"; // Affichage de "00:00" lorsque le temps est écoulé
+                partie.NbVie = 0; // Mise à jour du nombre de vies
+                IsGameDefeat(); // Appel de la fonction de défaite
             }
         }
 
         private void UpdateTimerDisplay()
         {
-            int minutes = timeLeft / 60;
-            int seconds = timeLeft % 60;
-            lblTimerChange.Text = $"{minutes:D2}:{seconds:D2}";
+            int minutes = timeLeft / 60; // Calcul des minutes restantes
+            int seconds = timeLeft % 60; // Calcul des secondes restantes
+            lblTimerChange.Text = $"{minutes:D2}:{seconds:D2}"; // Mise à jour de l'affichage du timer
 
             if (timeLeft <= 20)
             {
+                // Changement de la couleur du texte en rouge si le temps restant est inférieur ou égal à 20 secondes
                 lblTimer.ForeColor = Color.Red;
                 lblTimerChange.ForeColor = Color.Red;
             }
@@ -312,24 +314,24 @@ namespace Interface_PacMan
 
         /* ---------------- Fonctions de réinitialisation ---------------- */
         // Réinitialisation de PacMan
-        // Réinitialisation du fantome
-        // Réinitialisation de toutes les fonctions asyncrones
+        // Réinitialisation des fantômes
+        // Réinitialisation de toutes les fonctions asynchrones
 
         private void Reset_PacMan()
         {
-            pacMan.Position = pacmanSpawnPosition;
-            pacMan.CurrentCellule = pacmanSpawnCellule;
-            pacMan.Index = pacmanSpawnCellule.getY() * partie.Largeur + pacmanSpawnCellule.getX();
+            pacMan.Position = pacmanSpawnPosition; // Réinitialisation de la position de PacMan
+            pacMan.CurrentCellule = pacmanSpawnCellule; // Réinitialisation de la cellule actuelle de PacMan
+            pacMan.Index = pacmanSpawnCellule.getY() * partie.Largeur + pacmanSpawnCellule.getX(); // Mise à jour de l'index de PacMan
             isMoving = false;
         }
         
         private void Reset_Fantome()
         {
-            fantomeAleatoire.Position = fantomeSpawnPosition;
-            fantomePCC.Position = new(fantomeSpawnPosition.X + 50, fantomeSpawnPosition.Y);
+            fantomeAleatoire.Position = fantomeSpawnPosition; // Réinitialisation de la position du fantôme aléatoire
+            fantomePCC.Position = new(fantomeSpawnPosition.X + 50, fantomeSpawnPosition.Y); // Réinitialisation de la position du fantôme PCC
 
-            fantomeAleatoire.CurrentCellule = labyrinthe.getCellules()[fantomeAleatoire.Index];
-            fantomePCC.CurrentCellule = labyrinthe.getCellules()[fantomePCC.Index];
+            fantomeAleatoire.CurrentCellule = labyrinthe.getCellules()[fantomeAleatoire.Index]; // Réinitialisation de la cellule actuelle du fantôme aléatoire
+            fantomePCC.CurrentCellule = labyrinthe.getCellules()[fantomePCC.Index]; // Réinitialisation de la cellule actuelle du fantôme PCC
 
             isRunning = false;
         }
@@ -337,52 +339,49 @@ namespace Interface_PacMan
         private void Reset_Token()
         {
             if (cancellationTokenSource.IsCancellationRequested)
-                cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        private void Reset_PacManToken()
-        {
-            pacManTokenSource.Cancel();
-            pacManTokenSource = new CancellationTokenSource();
+                cancellationTokenSource = new CancellationTokenSource(); // Réinitialisation du token d'annulation si une annulation a été demandée
         }
 
         /* ---------------- Fermeture du jeu ---------------- */
+        // Cette fonction s'occupe de réinitialiser l'ensemble des éléments de la partie
+        // au moment de la fermeture du jeu
 
         private void GameClose()
         {
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Cancel(); // Annulation des tâches en cours
             Reset_PacMan();
             Reset_Fantome();
-            tlpLabyrinthe.Controls.Clear();
-            panelLabyrinthe.Controls.Clear();
-            this.Close();
+            tlpLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le TableLayoutPanel du labyrinthe
+            panelLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le panel du labyrinthe
+            this.Close(); // Fermeture de la fenêtre de jeu
         }
 
         /* ---------------- Condition de victoire et défaite ---------------- */
+        // Ces fonctions vérifient respectivement si la partie est gagnée ou perdue
 
         private void IsGameVictory()
         {
             if (positionsPieces.Count == 0)
             {
-                timer.Stop();
+                timer.Stop(); // Arrêt du timer
                 isRunning = false;
                 isVictory = true;
-                partie.Score = Convert.ToInt32(lblScoreCount.Text);
-                partie.Level += 1;
-                partie.Init_Dimensions();
-                GameClose();
+                partie.Score = Convert.ToInt32(lblScoreCount.Text); // Mise à jour du score
+                partie.Level += 1; // Mise à jour du niveau de la partie
+                partie.Init_Dimensions(); // Réinitialisation des dimensions du labyrinthe
+                GameClose(); // Fermeture du jeu
             }
         }
 
         private void IsGameDefeat()
         {
-            timer.Stop();
+            timer.Stop(); // Arrêt du timer
             if (partie.NbVie == 0)
             {
                 isRunning = false;
                 isDefeat = true;
-                partie.Score = Convert.ToInt32(lblScoreCount.Text);
-                GameClose();
+                partie.Score = Convert.ToInt32(lblScoreCount.Text); // Mise à jour du score
+                GameClose(); // Fermeture du jeu
             }
             else
             {
@@ -391,7 +390,10 @@ namespace Interface_PacMan
             }
         }
 
-        /* ---------------- Récolte des pieces et/ou bonus ---------------- */
+        /* ---------------- Récolte des pièces et/ou bonus ---------------- */
+        // Cette fonction retire l'objet à la position donnée.
+        // Si l'objet est une pièce : incrémentation du score de +1.
+        // Si l'objet est un bonus : incrémentation du score de +10 et gestion spécifique du bonus.
 
         private void RemoveControlAtPosition(Point point)
         {
@@ -401,8 +403,8 @@ namespace Interface_PacMan
                 {
                     if (positionsPieces.Contains(point))
                     {
-                        positionsPieces.Remove(point);
-                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 1);
+                        positionsPieces.Remove(point); // Retire la pièce de la liste des positions de pièces
+                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 1); // Incrémente le score de +1
                     }
                     else if (positionsBonus.Contains(point))
                     {
@@ -420,26 +422,28 @@ namespace Interface_PacMan
                                         Name = "vie" + tlpVies.Controls.Count
                                     };
 
+                                    // Ajoute une vie supplémentaire à l'interface graphique
                                     tlpVies.Controls.Add(pictureBox, tlpVies.Controls.Count, 0);
                                     partie.NbVie++;
                                 }
                                 break;
 
                             case "bonusTemps":
-                                timeLeft += 10;
+                                timeLeft += 10; // Ajoute 10 secondes au temps restant
                                 break;
                         }
-                        positionsBonus.Remove(point);
-                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 10);
+                        positionsBonus.Remove(point); // Retire le bonus de la liste des positions de bonus
+                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 10); // Incrémente le score de +10
                     }
-                    panelLabyrinthe.Controls.Remove(control);
-                    IsGameVictory();
+                    panelLabyrinthe.Controls.Remove(control); // Retire le contrôle du panel du labyrinthe
+                    IsGameVictory(); // Vérifie si la condition de victoire est atteinte
                 }
             }
         }
 
         /* ---------------- Déplacement de PacMan ---------------- */
-        // Ces 4 fonctions asyncrones permettent le mouvement fluide de PacMan à l'interieur du labyrinthe
+        // Ces 4 fonctions asynchrones permettent le déplacement de PacMan à l'intérieur du labyrinthe.
+        // PacMan se déplace de 2 pixels par 2 pixels dans la direction souhaitée avec un délai constant.
 
         private async Task Up(CancellationToken cancellationToken)
         {
@@ -585,9 +589,9 @@ namespace Interface_PacMan
             VerifApresDeplacement();
         }
 
-        /* ---------------- Fonctions de vérifications du déplacement de PacMan ---------------- */
-        // Ces 4 fonctions permettent de vérifier si le mouvement de PacMan est possible
-        // Mouvement possible si la cellule cible existe et elle est liée a la cellule actuelle
+        /* ---------------- Fonctions de vérification du déplacement de PacMan ---------------- */
+        // Ces 4 fonctions permettent de vérifier si le déplacement de PacMan est possible.
+        // Le déplacement est possible si la cellule cible existe et est liée à la cellule actuelle.
 
         private bool MouvementPossibleHaut()
         {
@@ -641,45 +645,50 @@ namespace Interface_PacMan
             }
         }
 
-        /* ---------------- Fonction de vérification des touches ---------------- */
+        /* ---------------- Vérification des touches ---------------- */
+        // Cette fonction gère les touches à l'aide d'une 'Queue'.
+        // Elle permet le déplacement fluide de Pac-Man dans le labyrinthe.
+        // Tant qu'aucune nouvelle touche n'est pressée et que
+        // le mouvement en cours est possible, Pac-Man continue d'avancer.
 
         private async void Deplacement()
         {
-            Reset_Token();
+            Reset_Token(); // Réinitialisation du jeton d'annulation
 
             while (!cancellationTokenSource.IsCancellationRequested)
             {
                 char touche;
                 if (toucheQueue.Count > 0)
                 {
-                    touche = toucheQueue.Dequeue();
-                    lastTouche = touche;
+                    touche = toucheQueue.Dequeue(); // Récupération de la prochaine touche de la file d'attente
+                    lastTouche = touche; // Mise à jour de la dernière touche utilisée
                 }
                 else
                 {
-                    touche = lastTouche;
+                    touche = lastTouche; // Utilisation de la dernière touche si aucune nouvelle n'est disponible
                 }
 
                 bool moved = false;
 
+                // Vérification et traitement du déplacement selon la touche pressée
                 if (touche == partie.ToucheHaut && MouvementPossibleHaut())
                 {
-                    await Up(cancellationTokenSource.Token);
+                    await Up(cancellationTokenSource.Token); // Déplacement vers le haut
                     moved = true;
                 }
                 else if (touche == partie.ToucheBas && MouvementPossibleBas())
                 {
-                    await Down(cancellationTokenSource.Token);
+                    await Down(cancellationTokenSource.Token); // Déplacement vers le bas
                     moved = true;
                 }
                 else if (touche == partie.ToucheGauche && MouvementPossibleGauche())
                 {
-                    await Left(cancellationTokenSource.Token);
+                    await Left(cancellationTokenSource.Token); // Déplacement vers la gauche
                     moved = true;
                 }
                 else if (touche == partie.ToucheDroite && MouvementPossibleDroite())
                 {
-                    await Right(cancellationTokenSource.Token);
+                    await Right(cancellationTokenSource.Token); // Déplacement vers la droite
                     moved = true;
                 }
 
@@ -689,31 +698,39 @@ namespace Interface_PacMan
                     break;
                 }
 
-                await Task.Delay(pacManSpeed);
+                await Task.Delay(pacManSpeed); // Délai avant le prochain déplacement
             }
         }
 
         /* ---------------- Touches alpha-numériques ---------------- */
+        // Cette fonction s'exécute lorsqu'une touche alpha-numérique est pressée.
 
         private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char touche = char.ToUpper(e.KeyChar);
-            toucheQueue.Enqueue(touche);
-            Deplacement();
+            char touche = char.ToUpper(e.KeyChar); // Convertit la touche en majuscule
+            if (touche == partie.ToucheHaut || touche == partie.ToucheBas || touche == partie.ToucheGauche || touche == partie.ToucheDroite)
+            {
+                toucheQueue.Enqueue(touche); // Ajoute la touche à la file d'attente
+                Deplacement(); // Démarre le déplacement de Pac-Man    
+            }
         }
 
-        /* ---------------- Vérifications après le déplacement de PacMan ---------------- */
+        /* ---------------- Vérifications après déplacement ---------------- */
+        // Cette fonction est appelée après chaque déplacement de Pac-Man.
+        // Elle vérifie si un objet est sur la même case que lui.
+        // Elle relance également le Timer si le jeu est en pause.
 
         private void VerifApresDeplacement()
         {
-            partie.PacManPosition = pacMan.Position;
+            partie.PacManPosition = pacMan.Position; // Met à jour la position de Pac-Man
 
             LoopStart();
-            timer.Start();
-            RemoveControlAtPosition(pacMan.Position);
+            timer.Start(); // Redémarre le Timer
+            RemoveControlAtPosition(pacMan.Position); // Vérifie et retire tout objet sur la case de Pac-Man
         }
 
-        /* ---------------- Colision PacMan Fantome ---------------- */
+        /* ---------------- Collision PacMan Fantome ---------------- */
+        // Ces fonctions sont utilisées pour vérifier s'il y a une collision entre Pac-Man et un fantôme.
 
         private static bool Colision(Point fantomePosition, Point pacManPosition)
         {
@@ -727,30 +744,33 @@ namespace Interface_PacMan
         {
             if (Colision(fantome.Position, pacMan.Position) && fantome.Position != pacMan.Position)
             {
-                cancellationTokenSource.Cancel();
-                pacManTokenSource.Cancel();
-                isRunning = false;
-                Reset_PacMan();
-                Reset_Fantome();
-                tlpVies.Controls.RemoveAt(partie.NbVie);
-                partie.NbVie--;
-                IsGameDefeat();
+                cancellationTokenSource.Cancel(); // Annule le jeton d'annulation
+                isRunning = false; // Indique que le jeu n'est plus en cours
+                Reset_PacMan(); // Réinitialise Pac-Man
+                Reset_Fantome(); // Réinitialise les fantômes
+                tlpVies.Controls.RemoveAt(partie.NbVie); // Retire une vie visuellement
+                partie.NbVie--; // Réduit le nombre de vies
+                IsGameDefeat(); // Vérifie si c'est une défaite
             }
         }
 
-        /* ---------------- Mise en marche du fantome ---------------- */
+        /* ---------------- Mise en marche des fantômes ---------------- */
+        // Cette fonction lance le déplacement des fantômes s'ils ne bougent pas déjà.
 
         private async void LoopStart()
         {
             if (!isRunning && !isVictory && !isDefeat)
             {
-                isRunning = true;
-                FantomeAleatoireLoop();
-                FantomePCCLoop();
+                isRunning = true; // Marque le jeu comme en cours
+                FantomeAleatoireLoop(); // Lance la boucle de déplacement du fantôme aléatoire
+                FantomePCCLoop(); // Lance la boucle de déplacement du fantôme PCC
             }
         }
 
-        /* ---------------- Fonction asyncrone (Actions du fantome) ---------------- */
+        /* ---------------- Fonctions asynchrones (Actions des fantômes) ---------------- */
+        // Ces fonctions représentent les actions des fantômes :
+        // - Fantôme aléatoire
+        // - Fantôme plus court chemin
 
         private async void FantomeAleatoireLoop()
         {
@@ -799,6 +819,10 @@ namespace Interface_PacMan
             }
         }
 
+        /* ---------------- Fonctions Plus Court Chemin ---------------- */
+        // Ces fonctions permettent le calcul du plus court chemin entre une cellule de départ et Pac-Man.
+        // Elles retournent la liste de cellules qui correspond à ce chemin.
+
         private List<UneCellule> AlgoPlusCourtChemin(UneCellule depart)
         {
             // Initialisation de la file et du dictionnaire des parents
@@ -845,7 +869,10 @@ namespace Interface_PacMan
             return chemin;
         }
 
-        /* ---------------- Déplacement du fantome ---------------- */
+        /* ---------------- Déplacement des fantômes ---------------- */
+        // Cette fonction permet le déplacement d'un fantôme vers une cellule cible à l'écran.
+        // Elle ajuste la position du fantôme progressivement jusqu'à atteindre la position cible
+        // avec une vitesse spécifiée, tout en vérifiant les collisions avec Pac-Man.
 
         private async Task FantomeDeplacement(Character fantome, UneCellule cellule, int speed, CancellationToken cancellationToken)
         {
@@ -922,6 +949,7 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Affichage du labyrinthe ---------------- */
+        // Cette fonction permet d'afficher le labyrinthe à l'écran.
 
         private void AffichageLabyrinthe()
         {
@@ -1059,6 +1087,9 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Fermeture du formulaire ---------------- */
+        // Fonction exécutée à la fermeture du formulaire.
+        // Vérifie si la partie est terminée (victoire ou défaite) pour afficher l'écran de fin de partie,
+        // sinon annule les tâches en cours et ferme le formulaire principal du jeu.
 
         private void FormPartie_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1075,6 +1106,8 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Mise en pause du formulaire ---------------- */
+        // Fonction qui tourne en boucle tant que le formulaire de pause est actif.
+        // Met le jeu en pause en arrêtant le timer et sauvegarde les touches en cours.
 
         private async Task Pause(FormMenuPause formMenuPause)
         {
@@ -1088,6 +1121,7 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Sauvegarde des touches ---------------- */
+        // Fonction de sauvegarde des touches à l'intérieur des paramètres de l'application (AppSettings).
 
         private void SaveTouches()
         {
@@ -1098,6 +1132,7 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Flèches directionnelles + Touche échap ---------------- */
+        // Fonction qui s'exécute lors de l'appui sur une des touches directionnelles ou la touche Échap.
 
         private async void FormPartie_KeyDown(object sender, KeyEventArgs e)
         {
@@ -1137,6 +1172,8 @@ namespace Interface_PacMan
         }
 
         /* ---------------- Changement de taille du formulaire ---------------- */
+        // Fonction qui s'exécute lors du changement de taille du formulaire et qui appelle une autre fonction de la classe
+        // Utils pour ajuster automatiquement la taille du texte en fonction de la nouvelle taille du formulaire.
 
         private void FormPartie_SizeChanged(object sender, EventArgs e)
         {

@@ -4,6 +4,8 @@ namespace BibliothequePacMan
 {
     public class Partie
     {
+        /* ---------------- Variables globales ---------------- */
+
         private int _volumeEffets;
         private int _volumeGlobal;
         private int _volumeMusique;
