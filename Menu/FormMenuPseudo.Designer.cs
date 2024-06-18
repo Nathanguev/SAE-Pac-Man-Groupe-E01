@@ -110,6 +110,7 @@
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnRetour.HexaColor = "";
+            btnRetour.Image = Properties.Resources.fleche1;
             btnRetour.Location = new Point(118, 7);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";

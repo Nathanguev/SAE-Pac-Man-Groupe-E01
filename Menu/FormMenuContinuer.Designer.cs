@@ -138,6 +138,8 @@
             btnRetour.FlatAppearance.BorderSize = 0;
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.HexaColor = "";
+            btnRetour.Image = Properties.Resources.fleche1;
             btnRetour.Location = new Point(0, 0);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
@@ -178,7 +180,6 @@
         private PictureBox pictureBox1;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel4;
-        private UserControlButton userControlButton1;
         private Bibliotheque_PacMan.RoundButton btnRetour;
     }
 }

@@ -44,6 +44,25 @@
             lblTimer = new Label();
             tlpVies = new TableLayoutPanel();
             lblVies = new Label();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            lblGauche = new Label();
+            lblToucheGauche = new Label();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            lblTempsBonus = new Label();
+            picBonus = new PictureBox();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            lblToucheHaut = new Label();
+            lblHaut = new Label();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            lblBas = new Label();
+            lblToucheBas = new Label();
+            tableLayoutPanel8 = new TableLayoutPanel();
+            lblDroite = new Label();
+            lblToucheDroite = new Label();
+            tableLayoutPanel9 = new TableLayoutPanel();
+            lblPause = new Label();
+            lblToucheEsc = new Label();
             tlpGrille.SuspendLayout();
             tlpBordure.SuspendLayout();
             tlpScore.SuspendLayout();
@@ -52,6 +71,14 @@
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tlpVies.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel7.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picBonus).BeginInit();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
+            tableLayoutPanel9.SuspendLayout();
             SuspendLayout();
             // 
             // tlpGrille
@@ -104,20 +131,20 @@
             // 
             // tlpScore
             // 
-            tlpScore.ColumnCount = 4;
-            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpScore.Controls.Add(lblScoreCount, 2, 0);
-            tlpScore.Controls.Add(lblScore, 1, 0);
+            tlpScore.ColumnCount = 2;
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tlpScore.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tlpScore.Controls.Add(lblScoreCount, 1, 0);
+            tlpScore.Controls.Add(lblScore, 0, 0);
             tlpScore.Dock = DockStyle.Fill;
             tlpScore.Location = new Point(580, 10);
             tlpScore.Margin = new Padding(0);
             tlpScore.Name = "tlpScore";
             tlpScore.RowCount = 1;
             tlpScore.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpScore.Size = new Size(290, 42);
+            tlpScore.Size = new Size(232, 42);
             tlpScore.TabIndex = 0;
             // 
             // lblScoreCount
@@ -127,10 +154,10 @@
             lblScoreCount.Dock = DockStyle.Fill;
             lblScoreCount.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblScoreCount.ForeColor = Color.White;
-            lblScoreCount.Location = new Point(174, 0);
+            lblScoreCount.Location = new Point(116, 0);
             lblScoreCount.Margin = new Padding(0);
             lblScoreCount.Name = "lblScoreCount";
-            lblScoreCount.Size = new Size(58, 42);
+            lblScoreCount.Size = new Size(116, 42);
             lblScoreCount.TabIndex = 1;
             lblScoreCount.Text = "0";
             lblScoreCount.TextAlign = ContentAlignment.MiddleLeft;
@@ -142,10 +169,10 @@
             lblScore.Dock = DockStyle.Fill;
             lblScore.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblScore.ForeColor = Color.White;
-            lblScore.Location = new Point(87, 0);
+            lblScore.Location = new Point(0, 0);
             lblScore.Margin = new Padding(0);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(87, 42);
+            lblScore.Size = new Size(116, 42);
             lblScore.TabIndex = 0;
             lblScore.Text = "SCORE :";
             lblScore.TextAlign = ContentAlignment.MiddleRight;
@@ -158,6 +185,7 @@
             tlpFondEcran.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
             tlpFondEcran.Controls.Add(tlpGrille, 1, 1);
             tlpFondEcran.Controls.Add(tlpAffichage, 1, 0);
+            tlpFondEcran.Controls.Add(tableLayoutPanel3, 1, 2);
             tlpFondEcran.Dock = DockStyle.Fill;
             tlpFondEcran.Location = new Point(0, 0);
             tlpFondEcran.Name = "tlpFondEcran";
@@ -170,15 +198,17 @@
             // 
             // tlpAffichage
             // 
-            tlpAffichage.ColumnCount = 4;
+            tlpAffichage.ColumnCount = 6;
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
             tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpAffichage.Controls.Add(tlpScore, 2, 1);
-            tlpAffichage.Controls.Add(tableLayoutPanel1, 0, 1);
-            tlpAffichage.Controls.Add(tableLayoutPanel2, 1, 1);
-            tlpAffichage.Controls.Add(tlpVies, 3, 1);
+            tlpAffichage.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tlpAffichage.Controls.Add(tlpScore, 3, 1);
+            tlpAffichage.Controls.Add(tableLayoutPanel1, 1, 1);
+            tlpAffichage.Controls.Add(tableLayoutPanel2, 2, 1);
+            tlpAffichage.Controls.Add(tlpVies, 4, 1);
             tlpAffichage.Dock = DockStyle.Fill;
             tlpAffichage.Location = new Point(10, 0);
             tlpAffichage.Margin = new Padding(0);
@@ -187,8 +217,6 @@
             tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
             tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tlpAffichage.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tlpAffichage.Size = new Size(1162, 62);
             tlpAffichage.TabIndex = 1;
             // 
@@ -200,7 +228,7 @@
             tableLayoutPanel1.Controls.Add(lblPseudo, 0, 0);
             tableLayoutPanel1.Controls.Add(lblPseudoChange, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 10);
+            tableLayoutPanel1.Location = new Point(58, 10);
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
@@ -244,13 +272,13 @@
             tableLayoutPanel2.Controls.Add(lblTimerChange, 1, 0);
             tableLayoutPanel2.Controls.Add(lblTimer, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(290, 10);
+            tableLayoutPanel2.Location = new Point(348, 10);
             tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(290, 42);
+            tableLayoutPanel2.Size = new Size(232, 42);
             tableLayoutPanel2.TabIndex = 3;
             // 
             // lblTimerChange
@@ -259,10 +287,10 @@
             lblTimerChange.Dock = DockStyle.Fill;
             lblTimerChange.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblTimerChange.ForeColor = Color.White;
-            lblTimerChange.Location = new Point(145, 0);
+            lblTimerChange.Location = new Point(116, 0);
             lblTimerChange.Margin = new Padding(0);
             lblTimerChange.Name = "lblTimerChange";
-            lblTimerChange.Size = new Size(145, 42);
+            lblTimerChange.Size = new Size(116, 42);
             lblTimerChange.TabIndex = 1;
             lblTimerChange.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -275,7 +303,7 @@
             lblTimer.Location = new Point(0, 0);
             lblTimer.Margin = new Padding(0);
             lblTimer.Name = "lblTimer";
-            lblTimer.Size = new Size(145, 42);
+            lblTimer.Size = new Size(116, 42);
             lblTimer.TabIndex = 0;
             lblTimer.Text = "TIMER :";
             lblTimer.TextAlign = ContentAlignment.MiddleRight;
@@ -291,12 +319,12 @@
             tlpVies.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14F));
             tlpVies.Controls.Add(lblVies, 0, 0);
             tlpVies.Dock = DockStyle.Fill;
-            tlpVies.Location = new Point(870, 10);
+            tlpVies.Location = new Point(812, 10);
             tlpVies.Margin = new Padding(0);
             tlpVies.Name = "tlpVies";
             tlpVies.RowCount = 1;
             tlpVies.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpVies.Size = new Size(292, 42);
+            tlpVies.Size = new Size(290, 42);
             tlpVies.TabIndex = 1;
             // 
             // lblVies
@@ -313,6 +341,313 @@
             lblVies.TabIndex = 0;
             lblVies.Text = "VIES : ";
             lblVies.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 8;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel7, 3, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 6, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel5, 1, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel6, 2, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel8, 4, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel9, 5, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(10, 564);
+            tableLayoutPanel3.Margin = new Padding(0);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(1162, 64);
+            tableLayoutPanel3.TabIndex = 2;
+            // 
+            // tableLayoutPanel7
+            // 
+            tableLayoutPanel7.ColumnCount = 4;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel7.Controls.Add(lblGauche, 1, 1);
+            tableLayoutPanel7.Controls.Add(lblToucheGauche, 2, 1);
+            tableLayoutPanel7.Location = new Point(406, 0);
+            tableLayoutPanel7.Margin = new Padding(0);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 3;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel7.Size = new Size(174, 64);
+            tableLayoutPanel7.TabIndex = 2;
+            // 
+            // lblGauche
+            // 
+            lblGauche.AutoSize = true;
+            lblGauche.Dock = DockStyle.Fill;
+            lblGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblGauche.ForeColor = Color.White;
+            lblGauche.Location = new Point(17, 6);
+            lblGauche.Margin = new Padding(0);
+            lblGauche.Name = "lblGauche";
+            lblGauche.Size = new Size(69, 51);
+            lblGauche.TabIndex = 5;
+            lblGauche.Text = "Gauche";
+            lblGauche.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblToucheGauche
+            // 
+            lblToucheGauche.AutoSize = true;
+            lblToucheGauche.Dock = DockStyle.Fill;
+            lblToucheGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblToucheGauche.ForeColor = Color.White;
+            lblToucheGauche.Location = new Point(86, 6);
+            lblToucheGauche.Margin = new Padding(0);
+            lblToucheGauche.Name = "lblToucheGauche";
+            lblToucheGauche.Size = new Size(52, 51);
+            lblToucheGauche.TabIndex = 0;
+            lblToucheGauche.Text = " : Q";
+            lblToucheGauche.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 4;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel4.Controls.Add(lblTempsBonus, 2, 1);
+            tableLayoutPanel4.Controls.Add(picBonus, 1, 1);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(928, 0);
+            tableLayoutPanel4.Margin = new Padding(0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 3;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel4.Size = new Size(174, 64);
+            tableLayoutPanel4.TabIndex = 0;
+            // 
+            // lblTempsBonus
+            // 
+            lblTempsBonus.AutoSize = true;
+            lblTempsBonus.Dock = DockStyle.Fill;
+            lblTempsBonus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblTempsBonus.ForeColor = Color.White;
+            lblTempsBonus.Location = new Point(86, 6);
+            lblTempsBonus.Margin = new Padding(0);
+            lblTempsBonus.Name = "lblTempsBonus";
+            lblTempsBonus.Size = new Size(52, 51);
+            lblTempsBonus.TabIndex = 0;
+            lblTempsBonus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // picBonus
+            // 
+            picBonus.Dock = DockStyle.Fill;
+            picBonus.Image = Properties.Resources.bonus_vitesse;
+            picBonus.Location = new Point(34, 6);
+            picBonus.Margin = new Padding(0);
+            picBonus.Name = "picBonus";
+            picBonus.Size = new Size(52, 51);
+            picBonus.SizeMode = PictureBoxSizeMode.Zoom;
+            picBonus.TabIndex = 1;
+            picBonus.TabStop = false;
+            picBonus.Visible = false;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.ColumnCount = 4;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel5.Controls.Add(lblToucheHaut, 2, 1);
+            tableLayoutPanel5.Controls.Add(lblHaut, 1, 1);
+            tableLayoutPanel5.Location = new Point(58, 0);
+            tableLayoutPanel5.Margin = new Padding(0);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 3;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel5.Size = new Size(174, 64);
+            tableLayoutPanel5.TabIndex = 1;
+            // 
+            // lblToucheHaut
+            // 
+            lblToucheHaut.AutoSize = true;
+            lblToucheHaut.Dock = DockStyle.Fill;
+            lblToucheHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblToucheHaut.ForeColor = Color.White;
+            lblToucheHaut.Location = new Point(86, 6);
+            lblToucheHaut.Margin = new Padding(0);
+            lblToucheHaut.Name = "lblToucheHaut";
+            lblToucheHaut.Size = new Size(52, 51);
+            lblToucheHaut.TabIndex = 0;
+            lblToucheHaut.Text = " : Z";
+            lblToucheHaut.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblHaut
+            // 
+            lblHaut.AutoSize = true;
+            lblHaut.Dock = DockStyle.Fill;
+            lblHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblHaut.ForeColor = Color.White;
+            lblHaut.Location = new Point(17, 6);
+            lblHaut.Margin = new Padding(0);
+            lblHaut.Name = "lblHaut";
+            lblHaut.Size = new Size(69, 51);
+            lblHaut.TabIndex = 1;
+            lblHaut.Text = "Haut";
+            lblHaut.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.ColumnCount = 4;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel6.Controls.Add(lblBas, 1, 1);
+            tableLayoutPanel6.Controls.Add(lblToucheBas, 2, 1);
+            tableLayoutPanel6.Location = new Point(232, 0);
+            tableLayoutPanel6.Margin = new Padding(0);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 3;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel6.Size = new Size(174, 64);
+            tableLayoutPanel6.TabIndex = 2;
+            // 
+            // lblBas
+            // 
+            lblBas.AutoSize = true;
+            lblBas.Dock = DockStyle.Fill;
+            lblBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblBas.ForeColor = Color.White;
+            lblBas.Location = new Point(17, 6);
+            lblBas.Margin = new Padding(0);
+            lblBas.Name = "lblBas";
+            lblBas.Size = new Size(69, 51);
+            lblBas.TabIndex = 5;
+            lblBas.Text = "Bas";
+            lblBas.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblToucheBas
+            // 
+            lblToucheBas.AutoSize = true;
+            lblToucheBas.Dock = DockStyle.Fill;
+            lblToucheBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblToucheBas.ForeColor = Color.White;
+            lblToucheBas.Location = new Point(86, 6);
+            lblToucheBas.Margin = new Padding(0);
+            lblToucheBas.Name = "lblToucheBas";
+            lblToucheBas.Size = new Size(52, 51);
+            lblToucheBas.TabIndex = 0;
+            lblToucheBas.Text = " : S";
+            lblToucheBas.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.ColumnCount = 4;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel8.Controls.Add(lblDroite, 1, 1);
+            tableLayoutPanel8.Controls.Add(lblToucheDroite, 2, 1);
+            tableLayoutPanel8.Location = new Point(580, 0);
+            tableLayoutPanel8.Margin = new Padding(0);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.RowCount = 3;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel8.Size = new Size(174, 64);
+            tableLayoutPanel8.TabIndex = 3;
+            // 
+            // lblDroite
+            // 
+            lblDroite.AutoSize = true;
+            lblDroite.Dock = DockStyle.Fill;
+            lblDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblDroite.ForeColor = Color.White;
+            lblDroite.Location = new Point(17, 6);
+            lblDroite.Margin = new Padding(0);
+            lblDroite.Name = "lblDroite";
+            lblDroite.Size = new Size(69, 51);
+            lblDroite.TabIndex = 5;
+            lblDroite.Text = "Droite";
+            lblDroite.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblToucheDroite
+            // 
+            lblToucheDroite.AutoSize = true;
+            lblToucheDroite.Dock = DockStyle.Fill;
+            lblToucheDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblToucheDroite.ForeColor = Color.White;
+            lblToucheDroite.Location = new Point(86, 6);
+            lblToucheDroite.Margin = new Padding(0);
+            lblToucheDroite.Name = "lblToucheDroite";
+            lblToucheDroite.Size = new Size(52, 51);
+            lblToucheDroite.TabIndex = 0;
+            lblToucheDroite.Text = " : D";
+            lblToucheDroite.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel9
+            // 
+            tableLayoutPanel9.ColumnCount = 4;
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel9.Controls.Add(lblPause, 1, 1);
+            tableLayoutPanel9.Controls.Add(lblToucheEsc, 2, 1);
+            tableLayoutPanel9.Location = new Point(754, 0);
+            tableLayoutPanel9.Margin = new Padding(0);
+            tableLayoutPanel9.Name = "tableLayoutPanel9";
+            tableLayoutPanel9.RowCount = 3;
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel9.Size = new Size(174, 64);
+            tableLayoutPanel9.TabIndex = 4;
+            // 
+            // lblPause
+            // 
+            lblPause.AutoSize = true;
+            lblPause.Dock = DockStyle.Fill;
+            lblPause.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblPause.ForeColor = Color.White;
+            lblPause.Location = new Point(17, 6);
+            lblPause.Margin = new Padding(0);
+            lblPause.Name = "lblPause";
+            lblPause.Size = new Size(69, 51);
+            lblPause.TabIndex = 5;
+            lblPause.Text = "Pause";
+            lblPause.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblToucheEsc
+            // 
+            lblToucheEsc.AutoSize = true;
+            lblToucheEsc.Dock = DockStyle.Fill;
+            lblToucheEsc.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblToucheEsc.ForeColor = Color.White;
+            lblToucheEsc.Location = new Point(86, 6);
+            lblToucheEsc.Margin = new Padding(0);
+            lblToucheEsc.Name = "lblToucheEsc";
+            lblToucheEsc.Size = new Size(52, 51);
+            lblToucheEsc.TabIndex = 0;
+            lblToucheEsc.Text = ": Esc";
+            lblToucheEsc.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // FormPartie
             // 
@@ -346,6 +681,20 @@
             tableLayoutPanel2.PerformLayout();
             tlpVies.ResumeLayout(false);
             tlpVies.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel7.ResumeLayout(false);
+            tableLayoutPanel7.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picBonus).EndInit();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel8.PerformLayout();
+            tableLayoutPanel9.ResumeLayout(false);
+            tableLayoutPanel9.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -367,5 +716,24 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Label lblTimerChange;
         private Label lblTimer;
+        private TableLayoutPanel tableLayoutPanel3;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label lblTempsBonus;
+        private PictureBox picBonus;
+        private TableLayoutPanel tableLayoutPanel7;
+        private Label lblToucheGauche;
+        private TableLayoutPanel tableLayoutPanel5;
+        private Label lblToucheHaut;
+        private TableLayoutPanel tableLayoutPanel6;
+        private Label lblToucheBas;
+        private TableLayoutPanel tableLayoutPanel8;
+        private Label lblToucheDroite;
+        private TableLayoutPanel tableLayoutPanel9;
+        private Label lblToucheEsc;
+        private Label lblGauche;
+        private Label lblHaut;
+        private Label lblBas;
+        private Label lblDroite;
+        private Label lblPause;
     }
 }

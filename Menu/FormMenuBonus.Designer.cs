@@ -1,6 +1,6 @@
 ﻿namespace Interface_PacMan
 {
-    partial class FormMenuTouches
+    partial class FormMenuBonus
     {
         /// <summary>
         /// Required designer variable.
@@ -29,69 +29,50 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            pictureBox1 = new PictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnRetour = new Bibliotheque_PacMan.RoundButton();
             roundTableLayoutPanel1 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            roundTableLayoutPanel2 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            txtHaut = new TextBox();
             lblHaut = new Label();
+            btnVie = new Bibliotheque_PacMan.RoundButton();
             roundTableLayoutPanel5 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            roundTableLayoutPanel6 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            txtGauche = new TextBox();
             lblGauche = new Label();
+            btnVitesse = new Bibliotheque_PacMan.RoundButton();
+            pictureBox1 = new PictureBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             roundTableLayoutPanel3 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            roundTableLayoutPanel4 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            txtBas = new TextBox();
             lblBas = new Label();
+            btnTemps = new Bibliotheque_PacMan.RoundButton();
             roundTableLayoutPanel7 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            roundTableLayoutPanel8 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
-            txtDroite = new TextBox();
             lblDroite = new Label();
+            btnScore = new Bibliotheque_PacMan.RoundButton();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             roundTableLayoutPanel1.SuspendLayout();
-            roundTableLayoutPanel2.SuspendLayout();
             roundTableLayoutPanel5.SuspendLayout();
-            roundTableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel3.SuspendLayout();
             roundTableLayoutPanel3.SuspendLayout();
-            roundTableLayoutPanel4.SuspendLayout();
             roundTableLayoutPanel7.SuspendLayout();
-            roundTableLayoutPanel8.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 0, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
+            tableLayoutPanel1.RowCount = 5;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.5F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.5F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.Size = new Size(1182, 628);
             tableLayoutPanel1.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = Properties.Resources.Logo;
-            pictureBox1.Location = new Point(30, 30);
-            pictureBox1.Margin = new Padding(30);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1122, 254);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -115,7 +96,7 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.Size = new Size(1182, 78);
-            tableLayoutPanel2.TabIndex = 1;
+            tableLayoutPanel2.TabIndex = 2;
             // 
             // btnRetour
             // 
@@ -135,6 +116,7 @@
             btnRetour.Rounded = true;
             btnRetour.Size = new Size(59, 62);
             btnRetour.TabIndex = 0;
+            btnRetour.Tag = "retour";
             btnRetour.UseVisualStyleBackColor = false;
             btnRetour.Click += btnRetour_Click;
             btnRetour.MouseEnter += btn_MouseEnter;
@@ -151,8 +133,8 @@
             roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
             roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            roundTableLayoutPanel1.Controls.Add(roundTableLayoutPanel2, 2, 1);
             roundTableLayoutPanel1.Controls.Add(lblHaut, 1, 1);
+            roundTableLayoutPanel1.Controls.Add(btnVie, 2, 1);
             roundTableLayoutPanel1.Dock = DockStyle.Fill;
             roundTableLayoutPanel1.Location = new Point(265, 7);
             roundTableLayoutPanel1.Margin = new Padding(0);
@@ -164,44 +146,6 @@
             roundTableLayoutPanel1.Size = new Size(295, 62);
             roundTableLayoutPanel1.TabIndex = 1;
             // 
-            // roundTableLayoutPanel2
-            // 
-            roundTableLayoutPanel2.BackColor = Color.White;
-            roundTableLayoutPanel2.BorderColor = Color.Transparent;
-            roundTableLayoutPanel2.BorderRadius = 21;
-            roundTableLayoutPanel2.BorderWidth = 0;
-            roundTableLayoutPanel2.ColumnCount = 1;
-            roundTableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel2.Controls.Add(txtHaut, 0, 0);
-            roundTableLayoutPanel2.Dock = DockStyle.Fill;
-            roundTableLayoutPanel2.Location = new Point(176, 9);
-            roundTableLayoutPanel2.Margin = new Padding(0);
-            roundTableLayoutPanel2.Name = "roundTableLayoutPanel2";
-            roundTableLayoutPanel2.RowCount = 1;
-            roundTableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel2.Size = new Size(103, 43);
-            roundTableLayoutPanel2.TabIndex = 0;
-            roundTableLayoutPanel2.Tag = "ToucheHaut";
-            roundTableLayoutPanel2.Click += tlp_Click;
-            // 
-            // txtHaut
-            // 
-            txtHaut.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtHaut.BorderStyle = BorderStyle.None;
-            txtHaut.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtHaut.Location = new Point(0, 10);
-            txtHaut.Margin = new Padding(0);
-            txtHaut.MaxLength = 1;
-            txtHaut.Name = "txtHaut";
-            txtHaut.Size = new Size(103, 23);
-            txtHaut.TabIndex = 0;
-            txtHaut.Tag = "ToucheHaut";
-            txtHaut.TextAlign = HorizontalAlignment.Center;
-            txtHaut.TextChanged += txt_TextChanged;
-            txtHaut.Validated += txt_Validated;
-            // 
             // lblHaut
             // 
             lblHaut.AutoSize = true;
@@ -212,8 +156,32 @@
             lblHaut.Name = "lblHaut";
             lblHaut.Size = new Size(162, 43);
             lblHaut.TabIndex = 1;
-            lblHaut.Text = "Haut";
+            lblHaut.Text = "Bonus Vie +";
             lblHaut.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnVie
+            // 
+            btnVie.BackColor = Color.White;
+            btnVie.BorderColor = Color.Transparent;
+            btnVie.BorderRadius = 20;
+            btnVie.BorderWidth = 0;
+            btnVie.Dock = DockStyle.Fill;
+            btnVie.FlatAppearance.BorderSize = 0;
+            btnVie.FlatStyle = FlatStyle.Flat;
+            btnVie.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnVie.HexaColor = "";
+            btnVie.Location = new Point(177, 10);
+            btnVie.Margin = new Padding(1);
+            btnVie.Name = "btnVie";
+            btnVie.Rounded = true;
+            btnVie.Size = new Size(101, 41);
+            btnVie.TabIndex = 2;
+            btnVie.Tag = "0";
+            btnVie.Text = "ON";
+            btnVie.UseVisualStyleBackColor = false;
+            btnVie.Click += btn_BonusClick;
+            btnVie.MouseEnter += btn_MouseEnter;
+            btnVie.MouseLeave += btn_MouseLeave;
             // 
             // roundTableLayoutPanel5
             // 
@@ -226,8 +194,8 @@
             roundTableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
             roundTableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             roundTableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            roundTableLayoutPanel5.Controls.Add(roundTableLayoutPanel6, 2, 1);
             roundTableLayoutPanel5.Controls.Add(lblGauche, 1, 1);
+            roundTableLayoutPanel5.Controls.Add(btnVitesse, 2, 1);
             roundTableLayoutPanel5.Dock = DockStyle.Fill;
             roundTableLayoutPanel5.Location = new Point(619, 7);
             roundTableLayoutPanel5.Margin = new Padding(0);
@@ -239,44 +207,6 @@
             roundTableLayoutPanel5.Size = new Size(295, 62);
             roundTableLayoutPanel5.TabIndex = 2;
             // 
-            // roundTableLayoutPanel6
-            // 
-            roundTableLayoutPanel6.BackColor = Color.White;
-            roundTableLayoutPanel6.BorderColor = Color.Transparent;
-            roundTableLayoutPanel6.BorderRadius = 21;
-            roundTableLayoutPanel6.BorderWidth = 0;
-            roundTableLayoutPanel6.ColumnCount = 1;
-            roundTableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel6.Controls.Add(txtGauche, 0, 0);
-            roundTableLayoutPanel6.Dock = DockStyle.Fill;
-            roundTableLayoutPanel6.Location = new Point(176, 9);
-            roundTableLayoutPanel6.Margin = new Padding(0);
-            roundTableLayoutPanel6.Name = "roundTableLayoutPanel6";
-            roundTableLayoutPanel6.RowCount = 1;
-            roundTableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel6.Size = new Size(103, 43);
-            roundTableLayoutPanel6.TabIndex = 0;
-            roundTableLayoutPanel6.Tag = "ToucheGauche";
-            roundTableLayoutPanel6.Click += tlp_Click;
-            // 
-            // txtGauche
-            // 
-            txtGauche.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtGauche.BorderStyle = BorderStyle.None;
-            txtGauche.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtGauche.Location = new Point(0, 10);
-            txtGauche.Margin = new Padding(0);
-            txtGauche.MaxLength = 1;
-            txtGauche.Name = "txtGauche";
-            txtGauche.Size = new Size(103, 23);
-            txtGauche.TabIndex = 0;
-            txtGauche.Tag = "ToucheGauche";
-            txtGauche.TextAlign = HorizontalAlignment.Center;
-            txtGauche.TextChanged += txt_TextChanged;
-            txtGauche.Validated += txt_Validated;
-            // 
             // lblGauche
             // 
             lblGauche.AutoSize = true;
@@ -287,8 +217,44 @@
             lblGauche.Name = "lblGauche";
             lblGauche.Size = new Size(162, 43);
             lblGauche.TabIndex = 1;
-            lblGauche.Text = "Gauche";
+            lblGauche.Text = "Bonus Vitesse";
             lblGauche.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnVitesse
+            // 
+            btnVitesse.BackColor = Color.White;
+            btnVitesse.BorderColor = Color.Transparent;
+            btnVitesse.BorderRadius = 20;
+            btnVitesse.BorderWidth = 0;
+            btnVitesse.Dock = DockStyle.Fill;
+            btnVitesse.FlatAppearance.BorderSize = 0;
+            btnVitesse.FlatStyle = FlatStyle.Flat;
+            btnVitesse.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnVitesse.HexaColor = "";
+            btnVitesse.Location = new Point(177, 10);
+            btnVitesse.Margin = new Padding(1);
+            btnVitesse.Name = "btnVitesse";
+            btnVitesse.Rounded = true;
+            btnVitesse.Size = new Size(101, 41);
+            btnVitesse.TabIndex = 2;
+            btnVitesse.Tag = "1";
+            btnVitesse.Text = "ON";
+            btnVitesse.UseVisualStyleBackColor = false;
+            btnVitesse.Click += btn_BonusClick;
+            btnVitesse.MouseEnter += btn_MouseEnter;
+            btnVitesse.MouseLeave += btn_MouseLeave;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = Properties.Resources.Logo;
+            pictureBox1.Location = new Point(30, 30);
+            pictureBox1.Margin = new Padding(30);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1122, 254);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // tableLayoutPanel3
             // 
@@ -309,7 +275,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel3.Size = new Size(1182, 78);
-            tableLayoutPanel3.TabIndex = 2;
+            tableLayoutPanel3.TabIndex = 3;
             // 
             // roundTableLayoutPanel3
             // 
@@ -322,8 +288,8 @@
             roundTableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
             roundTableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             roundTableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            roundTableLayoutPanel3.Controls.Add(roundTableLayoutPanel4, 2, 1);
             roundTableLayoutPanel3.Controls.Add(lblBas, 1, 1);
+            roundTableLayoutPanel3.Controls.Add(btnTemps, 2, 1);
             roundTableLayoutPanel3.Dock = DockStyle.Fill;
             roundTableLayoutPanel3.Location = new Point(265, 7);
             roundTableLayoutPanel3.Margin = new Padding(0);
@@ -335,44 +301,6 @@
             roundTableLayoutPanel3.Size = new Size(295, 62);
             roundTableLayoutPanel3.TabIndex = 2;
             // 
-            // roundTableLayoutPanel4
-            // 
-            roundTableLayoutPanel4.BackColor = Color.White;
-            roundTableLayoutPanel4.BorderColor = Color.Transparent;
-            roundTableLayoutPanel4.BorderRadius = 21;
-            roundTableLayoutPanel4.BorderWidth = 0;
-            roundTableLayoutPanel4.ColumnCount = 1;
-            roundTableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel4.Controls.Add(txtBas, 0, 0);
-            roundTableLayoutPanel4.Dock = DockStyle.Fill;
-            roundTableLayoutPanel4.Location = new Point(176, 9);
-            roundTableLayoutPanel4.Margin = new Padding(0);
-            roundTableLayoutPanel4.Name = "roundTableLayoutPanel4";
-            roundTableLayoutPanel4.RowCount = 1;
-            roundTableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel4.Size = new Size(103, 43);
-            roundTableLayoutPanel4.TabIndex = 0;
-            roundTableLayoutPanel4.Tag = "ToucheBas";
-            roundTableLayoutPanel4.Click += tlp_Click;
-            // 
-            // txtBas
-            // 
-            txtBas.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtBas.BorderStyle = BorderStyle.None;
-            txtBas.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtBas.Location = new Point(0, 10);
-            txtBas.Margin = new Padding(0);
-            txtBas.MaxLength = 1;
-            txtBas.Name = "txtBas";
-            txtBas.Size = new Size(103, 23);
-            txtBas.TabIndex = 0;
-            txtBas.Tag = "ToucheBas";
-            txtBas.TextAlign = HorizontalAlignment.Center;
-            txtBas.TextChanged += txt_TextChanged;
-            txtBas.Validated += txt_Validated;
-            // 
             // lblBas
             // 
             lblBas.AutoSize = true;
@@ -383,8 +311,32 @@
             lblBas.Name = "lblBas";
             lblBas.Size = new Size(162, 43);
             lblBas.TabIndex = 1;
-            lblBas.Text = "Bas";
+            lblBas.Text = "Bonus Temps +";
             lblBas.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnTemps
+            // 
+            btnTemps.BackColor = Color.White;
+            btnTemps.BorderColor = Color.Transparent;
+            btnTemps.BorderRadius = 20;
+            btnTemps.BorderWidth = 0;
+            btnTemps.Dock = DockStyle.Fill;
+            btnTemps.FlatAppearance.BorderSize = 0;
+            btnTemps.FlatStyle = FlatStyle.Flat;
+            btnTemps.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnTemps.HexaColor = "";
+            btnTemps.Location = new Point(177, 10);
+            btnTemps.Margin = new Padding(1);
+            btnTemps.Name = "btnTemps";
+            btnTemps.Rounded = true;
+            btnTemps.Size = new Size(101, 41);
+            btnTemps.TabIndex = 2;
+            btnTemps.Tag = "2";
+            btnTemps.Text = "ON";
+            btnTemps.UseVisualStyleBackColor = false;
+            btnTemps.Click += btn_BonusClick;
+            btnTemps.MouseEnter += btn_MouseEnter;
+            btnTemps.MouseLeave += btn_MouseLeave;
             // 
             // roundTableLayoutPanel7
             // 
@@ -397,8 +349,8 @@
             roundTableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
             roundTableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             roundTableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 5F));
-            roundTableLayoutPanel7.Controls.Add(roundTableLayoutPanel8, 2, 1);
             roundTableLayoutPanel7.Controls.Add(lblDroite, 1, 1);
+            roundTableLayoutPanel7.Controls.Add(btnScore, 2, 1);
             roundTableLayoutPanel7.Dock = DockStyle.Fill;
             roundTableLayoutPanel7.Location = new Point(619, 7);
             roundTableLayoutPanel7.Margin = new Padding(0);
@@ -410,44 +362,6 @@
             roundTableLayoutPanel7.Size = new Size(295, 62);
             roundTableLayoutPanel7.TabIndex = 3;
             // 
-            // roundTableLayoutPanel8
-            // 
-            roundTableLayoutPanel8.BackColor = Color.White;
-            roundTableLayoutPanel8.BorderColor = Color.Transparent;
-            roundTableLayoutPanel8.BorderRadius = 21;
-            roundTableLayoutPanel8.BorderWidth = 0;
-            roundTableLayoutPanel8.ColumnCount = 1;
-            roundTableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel8.Controls.Add(txtDroite, 0, 0);
-            roundTableLayoutPanel8.Dock = DockStyle.Fill;
-            roundTableLayoutPanel8.Location = new Point(176, 9);
-            roundTableLayoutPanel8.Margin = new Padding(0);
-            roundTableLayoutPanel8.Name = "roundTableLayoutPanel8";
-            roundTableLayoutPanel8.RowCount = 1;
-            roundTableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            roundTableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            roundTableLayoutPanel8.Size = new Size(103, 43);
-            roundTableLayoutPanel8.TabIndex = 0;
-            roundTableLayoutPanel8.Tag = "ToucheDroite";
-            roundTableLayoutPanel8.Click += tlp_Click;
-            // 
-            // txtDroite
-            // 
-            txtDroite.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtDroite.BorderStyle = BorderStyle.None;
-            txtDroite.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtDroite.Location = new Point(0, 10);
-            txtDroite.Margin = new Padding(0);
-            txtDroite.MaxLength = 1;
-            txtDroite.Name = "txtDroite";
-            txtDroite.Size = new Size(103, 23);
-            txtDroite.TabIndex = 0;
-            txtDroite.Tag = "ToucheDroite";
-            txtDroite.TextAlign = HorizontalAlignment.Center;
-            txtDroite.TextChanged += txt_TextChanged;
-            txtDroite.Validated += txt_Validated;
-            // 
             // lblDroite
             // 
             lblDroite.AutoSize = true;
@@ -458,10 +372,34 @@
             lblDroite.Name = "lblDroite";
             lblDroite.Size = new Size(162, 43);
             lblDroite.TabIndex = 1;
-            lblDroite.Text = "Droite";
+            lblDroite.Text = "Bonus Score";
             lblDroite.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // FormMenuTouches
+            // btnScore
+            // 
+            btnScore.BackColor = Color.White;
+            btnScore.BorderColor = Color.Transparent;
+            btnScore.BorderRadius = 20;
+            btnScore.BorderWidth = 0;
+            btnScore.Dock = DockStyle.Fill;
+            btnScore.FlatAppearance.BorderSize = 0;
+            btnScore.FlatStyle = FlatStyle.Flat;
+            btnScore.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnScore.HexaColor = "";
+            btnScore.Location = new Point(177, 10);
+            btnScore.Margin = new Padding(1);
+            btnScore.Name = "btnScore";
+            btnScore.Rounded = true;
+            btnScore.Size = new Size(101, 41);
+            btnScore.TabIndex = 2;
+            btnScore.Tag = "3";
+            btnScore.Text = "ON";
+            btnScore.UseVisualStyleBackColor = false;
+            btnScore.Click += btn_BonusClick;
+            btnScore.MouseEnter += btn_MouseEnter;
+            btnScore.MouseLeave += btn_MouseLeave;
+            // 
+            // FormMenuBonus
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -469,34 +407,26 @@
             ClientSize = new Size(1182, 628);
             Controls.Add(tableLayoutPanel1);
             MinimumSize = new Size(960, 540);
-            Name = "FormMenuTouches";
+            Name = "FormMenuBonus";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Menu Touches";
+            Text = "Menu Bonus";
             WindowState = FormWindowState.Maximized;
-            FormClosing += FormMenuTouches_FormClosing;
-            Load += FormMenuTouches_Load;
-            SizeChanged += FormMenuTouches_SizeChanged;
+            FormClosing += FormMenuBonus_FormClosing;
+            Load += FormMenuBonus_Load;
+            SizeChanged += FormMenuBonus_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             roundTableLayoutPanel1.ResumeLayout(false);
             roundTableLayoutPanel1.PerformLayout();
-            roundTableLayoutPanel2.ResumeLayout(false);
-            roundTableLayoutPanel2.PerformLayout();
             roundTableLayoutPanel5.ResumeLayout(false);
             roundTableLayoutPanel5.PerformLayout();
-            roundTableLayoutPanel6.ResumeLayout(false);
-            roundTableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel3.ResumeLayout(false);
             roundTableLayoutPanel3.ResumeLayout(false);
             roundTableLayoutPanel3.PerformLayout();
-            roundTableLayoutPanel4.ResumeLayout(false);
-            roundTableLayoutPanel4.PerformLayout();
             roundTableLayoutPanel7.ResumeLayout(false);
             roundTableLayoutPanel7.PerformLayout();
-            roundTableLayoutPanel8.ResumeLayout(false);
-            roundTableLayoutPanel8.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -505,23 +435,19 @@
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox pictureBox1;
         private TableLayoutPanel tableLayoutPanel2;
-        private TableLayoutPanel tableLayoutPanel3;
         private Bibliotheque_PacMan.RoundButton btnRetour;
         private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel1;
-        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel2;
-        private TextBox txtHaut;
         private Label lblHaut;
         private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel5;
-        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel6;
-        private TextBox txtGauche;
         private Label lblGauche;
+        private TableLayoutPanel tableLayoutPanel3;
         private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel3;
-        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel4;
-        private TextBox txtBas;
         private Label lblBas;
         private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel7;
-        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel8;
-        private TextBox txtDroite;
         private Label lblDroite;
+        private Bibliotheque_PacMan.RoundButton btnVie;
+        private Bibliotheque_PacMan.RoundButton btnVitesse;
+        private Bibliotheque_PacMan.RoundButton btnTemps;
+        private Bibliotheque_PacMan.RoundButton btnScore;
     }
 }

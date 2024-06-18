@@ -28,34 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
             lblUserPseudo = new Label();
             lblDateCreation = new Label();
-            tableLayoutPanel1.SuspendLayout();
+            roundTableLayoutPanel1 = new Bibliotheque_PacMan.RoundTableLayoutPanel();
+            roundTableLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Controls.Add(lblUserPseudo, 1, 1);
-            tableLayoutPanel1.Controls.Add(lblDateCreation, 1, 2);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tableLayoutPanel1.Size = new Size(380, 180);
-            tableLayoutPanel1.TabIndex = 0;
-            tableLayoutPanel1.Click += UserControlSauvegarde_Click;
-            tableLayoutPanel1.MouseEnter += UserControlSauvegarde_MouseEnter;
-            tableLayoutPanel1.MouseLeave += UserControlSauvegarde_MouseLeave;
             // 
             // lblUserPseudo
             // 
@@ -91,26 +68,51 @@
             lblDateCreation.MouseEnter += UserControlSauvegarde_MouseEnter;
             lblDateCreation.MouseLeave += UserControlSauvegarde_MouseLeave;
             // 
+            // roundTableLayoutPanel1
+            // 
+            roundTableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            roundTableLayoutPanel1.BorderColor = Color.Transparent;
+            roundTableLayoutPanel1.BorderRadius = 90;
+            roundTableLayoutPanel1.BorderWidth = 0;
+            roundTableLayoutPanel1.ColumnCount = 3;
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            roundTableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            roundTableLayoutPanel1.Controls.Add(lblDateCreation, 1, 2);
+            roundTableLayoutPanel1.Controls.Add(lblUserPseudo, 1, 1);
+            roundTableLayoutPanel1.Dock = DockStyle.Fill;
+            roundTableLayoutPanel1.Location = new Point(0, 0);
+            roundTableLayoutPanel1.Margin = new Padding(0);
+            roundTableLayoutPanel1.Name = "roundTableLayoutPanel1";
+            roundTableLayoutPanel1.RowCount = 4;
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
+            roundTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            roundTableLayoutPanel1.Size = new Size(380, 180);
+            roundTableLayoutPanel1.TabIndex = 1;
+            roundTableLayoutPanel1.MouseEnter += UserControlSauvegarde_MouseEnter;
+            roundTableLayoutPanel1.MouseLeave += UserControlSauvegarde_MouseLeave;
+            // 
             // UserControlSauvegarde
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(roundTableLayoutPanel1);
             Name = "UserControlSauvegarde";
             Size = new Size(380, 180);
             SizeChanged += UserControlSauvegarde_SizeChanged;
             Click += UserControlSauvegarde_Click;
             MouseEnter += UserControlSauvegarde_MouseEnter;
             MouseLeave += UserControlSauvegarde_MouseLeave;
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            roundTableLayoutPanel1.ResumeLayout(false);
+            roundTableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private TableLayoutPanel tableLayoutPanel1;
         private Label lblUserPseudo;
         private Label lblDateCreation;
+        private Bibliotheque_PacMan.RoundTableLayoutPanel roundTableLayoutPanel1;
     }
 }

@@ -143,9 +143,19 @@ namespace Interface_PacMan.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap coeur {
+        internal static System.Drawing.Bitmap coeur_jaune {
             get {
-                object obj = ResourceManager.GetObject("coeur", resourceCulture);
+                object obj = ResourceManager.GetObject("coeur_jaune", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap coeur_rouge {
+            get {
+                object obj = ResourceManager.GetObject("coeur_rouge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -186,6 +196,26 @@ namespace Interface_PacMan.Properties {
         internal static System.Drawing.Bitmap Fleche {
             get {
                 object obj = ResourceManager.GetObject("Fleche", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fleche_retour {
+            get {
+                object obj = ResourceManager.GetObject("fleche_retour", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fleche1 {
+            get {
+                object obj = ResourceManager.GetObject("fleche1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

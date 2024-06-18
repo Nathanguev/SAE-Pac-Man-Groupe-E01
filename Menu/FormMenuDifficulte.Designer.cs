@@ -96,6 +96,7 @@
             btnDifficile.FlatAppearance.BorderSize = 0;
             btnDifficile.FlatStyle = FlatStyle.Flat;
             btnDifficile.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnDifficile.HexaColor = "";
             btnDifficile.Location = new Point(443, 7);
             btnDifficile.Margin = new Padding(0);
             btnDifficile.Name = "btnDifficile";
@@ -137,6 +138,7 @@
             btnMoyen.FlatAppearance.BorderSize = 0;
             btnMoyen.FlatStyle = FlatStyle.Flat;
             btnMoyen.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnMoyen.HexaColor = "";
             btnMoyen.Location = new Point(443, 7);
             btnMoyen.Margin = new Padding(0);
             btnMoyen.Name = "btnMoyen";
@@ -193,6 +195,8 @@
             btnRetour.FlatAppearance.BorderSize = 0;
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.HexaColor = "";
+            btnRetour.Image = Properties.Resources.fleche1;
             btnRetour.Location = new Point(118, 7);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
@@ -214,6 +218,7 @@
             btnFacile.FlatAppearance.BorderSize = 0;
             btnFacile.FlatStyle = FlatStyle.Flat;
             btnFacile.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnFacile.HexaColor = "";
             btnFacile.Location = new Point(442, 7);
             btnFacile.Margin = new Padding(0);
             btnFacile.Name = "btnFacile";

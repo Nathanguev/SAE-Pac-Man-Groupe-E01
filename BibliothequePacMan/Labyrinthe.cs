@@ -92,26 +92,6 @@ namespace Bibliotheque_PacMan
             return seed;
         }
 
-        public void algoStandard() // Fonction dédiée à la génération aléatoire "standard" du labyrinthe
-        {
-            Random rand = new Random(seed); // Une vaiable aléatoire initialisée avec notre seed (graine de la génération aléatoire)
-
-            addAllVoisins(); // Appel de la méthode addAllVoisins décrite précédemment
-
-            for (int i = 0; i < cellules.Count; i++) // On parcours toute les cellules du labyrinthe
-            {
-                cellules[i].randomVoisin(rand); // On mélange aléatoirement les voisin de la cellule actuelle
-
-                for (int j = 0; j < rand.Next(0, cellules[i].getVoisins().Count); j++)
-                {
-                    if (!cellules[i].getLiens().Contains(cellules[i].getVoisins()[j]))
-                    {
-                        cellules[i].addLien(cellules[i].getVoisins()[j]); // On créer des liens de façon aléatoire sur les voisins de la cellule
-                    }
-                }
-            }
-        }
-
         public void algoParcoursProfondeur() // Fonction algoParcoursProfondeur qui construit de manière aléatoire le labyrinthe en utilisant un algorithme de parcours en profondeur
         {
             Random rand = new Random(seed); // Une vaiable aléatoire initialisée avec notre seed (graine de la génération aléatoire)
@@ -164,31 +144,6 @@ namespace Bibliotheque_PacMan
                     cellules[i].addLien(cellules[i].getVoisins().First(cellule => cellule.isLien(cellules[i]) == false));
                 }
             }
-        }
-
-        public int comptNbPortes() // Fonction qui retourne le nombre de portes du labyrinthe (liens entre les cases)
-        {
-            int nbLiens = 0;
-            for (int i = 0; i < cellules.Count; i++)
-            {
-                nbLiens += cellules[i].getLiens().Count;
-            }
-            return nbLiens / 2;
-        }
-
-        public int comptNbMurs() // Fonction qui retourne le nombre de murs du labyrinthe
-        {
-            int nbVoisins = 0;
-            for (int i = 0; i < cellules.Count; i++)
-            {
-                nbVoisins += cellules[i].getVoisins().Count;
-            }
-            return (nbVoisins / 2) - comptNbPortes();
-        }
-
-        public int comptNbCases() // Fonction qui retourne le nombre de cases du labyrinthe
-        {
-            return cellules.Count;
         }
     }
 }

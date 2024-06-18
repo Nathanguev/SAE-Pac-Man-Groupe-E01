@@ -103,6 +103,8 @@
             btnRetour.FlatAppearance.BorderSize = 0;
             btnRetour.FlatStyle = FlatStyle.Flat;
             btnRetour.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRetour.HexaColor = "";
+            btnRetour.Image = Properties.Resources.fleche1;
             btnRetour.Location = new Point(118, 7);
             btnRetour.Margin = new Padding(0);
             btnRetour.Name = "btnRetour";
@@ -124,6 +126,7 @@
             btnTouches.FlatAppearance.BorderSize = 0;
             btnTouches.FlatStyle = FlatStyle.Flat;
             btnTouches.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnTouches.HexaColor = "";
             btnTouches.Location = new Point(442, 7);
             btnTouches.Margin = new Padding(0);
             btnTouches.Name = "btnTouches";
@@ -164,6 +167,7 @@
             btnVolume.FlatAppearance.BorderSize = 0;
             btnVolume.FlatStyle = FlatStyle.Flat;
             btnVolume.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnVolume.HexaColor = "";
             btnVolume.Location = new Point(443, 7);
             btnVolume.Margin = new Padding(0);
             btnVolume.Name = "btnVolume";

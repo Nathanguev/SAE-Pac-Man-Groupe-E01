@@ -15,11 +15,7 @@ namespace BibliothequePacMan
         private char _toucheDroite;
         private char _toucheGauche;
 
-        private bool _bonusVitesse;
-        private bool _bonusScore;
-        private bool _bonusVie;
-        private bool _bonusTrainee;
-        private bool _bonusFantome;
+        private bool[] _bonus;
 
         private string _pseudo;
         private int _difficulte;
@@ -39,13 +35,9 @@ namespace BibliothequePacMan
 
         public Partie()
         {
-            _bonusVitesse = true;
-            _bonusScore = true;
-            _bonusVie = true;
-            _bonusTrainee = true;
-            _bonusFantome = true;
+            _bonus = new[] { true, true, true, true };
 
-            _pseudo = "Idaho";
+                        _pseudo = "Idaho";
             _difficulte = 1;
             _couleur = "#ffcb01";
 
@@ -59,17 +51,13 @@ namespace BibliothequePacMan
             // Init_Dimensions();
         }
 
-        public Partie(string pseudo, int difficulte, string couleur, bool bonusVitesse, bool bonusScore, bool bonusVie, bool bonusTrainee, bool bonusFantome)
+        public Partie(string pseudo, int difficulte, string couleur, bool[] bonus)
         {
             _pseudo = pseudo;
             _difficulte = difficulte;
             _couleur = couleur;
 
-            _bonusVitesse = bonusVitesse;
-            _bonusScore = bonusScore;
-            _bonusVie = bonusVie;
-            _bonusTrainee = bonusTrainee;
-            _bonusFantome = bonusFantome;
+            _bonus = bonus;
 
             _level = 0;
             _score = 0;
@@ -237,6 +225,11 @@ namespace BibliothequePacMan
         {
             get { return _pacManPosition; }
             set { _pacManPosition = value; }
+        }
+
+        public bool[] Bonus
+        {
+            get { return _bonus; }
         }
     }
 }

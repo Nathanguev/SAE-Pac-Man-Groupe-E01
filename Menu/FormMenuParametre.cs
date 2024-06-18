@@ -20,14 +20,10 @@ namespace Interface_PacMan
         private bool isBtnRetourClicked = false;
 
         private string _pseudo;
-        private int _difficulte;
-        private string _couleur;
+        private int _difficulte = 2;
+        private string _couleur = "#ffcb01";
 
-        private bool _bonusVitesse;
-        private bool _bonusScore;
-        private bool _bonusVie;
-        private bool _bonusTrainee;
-        private bool _bonusFantome;
+        private bool[] _bonus = { true, true, true, true };
 
         public FormMenuParametre(FormMenuPrincipal formMenuPrincipal, FormMenuPseudo formMenuPseudo)
         {
@@ -36,14 +32,6 @@ namespace Interface_PacMan
             this.formMenuPseudo = formMenuPseudo;
 
             _pseudo = formMenuPseudo.pseudo;
-            _difficulte = 2;
-            _couleur = "#ffcb01";
-
-            _bonusVitesse = true;
-            _bonusScore = true;
-            _bonusVie = true;
-            _bonusTrainee = true;
-            _bonusFantome = true;
         }
 
         private void FormMenuParametre_SizeChanged(object sender, EventArgs e)
@@ -88,7 +76,7 @@ namespace Interface_PacMan
 
         private void btnJouer_Click(object sender, EventArgs e)
         {
-            Partie partie = new Partie(_pseudo, _difficulte, _couleur, _bonusVitesse, _bonusScore, _bonusVie, _bonusTrainee, _bonusFantome);
+            Partie partie = new Partie(_pseudo, _difficulte, _couleur, _bonus);
             FormPartie formPartie = new FormPartie(formMenuPrincipal, partie);
             formPartie.Show();
             this.Hide();
@@ -108,6 +96,13 @@ namespace Interface_PacMan
             this.Hide();
         }
 
+        private void btnBonus_Click(object sender, EventArgs e)
+        {
+            FormMenuBonus formMenuBonus = new FormMenuBonus(this);
+            formMenuBonus.Show();
+            this.Hide();
+        }
+
         public int difficulte
         {
             get { return _difficulte; }
@@ -120,34 +115,10 @@ namespace Interface_PacMan
             set { _couleur = value; }
         }
 
-        public bool bonusVitesse
+        public bool[] bonus
         {
-            get { return _bonusVitesse; }
-            set { _bonusVitesse = value; }
-        }
-
-        public bool bonusScore
-        {
-            get { return _bonusScore; }
-            set { _bonusScore = value; }
-        }
-
-        public bool bonusVie
-        {
-            get { return _bonusVie; }
-            set { _bonusVie = value; }
-        }
-
-        public bool bonusTrainee
-        {
-            get { return _bonusTrainee; }
-            set { _bonusTrainee = value; }
-        }
-
-        public bool bonusFantome
-        {
-            get { return _bonusFantome; }
-            set { _bonusFantome = value; }
+            get { return _bonus; }
+            set { _bonus = value; }
         }
     }
 }

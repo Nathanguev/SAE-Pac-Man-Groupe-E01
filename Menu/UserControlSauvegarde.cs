@@ -34,12 +34,12 @@ namespace Interface_PacMan
 
         private void UserControlSauvegarde_MouseEnter(object sender, EventArgs e)
         {
-            tableLayoutPanel1.BackColor = Color.LightBlue;
+            roundTableLayoutPanel1.BackColor = Color.LightBlue;
         }
 
         private void UserControlSauvegarde_MouseLeave(object sender, EventArgs e)
         {
-            tableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
+            roundTableLayoutPanel1.BackColor = Color.FromArgb(224, 224, 224);
         }
 
         private void UserControlSauvegarde_SizeChanged(object sender, EventArgs e)
@@ -51,6 +51,11 @@ namespace Interface_PacMan
                 lblUserPseudo.Font = new Font(lblUserPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
                 lblDateCreation.Font = new Font(lblDateCreation.Font.FontFamily, fontHeight, FontStyle.Bold);
             }
+        }
+
+        private void roundTableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
