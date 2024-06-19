@@ -4,6 +4,7 @@ using System.Media;
 using Interface_PacMan.Properties;
 using NAudio.Wave;
 using System.Configuration;
+using Bibliotheque_PacMan;
 
 namespace Menu
 {

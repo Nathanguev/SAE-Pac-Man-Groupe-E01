@@ -1,5 +1,6 @@
 ﻿using Menu;
 using System.Configuration;
+using Bibliotheque_PacMan;
 
 namespace Interface_PacMan
 {

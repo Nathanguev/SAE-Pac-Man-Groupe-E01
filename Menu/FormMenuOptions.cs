@@ -1,4 +1,5 @@
 ﻿using Menu;
+using Bibliotheque_PacMan;
 
 namespace Interface_PacMan
 {

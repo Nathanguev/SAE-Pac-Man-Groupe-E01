@@ -8,16 +8,22 @@ using System.Threading.Tasks;
 
 namespace Bibliotheque_PacMan
 {
+    /* ----------------- Classe RoundButton hérité de Button ----------------- */
+
     public class RoundButton : Button
     {
-        private int _borderRadius = 10;
-        private int _borderWidth = 0;
-        private Color _borderColor = Color.Transparent;
-        private bool _rounded = true;
-        private string _hexaColor = "";
+        // Ajout de 5 attributs privés à la classe RoundButton
 
+        private int _borderRadius = 10; // Détermine l'angle de l'arrondi du bouton
+        private int _borderWidth = 0; // Détermine l'épaisseur de la bordure
+        private Color _borderColor = Color.Transparent; // Détermine la couleur de la bordure
+        private bool _rounded = true; // Permet de rendre le bouton complètement rond en fonction de la valeur de _borderRadius
+        private string _hexaColor = ""; // Représente la couleur de fond du bouton en hexadécimal
+
+        /* ----------------- Constructeur par défaut pour RoundButton ----------------- */
         public RoundButton()
         {
+            // Initialisation des propriétés du bouton
             this.BackColor = Color.FromArgb(224, 224, 224);
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
@@ -26,7 +32,7 @@ namespace Bibliotheque_PacMan
             this.Font = new Font(this.Font.FontFamily, 10, FontStyle.Bold);
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderRadius ----------------- */
         public int BorderRadius
         {
             get
@@ -38,10 +44,11 @@ namespace Bibliotheque_PacMan
                 if (!_rounded)
                 {
                     _borderRadius = value;
-                    this.Invalidate();
+                    this.Invalidate(); // Redessine le bouton pour refléter les modifications
                 }
                 else
                 {
+                    // Si le bouton est arrondi, ajuster le rayon pour qu'il soit parfaitement rond
                     if (this.Height < this.Width)
                     {
                         _borderRadius = this.Height / 2;
@@ -54,7 +61,7 @@ namespace Bibliotheque_PacMan
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderWidth ----------------- */
         public int BorderWidth
         {
             get
@@ -64,11 +71,11 @@ namespace Bibliotheque_PacMan
             set
             {
                 _borderWidth = value;
-                this.Invalidate();
+                this.Invalidate(); // Redessine le bouton pour refléter les modifications
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderColor ----------------- */
         public Color BorderColor
         {
             get
@@ -78,11 +85,11 @@ namespace Bibliotheque_PacMan
             set
             {
                 _borderColor = value;
-                this.Invalidate();
+                this.Invalidate(); // Redessine le bouton pour refléter les modifications
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _rounded ----------------- */
         public bool Rounded
         {
             get
@@ -94,6 +101,7 @@ namespace Bibliotheque_PacMan
                 _rounded = value;
                 if (_rounded)
                 {
+                    // Ajuster le rayon pour que le bouton soit parfaitement rond
                     if (this.Height < this.Width)
                     {
                         _borderRadius = this.Height / 2;
@@ -103,10 +111,11 @@ namespace Bibliotheque_PacMan
                         _borderRadius = this.Width / 2;
                     }
                 }
-                this.Invalidate();
+                this.Invalidate(); // Redessine le bouton pour refléter les modifications
             }
         }
 
+        /* ----------------- Propriété pour accéder et modifier _hexaColor ----------------- */
         public string HexaColor
         {
             get
@@ -118,23 +127,29 @@ namespace Bibliotheque_PacMan
                 _hexaColor = value;
                 if (_hexaColor != "")
                 {
+                    // Convertit le code hexadécimal en couleur
                     this.BackColor = ColorTranslator.FromHtml(_hexaColor);
                 }
-                this.Invalidate();
+                this.Invalidate(); // Redessine le bouton pour refléter les modifications
             }
         }
 
+        /* ----------------- Méthode appelée lors du dessin du bouton ----------------- */
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             GraphicsPath path = new GraphicsPath();
+
+            // Ajoute les arcs pour créer des coins arrondis
             path.AddArc(new Rectangle(0, 0, _borderRadius * 2, _borderRadius * 2), 180, 90);
             path.AddArc(new Rectangle(this.Width - _borderRadius * 2, 0, _borderRadius * 2, _borderRadius * 2), 270, 90);
             path.AddArc(new Rectangle(this.Width - _borderRadius * 2, this.Height - _borderRadius * 2, _borderRadius * 2, _borderRadius * 2), 0, 90);
             path.AddArc(new Rectangle(0, this.Height - _borderRadius * 2, _borderRadius * 2, _borderRadius * 2), 90, 90);
             path.CloseFigure();
-            this.Region = new Region(path);
 
+            this.Region = new Region(path); // Définit la région du bouton
+
+            // Dessine la bordure si nécessaire
             if (_borderRadius > 0)
             {
                 using (Pen borderPen = new Pen(_borderColor, _borderWidth))
@@ -144,11 +159,13 @@ namespace Bibliotheque_PacMan
             }
         }
 
+        /* ----------------- Méthode appelée lors du changement de taille du bouton ----------------- */
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             if (Rounded)
             {
+                // Ajuster le rayon pour que le bouton soit parfaitement rond
                 if (this.Height < this.Width)
                 {
                     BorderRadius = this.Height / 2;
@@ -158,7 +175,7 @@ namespace Bibliotheque_PacMan
                     BorderRadius = this.Width / 2;
                 }
             }
-            this.Invalidate();
+            this.Invalidate(); // Redessine le bouton pour refléter les modifications
         }
     }
 }

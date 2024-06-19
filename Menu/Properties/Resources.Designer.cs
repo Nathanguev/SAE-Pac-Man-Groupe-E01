@@ -213,26 +213,6 @@ namespace Interface_PacMan.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Fleche {
-            get {
-                object obj = ResourceManager.GetObject("Fleche", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap fleche_retour {
-            get {
-                object obj = ResourceManager.GetObject("fleche_retour", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap fleche1 {
             get {
                 object obj = ResourceManager.GetObject("fleche1", resourceCulture);

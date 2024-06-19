@@ -10,12 +10,17 @@ using System.Windows.Forms;
 
 namespace Bibliotheque_PacMan
 {
+    /* ----------------- Classe RoundLabel hérité de Label ----------------- */
+
     public class RoundLabel : Label
     {
-        private int _borderRadius = 10;
-        private int _borderWidth = 0;
-        private Color _borderColor = Color.Transparent;
+        // Ajout de 3 attributs privés à la classe RoundLabel
 
+        private int _borderRadius = 10; // Détermine l'angle de l'arrondi du Label
+        private int _borderWidth = 0; // Détermine l'épaisseur de la bordure
+        private Color _borderColor = Color.Transparent; // Détermine la couleur de la bordure
+
+        /* ----------------- Constructeur par défaut pour RoundLabel ----------------- */
         public RoundLabel()
         {
             this.BackColor = Color.FromArgb(224, 224, 224);
@@ -26,7 +31,7 @@ namespace Bibliotheque_PacMan
             this.TextAlign = ContentAlignment.MiddleCenter;
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderRadius ----------------- */
         public int BorderRadius
         {
             get
@@ -36,11 +41,11 @@ namespace Bibliotheque_PacMan
             set
             {
                 _borderRadius = value;
-                this.Invalidate();
+                this.Invalidate(); // Redessine le label pour refléter les modifications
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderWidth ----------------- */
         public int BorderWidth
         {
             get
@@ -50,11 +55,11 @@ namespace Bibliotheque_PacMan
             set
             {
                 _borderWidth = value;
-                this.Invalidate();
+                this.Invalidate(); // Redessine le label pour refléter les modifications
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        /* ----------------- Propriété pour accéder et modifier _borderColor ----------------- */
         public Color BorderColor
         {
             get
@@ -64,21 +69,26 @@ namespace Bibliotheque_PacMan
             set
             {
                 _borderColor = value;
-                this.Invalidate();
+                this.Invalidate(); // Redessine le label pour refléter les modifications
             }
         }
 
+        /* ----------------- Méthode appelée lors du dessin du label ----------------- */
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             GraphicsPath path = new GraphicsPath();
+
+            // Ajoute les arcs pour créer des coins arrondis
             path.AddArc(new Rectangle(0, 0, _borderRadius * 2, _borderRadius * 2), 180, 90);
             path.AddArc(new Rectangle(this.Width - _borderRadius * 2, 0, _borderRadius * 2, _borderRadius * 2), 270, 90);
             path.AddArc(new Rectangle(this.Width - _borderRadius * 2, this.Height - _borderRadius * 2, _borderRadius * 2, _borderRadius * 2), 0, 90);
             path.AddArc(new Rectangle(0, this.Height - _borderRadius * 2, _borderRadius * 2, _borderRadius * 2), 90, 90);
             path.CloseFigure();
-            this.Region = new Region(path);
 
+            this.Region = new Region(path); // Définit la région du label
+
+            // Dessine la bordure si nécessaire
             if (_borderRadius > 0)
             {
                 using (Pen borderPen = new Pen(_borderColor, _borderWidth))
@@ -88,6 +98,7 @@ namespace Bibliotheque_PacMan
             }
         }
 
+        /* ----------------- Méthode appelée lors du changement de taille du label ----------------- */
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -99,7 +110,7 @@ namespace Bibliotheque_PacMan
             {
                 BorderRadius = this.Width / 2;
             }
-            this.Invalidate();
+            this.Invalidate(); // Redessine le label pour refléter les modifications
         }
     }
 }

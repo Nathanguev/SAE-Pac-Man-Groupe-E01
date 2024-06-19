@@ -1,14 +1,13 @@
-﻿using Bibliotheque_PacMan;
-using BibliothequePacMan;
+﻿using BibliothequePacMan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interface_PacMan
+namespace Bibliotheque_PacMan
 {
-    public static class Utils
+    public class Utils
     {
         /* ----------------- Méthode de changement de couleur au survol ----------------- */
 
@@ -81,7 +80,6 @@ namespace Interface_PacMan
 
         // 0 : il y a un mur
         // 1 : il n'y a pas de mur (il y a une porte)
-
         public static string BinaireConvert(UneCellule currentCellule, int index, int mode, Labyrinthe labyrinthe, Partie partie)
         {
             switch (mode)
