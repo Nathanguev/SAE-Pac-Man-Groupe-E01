@@ -19,6 +19,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 using System.Threading;
 using System.Linq.Expressions;
 using NAudio.Utils;
+using System.Collections;
 
 namespace Interface_PacMan
 {
@@ -37,7 +38,9 @@ namespace Interface_PacMan
         private PacMan pacMan;
         private Character fantomeAleatoire;
         private Character fantomePCC;
+        private Character FantomeCycle;
 
+        private List<UneCellule> cycle;
         private List<Point> positionsPieces;
         private List<Point> positionsBonus;
 
@@ -48,13 +51,18 @@ namespace Interface_PacMan
 
         private int timeLeft;
         private int pacManSpeed = 8;
-        private int tempsBonus = 10;
+        private int fantomeAleatoireSpeed = 14;
+        private int fantomePCCSpeed = 16;
+        private int fantomeCycleSpeed = 13;
+        private int tempsBonusVitesse = 10;
+        private int tempsBonusScore = 10;
 
         private bool isMoving = false;
         private bool isRunning = false;
         private bool isVictory = false;
         private bool isDefeat = false;
         private bool bonusVitesseActif = false;
+        private bool bonusScoreActif = false;
 
         private char lastTouche = '\0';
         private Queue<char> toucheQueue = new Queue<char>();
@@ -94,7 +102,7 @@ namespace Interface_PacMan
             // Initialisation de l'affichage des vies, du timer et des touches
             Init_Vies();
             Init_Timer();
-            AffichageTouches();
+            lblPause.TextAlign = ContentAlignment.MiddleRight;
 
             // Affichage du pseudo du joueur
             lblPseudoChange.Text = partie.Pseudo;
@@ -110,9 +118,23 @@ namespace Interface_PacMan
             Init_Pieces(panelLabyrinthe);
             pacMan.BringToFront();
 
-            // Initialisation et affichage des fantômes PCC et aléatoire
-            Init_FantomePCC(panelLabyrinthe);
+            // Initialisatrion d'un cycle dans le labyrinthe
+            cycle = TrouverUnCycle(pacmanSpawnCellule, partie.Largeur);
+
+            // Initialisation et affichage du fantôme PCC (Plus Court Chemin)
+            if (partie.Level > 0)
+                Init_FantomePCC(panelLabyrinthe);
+            else
+                fantomePCC = null;
+
+            // Initialisation et affichage du fantômes Aléatoire
             Init_FantomeAleatoire(panelLabyrinthe);
+
+            // Initialisation et affichage du fantôme Cycle
+            if (partie.Level > 1)
+                Init_FantomeCycle(panelLabyrinthe);
+            else
+                FantomeCycle = null;
         }
 
         /* ---------------- Fonctions d'initialisation ---------------- */
@@ -162,7 +184,7 @@ namespace Interface_PacMan
         // Place le fantôme aléatoire dans le labyrinthe à sa position de départ.
         private void Init_FantomeAleatoire(Panel panel)
         {
-            int index = (partie.Largeur * (partie.Hauteur / 2) + (partie.Largeur / 2));
+            int index = (partie.Largeur * (partie.Hauteur / 2) + (partie.Largeur / 2) - 1);
             Image image = Properties.Resources.fantomeRouge;
             fantomeAleatoire = new Character(image, labyrinthe.getCellules()[index]);
 
@@ -170,7 +192,7 @@ namespace Interface_PacMan
             fantomeAleatoire.Index = index;
             fantomeAleatoire.Sprite.BringToFront();
 
-            fantomeSpawnPosition = fantomeAleatoire.Position;
+            fantomeSpawnPosition = new(fantomeAleatoire.Position.X + 50, fantomeAleatoire.Position.Y);
         }
 
         // Place le fantôme PCC (Plus Court Chemin) dans le labyrinthe à sa position de départ.
@@ -183,6 +205,27 @@ namespace Interface_PacMan
             panel.Controls.Add(fantomePCC.Sprite);
             fantomePCC.Index = index;
             fantomePCC.Sprite.BringToFront();
+        }
+
+        private void Init_FantomeCycle(Panel panel)
+        {
+            int index = 0;
+
+            foreach (UneCellule cellule in labyrinthe.getCellules())
+            {
+                index++;
+                if (cycle.Contains(cellule) && AlgoPlusCourtChemin(cellule).Count > 5)
+                {
+                    break;
+                }
+            }
+
+            Image image = Properties.Resources.fantomeViolet;
+            FantomeCycle = new Character(image, labyrinthe.getCellules()[index]);
+
+            panel.Controls.Add(FantomeCycle.Sprite);
+            FantomeCycle.Index = index;
+            FantomeCycle.Sprite.BringToFront();
         }
 
         // Initialise le TableLayoutPanel pour afficher le labyrinthe en fonction des dimensions du jeu.
@@ -326,24 +369,29 @@ namespace Interface_PacMan
 
             do
             {
-                numero = random.Next(3);
+                numero = random.Next(partie.Bonus.Count()); // Vie, Vitesse, Temps, Score
             } while (!partie.Bonus[numero]);
 
             switch (numero)
             {
-                case 0:
+                case 0: // Vie
                     bonus = new Objet(Properties.Resources.bonus_vie, point);
                     bonus.sprite.Tag = "bonusVie";
                     break;
 
-                case 1:
+                case 1: // Vitesse
                     bonus = new Objet(Properties.Resources.bonus_vitesse, point);
                     bonus.sprite.Tag = "bonusVitesse";
                     break;
 
-                default:
+                case 2: // Temps
                     bonus = new Objet(Properties.Resources.bonus_temps, point);
                     bonus.sprite.Tag = "bonusTemps";
+                    break;
+
+                default: // Score
+                    bonus = new Objet(Properties.Resources.bonus_score, point);
+                    bonus.sprite.Tag = "bonusScore";
                     break;
             }
             return bonus;
@@ -352,28 +400,55 @@ namespace Interface_PacMan
         // Activation du Bonus de Vitesse pendant 10 secondes
         private async void Bonus_Vitesse()
         {
-            tempsBonus = 10;
+            tempsBonusVitesse = 10;
             pacManSpeed = 1;
 
             if (!bonusVitesseActif)
             {
-                Bonus_Actif(true);
-                while (tempsBonus > 0)
+                Bonus_Actif(true, "vitesse");
+                while (tempsBonusVitesse > 0)
                 {
-                    lblTempsBonus.Text = tempsBonus.ToString();
+                    lblTempsBonus.Text = tempsBonusVitesse.ToString();
                     await Task.Delay(1000);
-                    tempsBonus--;
+                    tempsBonusVitesse--;
                 }
                 lblTempsBonus.Text = "";
-                Bonus_Actif(false);
+                Bonus_Actif(false, "vitesse");
                 pacManSpeed = 8;
             }
         }
 
-        private void Bonus_Actif(bool etat)
+        // Activation du Bonus de Score pendant 10 secondes
+        private async void Bonus_Score()
         {
-            bonusVitesseActif = etat;
-            picBonus.Visible = etat;
+            tempsBonusScore = 10;
+
+            if (!bonusScoreActif)
+            {
+                Bonus_Actif(true, "score");
+                while (tempsBonusScore > 0)
+                {
+                    lblTempsBonus2.Text = tempsBonusScore.ToString();
+                    await Task.Delay(1000);
+                    tempsBonusScore--;
+                }
+                lblTempsBonus2.Text = "";
+                Bonus_Actif(false, "score");
+            }
+        }
+
+        private void Bonus_Actif(bool etat, string bonus)
+        {
+            if (bonus == "vitesse")
+            {
+                bonusVitesseActif = etat;
+                picBonus.Visible = etat;
+            }
+            else if (bonus == "score")
+            {
+                bonusScoreActif = etat;
+                picBonus2.Visible = etat;
+            }
         }
 
         /* ---------------- Fonctions de réinitialisation ---------------- */
@@ -392,11 +467,20 @@ namespace Interface_PacMan
         {
             isRunning = false;
 
-            fantomeAleatoire.Position = fantomeSpawnPosition; // Réinitialisation de la position du fantôme aléatoire
-            fantomePCC.Position = new(fantomeSpawnPosition.X + 50, fantomeSpawnPosition.Y); // Réinitialisation de la position du fantôme PCC
+            if (fantomePCC != null)
+            {
+                fantomePCC.CurrentCellule = labyrinthe.getCellules()[fantomePCC.Index]; // Réinitialisation de la cellule actuelle du fantôme PCC
+                fantomePCC.Position = new(fantomeSpawnPosition.X + 50, fantomeSpawnPosition.Y); // Réinitialisation de la position du fantôme PCC
+            }
 
             fantomeAleatoire.CurrentCellule = labyrinthe.getCellules()[fantomeAleatoire.Index]; // Réinitialisation de la cellule actuelle du fantôme aléatoire
-            fantomePCC.CurrentCellule = labyrinthe.getCellules()[fantomePCC.Index]; // Réinitialisation de la cellule actuelle du fantôme PCC
+            fantomeAleatoire.Position = new(fantomeSpawnPosition.X - 50, fantomeSpawnPosition.Y); // Réinitialisation de la position du fantôme aléatoire
+
+            if (FantomeCycle != null)
+            {
+                FantomeCycle.CurrentCellule = labyrinthe.getCellules()[FantomeCycle.Index]; // Réinitialisation de la cellule actuelle du fantôme cycle
+                FantomeCycle.Position = new(FantomeCycle.CurrentCellule.getY() * 50 + 2, FantomeCycle.CurrentCellule.getX() * 50 + 2); // Réinitialisation de la position du fantôme cycle
+            }
         }
 
         // Réinitialisation de toutes les fonctions asynchrones
@@ -411,12 +495,19 @@ namespace Interface_PacMan
         // Cette fonction s'occupe de réinitialiser l'ensemble des éléments de la partie au moment de la fermeture du jeu
         private void GameClose()
         {
-            cancellationTokenSource.Cancel(); // Annulation des tâches en cours
-            Reset_PacMan();
-            Reset_Fantome();
-            tlpLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le TableLayoutPanel du labyrinthe
-            panelLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le panel du labyrinthe
-            this.Close(); // Fermeture de la fenêtre de jeu
+            try
+            {
+                cancellationTokenSource.Cancel(); // Annulation des tâches en cours
+                Reset_PacMan();
+                Reset_Fantome();
+                tlpLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le TableLayoutPanel du labyrinthe
+                panelLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le panel du labyrinthe
+                this.Close(); // Fermeture de la fenêtre de jeu
+            }
+            catch
+            {
+                this.Close(); // Fermeture de la fenêtre de jeu
+            }
         }
 
         /* ---------------- Condition de victoire et défaite ---------------- */
@@ -462,12 +553,15 @@ namespace Interface_PacMan
         {
             foreach (Control control in panelLabyrinthe.Controls)
             {
-                if (control.Location == point && control != pacMan && control != fantomeAleatoire.Sprite)
+                if (control.Location == point && control != pacMan)
                 {
                     if (positionsPieces.Contains(point))
                     {
                         positionsPieces.Remove(point); // Retire la pièce de la liste des positions de pièces
-                        lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 1); // Incrémente le score de +1
+                        if (bonusScoreActif)
+                            lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 3); // Incrémente le score de +3
+                        else
+                            lblScoreCount.Text = Convert.ToString(Convert.ToInt32(lblScoreCount.Text) + 1); // Incrémente le score de +1
                     }
                     else if (positionsBonus.Contains(point))
                     {
@@ -497,6 +591,10 @@ namespace Interface_PacMan
 
                             case "bonusVitesse":
                                 Bonus_Vitesse();
+                                break;
+
+                            case "bonusScore":
+                                Bonus_Score();
                                 break;
                         }
                         positionsBonus.Remove(point); // Retire le bonus de la liste des positions de bonus
@@ -584,7 +682,7 @@ namespace Interface_PacMan
             VerifApresDeplacement();
         }
 
-        private async Task Left(CancellationToken cancellationToken)
+        private new async Task Left(CancellationToken cancellationToken)
         {
             if (pacMan.Position.X > 2 && !isMoving)
             {
@@ -620,7 +718,7 @@ namespace Interface_PacMan
             VerifApresDeplacement();
         }
 
-        private async Task Right(CancellationToken cancellationToken)
+        private new async Task Right(CancellationToken cancellationToken)
         {
             if (pacMan.Position.X < partie.Largeur * 50 - 52 && !isMoving)
             {
@@ -772,7 +870,7 @@ namespace Interface_PacMan
         /* ---------------- Touches alpha-numériques ---------------- */
 
         // Cette fonction s'exécute lorsqu'une touche alpha-numérique est pressée.
-        private async void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
+        private void FormPartie_KeyPress(object sender, KeyPressEventArgs e)
         {
             char touche = char.ToUpper(e.KeyChar); // Convertit la touche en majuscule
             if (touche == partie.ToucheHaut || touche == partie.ToucheBas || touche == partie.ToucheGauche || touche == partie.ToucheDroite)
@@ -824,13 +922,19 @@ namespace Interface_PacMan
         /* ---------------- Mise en marche des fantômes ---------------- */
 
         // Cette fonction lance le déplacement des fantômes s'ils ne bougent pas déjà.
-        private async void LoopStart()
+        private void LoopStart()
         {
             if (!isRunning && !isVictory && !isDefeat)
             {
                 isRunning = true; // Marque le jeu comme en cours
+
                 FantomeAleatoireLoop(); // Lance la boucle de déplacement du fantôme aléatoire
-                FantomePCCLoop(); // Lance la boucle de déplacement du fantôme PCC
+
+                if (fantomePCC != null)
+                    FantomePCCLoop(); // Lance la boucle de déplacement du fantôme PCC
+
+                if (FantomeCycle != null)
+                    FantomeCycleLoop();
             }
         }
 
@@ -848,7 +952,7 @@ namespace Interface_PacMan
             {
                 UneCellule nextCellule = fantomeAleatoire.CurrentCellule.getVoisins().First(cellule => cellule.isLien(fantomeAleatoire.CurrentCellule) && cellule != cellulesVisited.Last());
 
-                await FantomeDeplacement(fantomeAleatoire, nextCellule, 14, cancellationTokenSource.Token);
+                await FantomeDeplacement(fantomeAleatoire, nextCellule, fantomeAleatoireSpeed, cancellationTokenSource.Token);
                 if (cancellationTokenSource.IsCancellationRequested)
                     return;
 
@@ -878,11 +982,28 @@ namespace Interface_PacMan
                 Chemin = AlgoPlusCourtChemin(fantomePCC.CurrentCellule);
                 Chemin.Remove(fantomePCC.CurrentCellule);
 
-                await FantomeDeplacement(fantomePCC, Chemin.First(), 16, cancellationTokenSource.Token);
+                await FantomeDeplacement(fantomePCC, Chemin.First(), fantomePCCSpeed, cancellationTokenSource.Token);
                 if (cancellationTokenSource.IsCancellationRequested)
                     return;
 
                 fantomePCC.CurrentCellule = Chemin.First();
+            }
+        }
+
+        // - Fantôme Cycle
+        private async void FantomeCycleLoop()
+        {
+            while (isRunning)
+            {
+                int currentIndex = cycle.IndexOf(FantomeCycle.CurrentCellule);
+                int nextIndex = (currentIndex + 1) % cycle.Count;
+                UneCellule nextCellule = cycle[nextIndex];
+
+                await FantomeDeplacement(FantomeCycle, nextCellule, fantomeCycleSpeed, cancellationTokenSource.Token);
+                if(cancellationTokenSource.IsCancellationRequested)
+                    return;
+
+                FantomeCycle.CurrentCellule = nextCellule;
             }
         }
 
@@ -936,84 +1057,160 @@ namespace Interface_PacMan
             return chemin;
         }
 
+        /* ---------------- Fonctions Cycle ---------------- */
+
+        // Ces fonctions permettent de trouver un cycle d'une certaine longueur minimum (minLenght).
+        // Elles retournent la liste de cellules qui correspond à ce cycle.
+        public List<UneCellule> TrouverUnCycle(UneCellule start, int minLength)
+        {
+            Stack<UneCellule> stack = new Stack<UneCellule>();
+            Dictionary<UneCellule, UneCellule> parents = new Dictionary<UneCellule, UneCellule>();
+            Dictionary<UneCellule, int> distances = new Dictionary<UneCellule, int>();
+            HashSet<UneCellule> visited = new HashSet<UneCellule>();
+
+            stack.Push(start);
+            parents[start] = null;
+            distances[start] = 0;
+
+            while (stack.Count > 0)
+            {
+                UneCellule current = stack.Pop();
+
+                if (visited.Contains(current))
+                {
+                    continue;
+                }
+
+                visited.Add(current);
+
+                foreach (var neighbor in current.getLiens())
+                {
+                    if (!visited.Contains(neighbor))
+                    {
+                        stack.Push(neighbor);
+                        parents[neighbor] = current;
+                        distances[neighbor] = distances[current] + 1;
+                    }
+                    else if (neighbor != parents[current] && distances[current] - distances[neighbor] >= minLength - 1)
+                    {
+                        // Cycle of at least minLength found
+                        return ConstruireCycle(parents, current, neighbor);
+                    }
+                }
+            }
+
+            // No cycle found
+            return new List<UneCellule>();
+        }
+
+        private List<UneCellule> ConstruireCycle(Dictionary<UneCellule, UneCellule> parents, UneCellule start, UneCellule end)
+        {
+            List<UneCellule> cycle = new List<UneCellule>();
+
+            // Traverse from start to end
+            for (UneCellule cell = start; cell != null; cell = parents[cell])
+            {
+                cycle.Add(cell);
+                if (cell == end)
+                {
+                    break;
+                }
+            }
+
+            // Traverse back from end to start to complete the cycle
+            for (UneCellule cell = end; cell != null; cell = parents[cell])
+            {
+                if (!cycle.Contains(cell))
+                {
+                    cycle.Add(cell);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return cycle;
+        }
+
         /* ---------------- Déplacement des fantômes ---------------- */
 
         // Cette fonction permet le déplacement d'un fantôme vers une cellule cible à l'écran.
         // Elle ajuste la position du fantôme progressivement jusqu'à atteindre la position cible
         // avec une vitesse spécifiée, tout en vérifiant les collisions avec Pac-Man.
         private async Task FantomeDeplacement(Character fantome, UneCellule cellule, int speed, CancellationToken cancellationToken)
-        {
-            Point point = new(cellule.getY() * 50 + 2, cellule.getX() * 50 + 2);
+            {
+                Point point = new(cellule.getY() * 50 + 2, cellule.getX() * 50 + 2);
 
-            if (fantome.Position.X < point.X)
-            {
-                while (fantome.Position != point)
+                if (fantome.Position.X < point.X)
                 {
-                    fantome.Position = new Point(fantome.Position.X + 2, fantome.Position.Y);
-                    try
+                    while (fantome.Position != point)
                     {
-                        Colision_PacMan_Fantome(fantome);
-                        await Task.Delay(speed, cancellationToken);
+                        fantome.Position = new Point(fantome.Position.X + 2, fantome.Position.Y);
+                        try
+                        {
+                            Colision_PacMan_Fantome(fantome);
+                            await Task.Delay(speed, cancellationToken);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            Reset_Fantome();
+                            return;
+                        }
                     }
-                    catch (TaskCanceledException)
+                }
+                else if (fantome.Position.X > point.X)
+                {
+                    while (fantome.Position != point)
                     {
-                        Reset_Fantome();
-                        return;
+                        fantome.Position = new Point(fantome.Position.X - 2, fantome.Position.Y);
+                        try
+                        {
+                            Colision_PacMan_Fantome(fantome);
+                            await Task.Delay(speed, cancellationToken);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            Reset_Fantome();
+                            return;
+                        }
+                    }
+                }
+                else if (fantome.Position.Y < point.Y)
+                {
+                    while (fantome.Position != point)
+                    {
+                        fantome.Position = new Point(fantome.Position.X, fantome.Position.Y + 2);
+                        try
+                        {
+                            Colision_PacMan_Fantome(fantome);
+                            await Task.Delay(speed, cancellationToken);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            Reset_Fantome();
+                            return;
+                        }
+                    }
+                }
+                else if (fantome.Position.Y > point.Y)
+                {
+                    while (fantome.Position != point)
+                    {
+                        fantome.Position = new Point(fantome.Position.X, fantome.Position.Y - 2);
+                        try
+                        {
+                            Colision_PacMan_Fantome(fantome);
+                            await Task.Delay(speed, cancellationToken);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            Reset_Fantome();
+                            return;
+                        }
                     }
                 }
             }
-            else if (fantome.Position.X > point.X)
-            {
-                while (fantome.Position != point)
-                {
-                    fantome.Position = new Point(fantome.Position.X - 2, fantome.Position.Y);
-                    try
-                    {
-                        Colision_PacMan_Fantome(fantome);
-                        await Task.Delay(speed, cancellationToken);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        Reset_Fantome();
-                        return;
-                    }
-                }
-            }
-            else if (fantome.Position.Y < point.Y)
-            {
-                while (fantome.Position != point)
-                {
-                    fantome.Position = new Point(fantome.Position.X, fantome.Position.Y + 2);
-                    try
-                    {
-                        Colision_PacMan_Fantome(fantome);
-                        await Task.Delay(speed, cancellationToken);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        Reset_Fantome();
-                        return;
-                    }
-                }
-            }
-            else if (fantome.Position.Y > point.Y)
-            {
-                while (fantome.Position != point)
-                {
-                    fantome.Position = new Point(fantome.Position.X, fantome.Position.Y - 2);
-                    try
-                    {
-                        Colision_PacMan_Fantome(fantome);
-                        await Task.Delay(speed, cancellationToken);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        Reset_Fantome();
-                        return;
-                    }
-                }
-            }
-        }
 
         /* ---------------- Affichage du labyrinthe ---------------- */
 
@@ -1209,27 +1406,12 @@ namespace Interface_PacMan
             partie.ToucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
             partie.ToucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
             partie.ToucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
-            AffichageTouches();
-        }
-
-        private void AffichageTouches()
-        {
-            lblToucheHaut.Text = ": " + partie.ToucheHaut;
-            lblToucheBas.Text = ": " + partie.ToucheBas;
-            lblToucheGauche.Text = ": " + partie.ToucheGauche;
-            lblToucheDroite.Text = ": " + partie.ToucheDroite;
-
-            lblHaut.TextAlign = ContentAlignment.MiddleRight;
-            lblBas.TextAlign = ContentAlignment.MiddleRight;
-            lblGauche.TextAlign = ContentAlignment.MiddleRight;
-            lblDroite.TextAlign = ContentAlignment.MiddleRight;
-            lblPause.TextAlign = ContentAlignment.MiddleRight;
         }
 
         /* ---------------- Flèches directionnelles + Touche échap ---------------- */
 
         // Fonction qui s'exécute lors de l'appui sur une des touches directionnelles ou la touche Échap.
-        private async void FormPartie_KeyDown(object sender, KeyEventArgs e)
+        private void FormPartie_KeyDown(object sender, KeyEventArgs e)
         {
             Reset_Token();
 

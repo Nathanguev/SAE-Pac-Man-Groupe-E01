@@ -48,7 +48,7 @@ namespace Interface_PacMan
 
         private void FormMenuBonus_SizeChanged(object sender, EventArgs e)
         {
-            Utils.Txt_AutoSize(this);
+            Utils.Txt_AutoSize(this, 4.0f);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

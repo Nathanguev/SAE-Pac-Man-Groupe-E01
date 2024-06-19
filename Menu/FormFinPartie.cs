@@ -85,14 +85,7 @@ namespace Interface_PacMan
 
         private void FormVictory_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblScore.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                lblScore.Font = new Font(lblScore.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnNiveauSuivant.Font = new Font(btnNiveauSuivant.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnQuitter.Font = new Font(btnQuitter.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
     }
 }

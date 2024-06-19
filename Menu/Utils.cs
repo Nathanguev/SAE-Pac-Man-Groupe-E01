@@ -14,7 +14,6 @@ namespace Interface_PacMan
 
         // Cette fonction change la couleur de fond d'un composant Button ou RoundButton
         // (car RoundButton hérite de Button) au survol de ce composant par la souris.
-
         public static void btn_MouseEnter(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -31,7 +30,6 @@ namespace Interface_PacMan
 
         // Cette fonction redimensionne le texte d'un composant en fonction de sa hauteur
         // pour les éléments suivants : Label, RoundLabel, Button, RoundButton.
-
         public static void Txt_AutoSize(Control parent)
         {
             foreach (Control control in parent.Controls)
@@ -47,6 +45,23 @@ namespace Interface_PacMan
                 else if (control is TextBox)
                 {
                     float fontHeight = control.Parent.Height / 4.0f;
+                    {
+                        control.Font = new Font(control.Font.FontFamily, fontHeight, FontStyle.Bold);
+                    }
+                }
+
+                if (control.HasChildren)
+                    Txt_AutoSize(control);
+            }
+        }
+
+        public static void Txt_AutoSize(Control parent, float height)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is Label || control is TextBox)
+                {
+                    float fontHeight = parent.Height / height;
                     {
                         control.Font = new Font(control.Font.FontFamily, fontHeight, FontStyle.Bold);
                     }

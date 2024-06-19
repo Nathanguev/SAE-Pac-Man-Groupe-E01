@@ -35,9 +35,9 @@ namespace BibliothequePacMan
 
         public Partie()
         {
-            _bonus = new[] { true, true, true, true };
+            _bonus = new[] { true, true, true, true }; // Vie, Vitesse, Temps, Score
 
-                        _pseudo = "Idaho";
+            _pseudo = "Idaho";
             _difficulte = 1;
             _couleur = "#ffcb01";
 

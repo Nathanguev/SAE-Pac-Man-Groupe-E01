@@ -24,13 +24,7 @@ namespace Interface_PacMan
 
         public void FormMenuOptions_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnTouches.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnTouches.Font = new Font(btnTouches.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnVolume.Font = new Font(btnVolume.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

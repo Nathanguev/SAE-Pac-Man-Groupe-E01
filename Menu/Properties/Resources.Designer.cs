@@ -113,6 +113,16 @@ namespace Interface_PacMan.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bonus_score {
+            get {
+                object obj = ResourceManager.GetObject("bonus_score", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bonus_temps {
             get {
                 object obj = ResourceManager.GetObject("bonus_temps", resourceCulture);
@@ -186,6 +196,16 @@ namespace Interface_PacMan.Properties {
         internal static System.Drawing.Bitmap fantomeRouge {
             get {
                 object obj = ResourceManager.GetObject("fantomeRouge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fantomeViolet {
+            get {
+                object obj = ResourceManager.GetObject("fantomeViolet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

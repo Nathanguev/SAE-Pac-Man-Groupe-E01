@@ -18,14 +18,7 @@ namespace Interface_PacMan
 
         private void FormMenuVolume_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblVolumeEffets.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                lblVolumeEffets.Font = new Font(lblVolumeEffets.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblVolumeGlobal.Font = new Font(lblVolumeGlobal.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblVolumeMusique.Font = new Font(lblVolumeMusique.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

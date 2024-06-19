@@ -52,19 +52,7 @@ namespace Interface_PacMan
 
         private void FormMenuTouches_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblHaut.Size.Height / 4;
-
-            if (fontHeight > 0)
-            {
-                lblHaut.Font = new Font(lblHaut.Font.FontFamily, fontHeight, FontStyle.Bold);
-                txtHaut.Font = new Font(txtHaut.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblBas.Font = new Font(lblBas.Font.FontFamily, fontHeight, FontStyle.Bold);
-                txtBas.Font = new Font(txtBas.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblGauche.Font = new Font(lblGauche.Font.FontFamily, fontHeight, FontStyle.Bold);
-                txtGauche.Font = new Font(txtGauche.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblDroite.Font = new Font(lblDroite.Font.FontFamily, fontHeight, FontStyle.Bold);
-                txtDroite.Font = new Font(txtDroite.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this, 4.0f);
         }
 
         private void btnRetour_Click(object sender, EventArgs e)

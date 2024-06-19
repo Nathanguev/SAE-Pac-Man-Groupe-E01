@@ -74,14 +74,7 @@ namespace Interface_PacMan
 
         private void FormMenuPause_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = btnContinuer.Size.Height / 5;
-
-            if (fontHeight > 0)
-            {
-                btnContinuer.Font = new Font(btnContinuer.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnOptions.Font = new Font(btnOptions.Font.FontFamily, fontHeight, FontStyle.Bold);
-                btnQuitter.Font = new Font(btnQuitter.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
+            Utils.Txt_AutoSize(this);
         }
     }
 }

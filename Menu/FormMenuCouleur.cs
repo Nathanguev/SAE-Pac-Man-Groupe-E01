@@ -86,7 +86,7 @@ namespace Interface_PacMan
 
         private void FormMenuCouleur_SizeChanged(object sender, EventArgs e)
         {
-            Utils.Txt_AutoSize(tableLayoutPanel1);
+            Utils.Txt_AutoSize(this);
         }
 
         private void btnPerso_Click(object sender, EventArgs e)

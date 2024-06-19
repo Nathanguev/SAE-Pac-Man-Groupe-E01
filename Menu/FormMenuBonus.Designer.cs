@@ -156,7 +156,7 @@
             lblHaut.Name = "lblHaut";
             lblHaut.Size = new Size(162, 43);
             lblHaut.TabIndex = 1;
-            lblHaut.Text = "Bonus Vie +";
+            lblHaut.Text = "Bonus Vie";
             lblHaut.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnVie
@@ -311,7 +311,7 @@
             lblBas.Name = "lblBas";
             lblBas.Size = new Size(162, 43);
             lblBas.TabIndex = 1;
-            lblBas.Text = "Bonus Temps +";
+            lblBas.Text = "Bonus Temps";
             lblBas.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // btnTemps
