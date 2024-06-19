@@ -52,7 +52,7 @@ namespace Interface_PacMan
 
         private void FormMenuTouches_SizeChanged(object sender, EventArgs e)
         {
-            Utils.Txt_AutoSize(this, 4.0f);
+            Utils.Txt_AutoSize(this);
         }
 
         private void btnRetour_Click(object sender, EventArgs e)

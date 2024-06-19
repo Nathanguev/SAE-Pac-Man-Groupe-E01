@@ -1,4 +1,5 @@
-﻿using BibliothequePacMan;
+﻿using Bibliotheque_PacMan;
+using BibliothequePacMan;
 using Menu;
 using System;
 using System.Collections.Generic;
@@ -44,18 +45,7 @@ namespace Interface_PacMan
 
         private void UserControlSauvegarde_SizeChanged(object sender, EventArgs e)
         {
-            float fontHeight = lblUserPseudo.Size.Height / 3;
-
-            if (fontHeight > 0)
-            {
-                lblUserPseudo.Font = new Font(lblUserPseudo.Font.FontFamily, fontHeight, FontStyle.Bold);
-                lblDateCreation.Font = new Font(lblDateCreation.Font.FontFamily, fontHeight, FontStyle.Bold);
-            }
-        }
-
-        private void roundTableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            Utils.Txt_AutoSize(this, 10.0f);
         }
 
         public string Pseudo

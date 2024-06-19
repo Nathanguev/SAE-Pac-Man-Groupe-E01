@@ -44,6 +44,7 @@ namespace Bibliotheque_PacMan
                 else if (control is TextBox)
                 {
                     float fontHeight = control.Parent.Height / 4.0f;
+                    if (fontHeight >= 1)
                     {
                         control.Font = new Font(control.Font.FontFamily, fontHeight, FontStyle.Bold);
                     }
@@ -58,25 +59,27 @@ namespace Bibliotheque_PacMan
         {
             foreach (Control control in parent.Controls)
             {
-                if (control is Label || control is TextBox)
+                if (control is Label || control is TextBox || control is Button)
                 {
                     float fontHeight = parent.Height / height;
+                    if (fontHeight >= 1)
                     {
                         control.Font = new Font(control.Font.FontFamily, fontHeight, FontStyle.Bold);
                     }
                 }
 
                 if (control.HasChildren)
-                    Txt_AutoSize(control);
+                    Txt_AutoSize(control, height);
             }
         }
 
         /* ----------------- Méthode de convertion binaire ----------------- */
 
         // Cette fonction permet de vérifier toutes les conditions possibles
-        // pour la position des murs du labyrinthe et retourne un octet binaire.
+        // pour la position des murs du labyrinthe et retourne un demi octet binaire.
 
         // Les positions sont : haut, bas, gauche, droite
+        // La case 0000 représente alors une case inaccessible, c'est-à-dire sans aucune porte.
 
         // 0 : il y a un mur
         // 1 : il n'y a pas de mur (il y a une porte)
@@ -116,7 +119,7 @@ namespace Bibliotheque_PacMan
                     else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
                         return "0001";
                     else
-                        return "0000"; // Case vide
+                        return "0000"; // case inaccessible
 
                 case 2:
                     if (currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
@@ -134,7 +137,7 @@ namespace Bibliotheque_PacMan
                     else if (!currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
                         return "0001";
                     else
-                        return "0000"; // Case vide
+                        return "0000"; // case inaccessible
 
                 case 3:
                     if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
@@ -152,7 +155,7 @@ namespace Bibliotheque_PacMan
                     else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index - 1]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
                         return "0001";
                     else
-                        return "0000"; // Case vide
+                        return "0000"; // case inaccessible
 
                 case 4:
                     if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
@@ -170,7 +173,7 @@ namespace Bibliotheque_PacMan
                     else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + 1]))
                         return "0001";
                     else
-                        return "0000"; // Case vide
+                        return "0000"; // case inaccessible
 
                 case 5:
                     if (currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
@@ -188,10 +191,10 @@ namespace Bibliotheque_PacMan
                     else if (!currentCellule.isLien(labyrinthe.getCellules()[index - partie.Largeur]) && !currentCellule.isLien(labyrinthe.getCellules()[index + partie.Largeur]) && currentCellule.isLien(labyrinthe.getCellules()[index - 1]))
                         return "0010";
                     else
-                        return "0000"; // Case vide
+                        return "0000"; // case inaccessible
 
                 default:
-                    return "0000"; // Case vide
+                    return "0000"; // case inaccessible
             }
         }
     }
