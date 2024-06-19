@@ -179,7 +179,6 @@
             txtPseudo.TabIndex = 0;
             txtPseudo.TextAlign = HorizontalAlignment.Center;
             txtPseudo.TextChanged += txtPseudo_TextChanged;
-            txtPseudo.Validated += txtPseudo_Validated;
             // 
             // tableLayoutPanel3
             // 
@@ -254,7 +253,6 @@
             Text = "Menu Pseudo";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuPseudo_FormClosing;
-            Load += FormMenuPseudo_Load;
             SizeChanged += FormMenuPseudo_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

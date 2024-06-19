@@ -296,7 +296,6 @@
             Text = "Menu Paramètre";
             WindowState = FormWindowState.Maximized;
             FormClosing += FormMenuParametre_FormClosing;
-            Load += FormMenuParametre_Load;
             SizeChanged += FormMenuParametre_SizeChanged;
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

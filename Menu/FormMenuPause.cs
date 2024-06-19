@@ -14,10 +14,12 @@ namespace Interface_PacMan
 {
     public partial class FormMenuPause : Form
     {
-        private FormMenuPrincipal formMenuPrincipal;
-        private FormPartie formPartie;
-        private bool isBtnQuitterClicked = false;
-        private bool isBtnContinuerClicked = false;
+        private FormMenuPrincipal formMenuPrincipal; // Référence vers le formulaire principal
+        private FormPartie formPartie; // Référence vers le formulaire de la partie en cours
+        private bool isBtnQuitterClicked = false; // Indique si le bouton "Quitter" a été cliqué
+        private bool isBtnContinuerClicked = false; // Indique si le bouton "Continuer" a été cliqué
+
+        /* ----------------- Constructeur de la classe FormMenuPause ----------------- */
 
         public FormMenuPause(FormMenuPrincipal formMenuPrincipal, FormPartie formPartie)
         {
@@ -26,53 +28,58 @@ namespace Interface_PacMan
             this.formPartie = formPartie;
         }
 
+        /* ----------------- Gestionnaire d'événement WinForms ----------------- */
+
+        // Fermeture du formulaire
         private void FormMenuPause_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Si l'utilisateur a choisi de continuer, affiche le formulaire de la partie en cours
             if (isBtnContinuerClicked)
-            {
                 formPartie.Show();
-            }
+            // Si l'utilisateur a choisi de quitter, affiche le formulaire principal
             else if (isBtnQuitterClicked)
-            {
                 formMenuPrincipal.Show();
-            }
+            // Sinon, ferme le formulaire principal
             else
-            {
                 formMenuPrincipal.Close();
-            }
         }
 
+        // Clic sur le bouton "Continuer"
         private void btnContinuer_Click(object sender, EventArgs e)
         {
-            isBtnContinuerClicked = true;
-            this.Close();
+            isBtnContinuerClicked = true; // Indique que le bouton "Continuer" a été cliqué
+            this.Close(); // Ferme le formulaire actuel
         }
 
+        // Clic sur le bouton "Quitter"
         private void btnQuitter_Click(object sender, EventArgs e)
         {
-            isBtnQuitterClicked = true;
-            this.Close();
+            isBtnQuitterClicked = true; // Indique que le bouton "Quitter" a été cliqué
+            this.Close(); // Ferme le formulaire actuel
         }
 
+        // Clic sur le bouton "Options"
         private void btnOptions_Click(object sender, EventArgs e)
         {
+            // Crée une nouvelle instance de FormMenuOptions
             FormMenuOptions formMenuOptions = new FormMenuOptions(formMenuPrincipal, this);
-            formMenuOptions.Show();
-            this.Hide();
+            formMenuOptions.Show(); // Affiche le formulaire des options
+            this.Hide(); // Cache le formulaire actuel
         }
 
+        // Survol de la souris sur un bouton
         private void btn_MouseEnter(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            btn.BackColor = Color.LightBlue;
+            Utils.btn_MouseEnter(sender, e);
         }
 
+        // Sortie de souris d'un bouton
         private void btn_MouseLeave(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            btn.BackColor = Color.FromArgb(224, 224, 224);
+            Utils.btn_MouseLeave(sender, e);
         }
 
+        // Redimensionnement du formulaire
         private void FormMenuPause_SizeChanged(object sender, EventArgs e)
         {
             Utils.Txt_AutoSize(this);

@@ -13,70 +13,76 @@ namespace Interface_PacMan
 {
     public partial class FormMenuDifficulte : Form
     {
-        private FormMenuParametre formMenuParametre;
-        private RoundButton btnSelected;
-        private bool isBtnRetourClicked = false;
+        private FormMenuParametre formMenuParametre; // Référence vers le formulaire FormMenuParametre
+        private RoundButton btnSelected; // Bouton sélectionné pour la difficulté
+        private bool isBtnRetourClicked = false; // Indique si le bouton "Retour" a été cliqué
 
+        /* ----------------- Constructeur de la classe FormMenuDifficulte ----------------- */
+
+        // Constructeur prenant en paramètre la référence vers le formulaire FormMenuParametre
         public FormMenuDifficulte(FormMenuParametre formMenuParametre)
         {
             InitializeComponent();
             this.formMenuParametre = formMenuParametre;
-            btnSelected = new RoundButton();
+            btnSelected = new RoundButton(); // Initialise un nouveau bouton pour la sélection
         }
 
+        /* ----------------- Gestionnaire d'événement WinForms ----------------- */
+
+        // Clic sur le bouton "Retour"
         private void btnRetour_Click(object sender, EventArgs e)
         {
-            isBtnRetourClicked = true;
-            this.Close();
+            isBtnRetourClicked = true; // Indique que le bouton "Retour" a été cliqué
+            this.Close(); // Ferme le formulaire actuel
         }
 
+        // Fermeture du formulaire
         private void FormMenuDifficulte_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isBtnRetourClicked == true)
-            {
-                formMenuParametre.Show();
-            }
+                formMenuParametre.Show(); // Affiche le formulaire FormMenuParametre si le bouton "Retour" a été cliqué
             else
-            {
-                formMenuParametre.Close();
-            }
+                formMenuParametre.Close(); // Ferme le formulaire FormMenuParametre si le bouton "Retour" n'a pas été cliqué
         }
 
+        // Redimensionnement du formulaire
         private void FormMenuDifficulte_SizeChanged(object sender, EventArgs e)
         {
             Utils.Txt_AutoSize(this);
         }
 
+        // Survole de souris sur un bouton
         private void btn_MouseEnter(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            btn.BackColor = Color.LightBlue;
+            Utils.btn_MouseEnter(sender, e);
         }
 
+        // Sortie de souris d'un bouton
         private void btn_MouseLeave(object sender, EventArgs e)
         {
+            Utils.btn_MouseLeave(sender, e);
+        }
+
+        // Clic sur un des boutons de difficulté
+        private void btn_Click(object sender, EventArgs e)
+        {
             Button btn = (Button)sender;
-            btn.BackColor = Color.FromArgb(224, 224, 224);
+
+            // Définit la difficulté sélectionnée dans FormMenuParametre
+            formMenuParametre.difficulte = Convert.ToInt32(btn.Tag);
+            btn_Select(); // Sélectionne visuellement le bouton cliqué
         }
 
-        private void btnFacile_Click(object sender, EventArgs e)
+        // Chargement du formulaire
+        private void FormMenuDifficulte_Load(object sender, EventArgs e)
         {
-            formMenuParametre.difficulte = 1;
+            // Sélectionne le bouton de difficulté correspondant à la difficulté actuelle
             btn_Select();
         }
 
-        private void btnMoyen_Click(object sender, EventArgs e)
-        {
-            formMenuParametre.difficulte = 2;
-            btn_Select();
-        }
+        /* ----------------- Fonction supplémentaire ----------------- */
 
-        private void btnDifficile_Click(object sender, EventArgs e)
-        {
-            formMenuParametre.difficulte = 3;
-            btn_Select();
-        }
-
+        // Méthode pour sélectionner visuellement le bouton de difficulté
         private void btn_Select()
         {
             RoundButton[] buttons = { btnFacile, btnMoyen, btnDifficile };
@@ -85,20 +91,15 @@ namespace Interface_PacMan
                 if (formMenuParametre.difficulte == Convert.ToInt32(btn.Tag))
                 {
                     btnSelected = btn;
-                    btn.BorderWidth = 15;
-                    btn.BorderColor = Color.DeepSkyBlue;
+                    btn.BorderWidth = 15; // Largeur de bordure augmentée pour indiquer la sélection
+                    btn.BorderColor = Color.DeepSkyBlue; // Couleur de bordure modifiée pour indiquer la sélection
                 }
                 else
                 {
-                    btn.BorderWidth = 0;
-                    btn.BorderColor = Color.Transparent;
+                    btn.BorderWidth = 0; // Aucune bordure pour les autres boutons
+                    btn.BorderColor = Color.Transparent; // Bordure transparente pour les autres boutons
                 }
             }
-        }
-
-        private void FormMenuDifficulte_Load(object sender, EventArgs e)
-        {
-            btn_Select();
         }
     }
 }

@@ -106,7 +106,7 @@
             btnDifficile.Tag = "3";
             btnDifficile.Text = "Difficile";
             btnDifficile.UseVisualStyleBackColor = false;
-            btnDifficile.Click += btnDifficile_Click;
+            btnDifficile.Click += btn_Click;
             btnDifficile.MouseEnter += btn_MouseEnter;
             btnDifficile.MouseLeave += btn_MouseLeave;
             // 
@@ -148,7 +148,7 @@
             btnMoyen.Tag = "2";
             btnMoyen.Text = "Moyen";
             btnMoyen.UseVisualStyleBackColor = false;
-            btnMoyen.Click += btnMoyen_Click;
+            btnMoyen.Click += btn_Click;
             btnMoyen.MouseEnter += btn_MouseEnter;
             btnMoyen.MouseLeave += btn_MouseLeave;
             // 
@@ -228,7 +228,7 @@
             btnFacile.Tag = "1";
             btnFacile.Text = "Facile";
             btnFacile.UseVisualStyleBackColor = false;
-            btnFacile.Click += btnFacile_Click;
+            btnFacile.Click += btn_Click;
             btnFacile.MouseEnter += btn_MouseEnter;
             btnFacile.MouseLeave += btn_MouseLeave;
             // 
