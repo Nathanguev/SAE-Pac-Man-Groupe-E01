@@ -23,4 +23,4 @@ L'interface utilisateur est développée en utilisant WinForms, une technologie 
 
 ## Contributeurs
 
-- Nathan Guevara(https://github.com/Nathanguev)
+- Nathan Guevara (https://github.com/Nathanguev)
