@@ -37,12 +37,12 @@ namespace BibliothequePacMan
         {
             _bonus = new[] { true, true, true, true }; // Vie, Vitesse, Temps, Score
 
-            _pseudo = "Idaho";
-            _difficulte = 1;
+            _pseudo = "Nathan";
+            _difficulte = 2;
             _couleur = "#ffcb01";
 
-            _level = 5;
-            _seed = 0;
+            _level = 30;
+            _seed = 7;
             _score = 0;
 
             Init_Volumes();
@@ -81,11 +81,6 @@ namespace BibliothequePacMan
             _toucheBas = Convert.ToChar(ConfigurationManager.AppSettings["ToucheBas"]);
             _toucheDroite = Convert.ToChar(ConfigurationManager.AppSettings["ToucheDroite"]);
             _toucheGauche = Convert.ToChar(ConfigurationManager.AppSettings["ToucheGauche"]);
-        }
-
-        public int Init_TimerStatValue()
-        {
-            return 120 + 30 * _level;
         }
 
         private void Init_NbVie()

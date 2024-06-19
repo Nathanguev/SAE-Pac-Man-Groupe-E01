@@ -442,7 +442,7 @@
             lblToucheEsc.Name = "lblToucheEsc";
             lblToucheEsc.Size = new Size(87, 64);
             lblToucheEsc.TabIndex = 0;
-            lblToucheEsc.Text = ": Esc";
+            lblToucheEsc.Text = ": Échap";
             lblToucheEsc.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel5

@@ -28,6 +28,9 @@ namespace Interface_PacMan
             tableLayoutPanel2.Controls.Add(sauvegarde, 3, 1);
             sauvegarde.Dock = DockStyle.Fill;
             sauvegarde.Margin = new Padding(0);
+
+            sauvegarde.Pseudo = "Nathan";
+            sauvegarde.DateCreation = "17/06/2024";
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)

@@ -85,12 +85,17 @@ namespace Interface_PacMan
         // Cette méthode est appelée lors du chargement du formulaire de jeu.
         private void FormPartie_Load(object sender, EventArgs e)
         {
-            // Initialisation des dimensions maximales du labyrinthe et du jeu
+            // Initialisation des dimensions maximales du labyrinthe
             Init_DimensionsMax();
+            Init_FantomesSpeed();
             partie.Init_Dimensions();
 
-            // Création du labyrinthe et génération du parcours par l'algorithme de parcours en profondeur
+            // Création du labyrinthe et initialisation de la graine aléatoire
             labyrinthe = new Labyrinthe(partie.Hauteur, partie.Largeur);
+            if (partie.Seed != 0)
+                labyrinthe.setSeed(partie.Seed);
+
+            // génération du labyrinthe par l'algorithme de parcours en profondeur
             labyrinthe.algoParcoursProfondeur();
 
             // Initialisation du TableLayoutPanel central pour l'affichage du labyrinthe
@@ -207,6 +212,7 @@ namespace Interface_PacMan
             fantomePCC.Sprite.BringToFront();
         }
 
+        // Place le fantôme cyclique dans le labyrinthe à sa position de départ.
         private void Init_FantomeCycle(Panel panel)
         {
             int index = 0;
@@ -287,12 +293,34 @@ namespace Interface_PacMan
             }
         }
 
+        private void Init_FantomesSpeed()
+        {
+            if (partie.Difficulte == 1)
+            {
+                fantomePCCSpeed = 18;
+                fantomeCycleSpeed = 15;
+                tempsBonusVitesse = 12;
+            }
+            else if (partie.Difficulte == 3)
+            {
+                fantomePCCSpeed = 14;
+                fantomeCycleSpeed = 11;
+                tempsBonusVitesse = 8;
+            }
+        }
+
         /* ---------------- Fonctions Timer ---------------- */
 
         // Initialisation du timer
         private void Init_Timer()
         {
-            timeLeft = partie.Init_TimerStatValue();
+            timeLeft = labyrinthe.getCellules().Count();
+
+            while ((timeLeft % 60) % 10 != 0)
+            {
+                timeLeft--;
+            }
+
             timer = new System.Windows.Forms.Timer
             {
                 Interval = 1000, // Intervalle de 1 seconde
@@ -338,12 +366,17 @@ namespace Interface_PacMan
         // Place les bonus de manière aléatoire dans le labyrinthe, en évitant la position de départ de Pac-Man.
         private void Init_Bonus(Panel panel)
         {
-            Random random = new Random();
+            Random random;
             positionsBonus = new List<Point>();
+
+            if (partie.Seed == 0)
+                random = new Random();
+            else
+                random = new Random(partie.Seed);
 
             if (!partie.Bonus.All(bonus => !bonus))
             {
-                while (positionsBonus.Count < 3 + partie.Level)
+                while (positionsBonus.Count < 3 + partie.Level && positionsBonus.Count < 10)
                 {
                     Point point;
 
@@ -463,7 +496,7 @@ namespace Interface_PacMan
         }
 
         // Réinitialisation des fantômes
-        private void Reset_Fantome()
+        private void Reset_Fantomes()
         {
             isRunning = false;
 
@@ -499,7 +532,7 @@ namespace Interface_PacMan
             {
                 cancellationTokenSource.Cancel(); // Annulation des tâches en cours
                 Reset_PacMan();
-                Reset_Fantome();
+                Reset_Fantomes();
                 tlpLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le TableLayoutPanel du labyrinthe
                 panelLabyrinthe.Controls.Clear(); // Nettoyage des contrôles dans le panel du labyrinthe
                 this.Close(); // Fermeture de la fenêtre de jeu
@@ -912,7 +945,7 @@ namespace Interface_PacMan
                 cancellationTokenSource.Cancel(); // Annule le jeton d'annulation
                 isRunning = false; // Indique que le jeu n'est plus en cours
                 Reset_PacMan(); // Réinitialise Pac-Man
-                Reset_Fantome(); // Réinitialise les fantômes
+                Reset_Fantomes(); // Réinitialise les fantômes
                 tlpVies.Controls.RemoveAt(partie.NbVie); // Retire une vie visuellement
                 partie.NbVie--; // Réduit le nombre de vies
                 IsGameDefeat(); // Vérifie si c'est une défaite
@@ -1154,7 +1187,7 @@ namespace Interface_PacMan
                         }
                         catch (TaskCanceledException)
                         {
-                            Reset_Fantome();
+                            Reset_Fantomes();
                             return;
                         }
                     }
@@ -1171,7 +1204,7 @@ namespace Interface_PacMan
                         }
                         catch (TaskCanceledException)
                         {
-                            Reset_Fantome();
+                            Reset_Fantomes();
                             return;
                         }
                     }
@@ -1188,7 +1221,7 @@ namespace Interface_PacMan
                         }
                         catch (TaskCanceledException)
                         {
-                            Reset_Fantome();
+                            Reset_Fantomes();
                             return;
                         }
                     }
@@ -1205,7 +1238,7 @@ namespace Interface_PacMan
                         }
                         catch (TaskCanceledException)
                         {
-                            Reset_Fantome();
+                            Reset_Fantomes();
                             return;
                         }
                     }

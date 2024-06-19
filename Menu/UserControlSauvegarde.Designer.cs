@@ -45,7 +45,7 @@
             lblUserPseudo.Name = "lblUserPseudo";
             lblUserPseudo.Size = new Size(298, 57);
             lblUserPseudo.TabIndex = 0;
-            lblUserPseudo.Text = "UserPseudo";
+            lblUserPseudo.Text = "Pseudo";
             lblUserPseudo.TextAlign = ContentAlignment.MiddleCenter;
             lblUserPseudo.Click += UserControlSauvegarde_Click;
             lblUserPseudo.MouseEnter += UserControlSauvegarde_MouseEnter;

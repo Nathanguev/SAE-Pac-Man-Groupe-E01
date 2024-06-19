@@ -57,5 +57,17 @@ namespace Interface_PacMan
         {
 
         }
+
+        public string Pseudo
+        {
+            get { return lblUserPseudo.Text; }
+            set { lblUserPseudo.Text = value; }
+        }
+
+        public string DateCreation
+        {
+            get { return lblDateCreation.Text; }
+            set { lblDateCreation.Text = value; }
+        }
     }
 }
